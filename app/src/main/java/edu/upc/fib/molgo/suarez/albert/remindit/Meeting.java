@@ -139,27 +139,51 @@ public class Meeting extends Event {
         this.description = description;
     }
 
+    /**
+     * Get the start hour of the implicit Meeting.
+     * @return The start hour.
+     */
     public Hour getHourStart() {
         return hourStart;
     }
 
+    /**
+     * Set the start hour implicit of the start hour's param.
+     * @param hourStart The start hour to set.
+     */
     public void setHourStart(Hour hourStart) {
         this.hourStart = hourStart;
     }
 
+    /**
+     * Get the end hour of the implicit Meeting.
+     * @return The end hour.
+     */
     public Hour getHourEnd() {
         return hourEnd;
     }
 
+    /**
+     * Set the end hour implicit of the end hour's param.
+     * @param hourEnd The end hour to set.
+     */
     public void setHourEnd(Hour hourEnd) {
         this.hourEnd = hourEnd;
     }
 
+    /**
+     * Add a task to the collection of tasks implicit.
+     * @param t The task to add.
+     */
     public void addTask(Task t) {
         this.tasks.add(t);
         t.setMeetingAssociated(this);
     }
 
+    /**
+     * Erase a task to the collection of tasks implicit.
+     * @param t The task to erase.
+     */
     public void eraseTask(Task t) {
         tasks.remove(t);
         t.setMeetingAssociated(null);
