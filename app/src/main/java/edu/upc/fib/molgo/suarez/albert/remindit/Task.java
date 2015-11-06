@@ -106,4 +106,14 @@ public class Task extends Event {
     public void setMeetingAssociated(Meeting meetingAssociated) {
         this.meetingAssociated = meetingAssociated;
     }
+
+    @Override
+    public String toString() {
+        String result = "";
+        result += this.dateStart.toString() + "\n";
+        result += this.dateEnd.toString() + "\n";
+        if (done) result += "DONE" + "\n";
+        else result += "NOT DONE" + "\n";
+        return result;
+    }
 }

@@ -1,7 +1,8 @@
 package edu.upc.fib.molgo.suarez.albert.remindit;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * Meeting class (extends Event)
@@ -26,18 +27,13 @@ public class Meeting extends Event {
         private int minute;
 
         /**
-         * A second is in the interval [0, 59].
-         */
-        private int second;
-
-        /**
          * Create an hour with their params
          * @param h The hour param
          * @param m The minute param
-         * @param s The second param
          */
-        public Hour(int h, int m, int s) {
-            hour = h; minute = m; second = s;
+        public Hour(int h, int m) {
+            hour = h;
+            minute = m;
         }
 
         /**
@@ -49,6 +45,14 @@ public class Meeting extends Event {
         }
 
         /**
+         * Set the hour implicit to hour's param.
+         * @param hour The hour to set.
+         */
+        public void setHour(int hour) {
+            this.hour = hour;
+        }
+
+        /**
          * Get the minute param of implicit Hour.
          * @return The minute.
          */
@@ -57,11 +61,11 @@ public class Meeting extends Event {
         }
 
         /**
-         * Get the second param of implicit Hour.
-         * @return The second.
+         * Set the minute implicit to minute's param.
+         * @param minute The minute to set.
          */
-        public int getSecond() {
-            return second;
+        public void setMinute(int minute) {
+            this.minute = minute;
         }
     }
 
@@ -88,23 +92,21 @@ public class Meeting extends Event {
     /**
      * A meeting can have an assigned tasks.
      */
-    private ArrayList<Task> tasks;
+    private Set<Task> tasks;
+
+
 
 
     /**
      * Create a Meeting.
      * @param dt The date to set.
      * @param desc The description to set.
-     * @param hs The start hour to set.
-     * @param he The end hour to set.
      */
-    public Meeting(Date dt, String desc, Hour hs, Hour he) {
+    public Meeting(Date dt, String desc) {
         super.eventType = EventType.EVENT_MEETING;
         this.date = dt;
         this.description = desc;
-        this.hourStart = hs;
-        this.hourEnd = he;
-        this.tasks = new ArrayList<Task>();
+        this.tasks = new LinkedHashSet<>();
     }
 
     /**
@@ -149,10 +151,12 @@ public class Meeting extends Event {
 
     /**
      * Set the start hour implicit of the start hour's param.
-     * @param hourStart The start hour to set.
+     * @param hour The hour to set.
+     * @param minute The minute to set.
      */
-    public void setHourStart(Hour hourStart) {
-        this.hourStart = hourStart;
+    public void setHourStart(int hour, int minute) {
+        this.hourStart.setHour(hour);
+        this.hourStart.setMinute(minute);
     }
 
     /**
@@ -164,11 +168,13 @@ public class Meeting extends Event {
     }
 
     /**
-     * Set the end hour implicit of the end hour's param.
-     * @param hourEnd The end hour to set.
+     * Set the end hour implicit of the start hour's param.
+     * @param hour The hour to set.
+     * @param minute The minute to set.
      */
-    public void setHourEnd(Hour hourEnd) {
-        this.hourEnd = hourEnd;
+    public void setHourEnd(int hour, int minute) {
+        this.hourEnd.setHour(hour);
+        this.hourEnd.setMinute(minute);
     }
 
     /**
@@ -176,7 +182,7 @@ public class Meeting extends Event {
      * @param t The task to add.
      */
     public void addTask(Task t) {
-        this.tasks.add(t);
+        tasks.add(t);
         t.setMeetingAssociated(this);
     }
 
@@ -187,5 +193,15 @@ public class Meeting extends Event {
     public void eraseTask(Task t) {
         tasks.remove(t);
         t.setMeetingAssociated(null);
+    }
+
+    @Override
+    public String toString() {
+        String result = "";
+        result += this.date.toString() + "\n";
+        result += this.getDescription() + "\n";
+        result += hourStart.getHour() + ":" + hourStart.getMinute() + "\n";
+        result += hourEnd.getHour() + ":" + hourEnd.getMinute() + "\n";
+        return result;
     }
 }

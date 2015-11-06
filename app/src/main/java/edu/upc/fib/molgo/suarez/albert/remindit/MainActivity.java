@@ -2,9 +2,8 @@ package edu.upc.fib.molgo.suarez.albert.remindit;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
+import android.view.*;
+import android.widget.*;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -12,8 +11,14 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
 
+        final Button button = (Button) findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                test(v);
+            }
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -35,5 +40,18 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void test(View view) {
+        switch (view.getId()) {
+            case R.id.button :
+                Button button = (Button) findViewById(R.id.button);
+                TextView text = (TextView) findViewById(R.id.textView);
+
+                if (button.isClickable()) {
+                    text.setText("Hello");
+                }
+                break;
+        }
     }
 }
