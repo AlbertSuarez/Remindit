@@ -107,7 +107,10 @@ public class Task extends Event {
         this.meetingAssociated = meetingAssociated;
     }
 
-    @Override
+    /**
+     * Get the String representation of an Event.
+     * @return The String representation.
+     */
     public String toString() {
         String result = "";
         result += this.dateStart.toString() + "\n";

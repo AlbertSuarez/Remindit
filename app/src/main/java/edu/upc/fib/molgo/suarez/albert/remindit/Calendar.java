@@ -72,7 +72,7 @@ public class Calendar {
 
     /**
      * Get all of undone tasks of the calendar
-     * @return
+     * @return The collection of undone tasks
      */
     public Set<Task> getUndoneTasks() {
         Set<Task> result = new LinkedHashSet<>();

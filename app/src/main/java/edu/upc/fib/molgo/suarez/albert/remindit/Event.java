@@ -52,4 +52,11 @@ public abstract class Event {
         if (eventType == EventType.EVENT_MEETING) return true;
         return false;
     }
+
+    /**
+     * Get the String representation of an Event.
+     * @return The String representation.
+     */
+    @Override
+    public abstract String toString();
 }

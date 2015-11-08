@@ -67,6 +67,14 @@ public class Meeting extends Event {
         public void setMinute(int minute) {
             this.minute = minute;
         }
+
+        /**
+         * Get the String representation of an Hour.
+         * @return The Hour representation.
+         */
+        public String toString() {
+            return (this.hour + ":" + this.minute + "\n");
+        }
     }
 
     /**
@@ -102,10 +110,12 @@ public class Meeting extends Event {
      * @param dt The date to set.
      * @param desc The description to set.
      */
-    public Meeting(Date dt, String desc) {
+    public Meeting(Date dt, String desc, int hourStart, int minuteStart, int hourEnd, int minuteEnd) {
         super.eventType = EventType.EVENT_MEETING;
         this.date = dt;
         this.description = desc;
+        this.hourStart.setHour(hourStart); this.hourStart.setHour(minuteStart);
+        this.hourEnd.setHour(hourEnd); this.hourEnd.setMinute(minuteEnd);
         this.tasks = new LinkedHashSet<>();
     }
 
@@ -195,13 +205,16 @@ public class Meeting extends Event {
         t.setMeetingAssociated(null);
     }
 
-    @Override
+    /**
+     * Get the String representation of an Event.
+     * @return The String representation.
+     */
     public String toString() {
         String result = "";
         result += this.date.toString() + "\n";
         result += this.getDescription() + "\n";
-        result += hourStart.getHour() + ":" + hourStart.getMinute() + "\n";
-        result += hourEnd.getHour() + ":" + hourEnd.getMinute() + "\n";
+        result += hourStart.toString();
+        result += hourEnd.toString();
         return result;
     }
 }
