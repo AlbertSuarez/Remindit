@@ -1,9 +1,11 @@
-package edu.upc.fib.molgo.suarez.albert.remindit;
+package edu.upc.fib.molgo.suarez.albert.remindit.activity;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
+
+import edu.upc.fib.molgo.suarez.albert.remindit.R;
 
 public class MainActivity extends ActionBarActivity {
 

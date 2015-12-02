@@ -1,6 +1,6 @@
 package edu.upc.fib.molgo.suarez.albert.remindit;
 
-import java.util.Date;
+import edu.upc.fib.molgo.suarez.albert.remindit.domain.*;
 
 /**
  * Created by Albert on 08/11/2015.
@@ -8,9 +8,23 @@ import java.util.Date;
 public class Main {
 
     public static void main(String[] arg0) {
-        Calendar c = new Calendar();
-        Meeting m = new Meeting(new Date(10,05,1995), "Reunion ER", 10, 00, 12, 00);
-        System.out.println(m.toString());
+        Reminder reminder = new Reminder();
+        Meeting m = new Meeting(10, 5, 2015, 10, 0, 11, 0, "Startup android");
+        Task t1 = new Task(10, 5, 2015, 20, 5, 2015);
+        Task t2 = new Task(10, 5, 2015, 15, 5, 2015);
+        m.addTask(t1);
+        m.addTask(t2);
+        reminder.addEvent(m);
+        reminder.addEvent(t1);
+        reminder.addEvent(t2);
+
+        //System.out.println(reminder.toString());
+
+        System.out.print(reminder.printUndoneTasks());
+        t2.setDone(true);
+        System.out.println("I HAVE DONE THE SECOND TASK!\n");
+        System.out.print(reminder.printUndoneTasks());
+
     }
 
 }
