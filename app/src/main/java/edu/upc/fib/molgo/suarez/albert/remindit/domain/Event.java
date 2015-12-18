@@ -15,7 +15,6 @@ public abstract class Event {
 
     protected Reminder reminder;
 
-
     public Reminder getReminder() {
         return reminder;
     }
