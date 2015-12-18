@@ -3,7 +3,7 @@ package edu.upc.fib.molgo.suarez.albert.remindit.domain;
 import java.util.*;
 
 /**
- * Calendar class.
+ * Reminder class.
  * @author albert.suarez.molgo
  */
 public class Reminder {

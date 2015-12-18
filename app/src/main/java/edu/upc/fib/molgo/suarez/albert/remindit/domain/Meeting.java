@@ -1,8 +1,6 @@
 package edu.upc.fib.molgo.suarez.albert.remindit.domain;
 
-import java.util.Date;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 import edu.upc.fib.molgo.suarez.albert.remindit.utils.Utils;
 
 /**
