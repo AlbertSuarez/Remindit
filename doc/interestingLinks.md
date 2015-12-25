@@ -12,5 +12,6 @@ https://github.com/alamkanak/Android-Week-View
 
 * Codi XML de Layout amb Week View
 
+http://stackoverflow.com/questions/9355747/how-can-i-create-a-weekly-calendar-view-for-an-android-honeycomb-application
 http://pastebin.com/jT4wQxeb
 

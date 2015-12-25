@@ -37,4 +37,6 @@
     <string name="pm10">10 PM</string>
     <string name="pm11">11 PM</string>
 
+    <string name="updating">UPDATING</string>
+
 </resources>
