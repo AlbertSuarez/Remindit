@@ -8,8 +8,6 @@ import edu.upc.fib.molgo.suarez.albert.remindit.R;
 
 public class MainActivity extends ActionBarActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

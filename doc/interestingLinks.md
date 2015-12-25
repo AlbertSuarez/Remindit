@@ -6,3 +6,7 @@ https://www.youtube.com/watch?v=ZHLCfqN-60A
 
 https://w2davids.wordpress.com/android-simple-calendar/
 
+* Exemple de Calendari per Setmana/3 dies/Dia concret
+
+https://github.com/alamkanak/Android-Week-View
+
