@@ -10,3 +10,7 @@ https://w2davids.wordpress.com/android-simple-calendar/
 
 https://github.com/alamkanak/Android-Week-View
 
+* Codi XML de Layout amb Week View
+
+http://pastebin.com/jT4wQxeb
+
