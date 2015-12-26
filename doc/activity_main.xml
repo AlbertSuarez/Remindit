@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:baselineAligned="false"
         android:layout_marginTop="0dp">
 
         <!--> Current Month Text View <!-->
@@ -28,9 +27,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:gravity="center"
-                android:textSize="15sp"
+                android:textSize="15dp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
                 android:text="" />
 
             <TextView
@@ -39,9 +37,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:gravity="center"
-                android:textSize="13sp"
+                android:textSize="13dp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
                 android:text="" />
 
         </RelativeLayout>
@@ -58,11 +55,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="6dp"
-                android:textSize="30sp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="6dp"
+                android:textSize="30dp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
                 android:text="" />
 
             <TextView
@@ -70,12 +66,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="6dp"
-                android:textSize="15sp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="6dp"
+                android:textSize="15dp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
                 android:text="@string/monday_name" />
+
+            <View
+                android:id="@+id/dayMarkerView"
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:layout_alignParentBottom="true" />
 
         </RelativeLayout>
 
@@ -91,11 +92,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="6dp"
-                android:textSize="30sp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="6dp"
+                android:textSize="30dp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
                 android:text="" />
 
             <TextView
@@ -103,11 +103,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="6dp"
-                android:textSize="15sp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="6dp"
+                android:textSize="15dp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
                 android:text="@string/tuesday_name" />
 
         </RelativeLayout>
@@ -124,11 +123,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="6dp"
-                android:textSize="30sp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="6dp"
+                android:textSize="30dp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
                 android:text="" />
 
             <TextView
@@ -136,11 +134,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="6dp"
-                android:textSize="15sp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="6dp"
+                android:textSize="15dp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
                 android:text="@string/wednesday_name" />
 
         </RelativeLayout>
@@ -157,11 +154,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="6dp"
-                android:textSize="30sp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="6dp"
+                android:textSize="30dp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
                 android:text="" />
 
             <TextView
@@ -169,11 +165,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="6dp"
-                android:textSize="15sp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="6dp"
+                android:textSize="15dp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
                 android:text="@string/thursday_name" />
 
         </RelativeLayout>
@@ -190,11 +185,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="6dp"
-                android:textSize="30sp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="6dp"
+                android:textSize="30dp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
                 android:text="" />
 
             <TextView
@@ -202,11 +196,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="6dp"
-                android:textSize="15sp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="6dp"
+                android:textSize="15dp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
                 android:text="@string/friday_name" />
 
         </RelativeLayout>
@@ -223,11 +216,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="6dp"
-                android:textSize="30sp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="6dp"
+                android:textSize="30dp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
                 android:text="" />
 
             <TextView
@@ -235,11 +227,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="6dp"
-                android:textSize="15sp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="6dp"
+                android:textSize="15dp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
                 android:text="@string/saturday_name" />
 
         </RelativeLayout>
@@ -256,11 +247,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="6dp"
-                android:textSize="30sp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="6dp"
+                android:textSize="30dp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
                 android:text="" />
 
             <TextView
@@ -268,11 +258,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="6dp"
-                android:textSize="15sp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="6dp"
+                android:textSize="15dp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
                 android:text="@string/sunday_name" />
 
         </RelativeLayout>
@@ -309,6 +298,7 @@
             <!--> Linear Layout Events <!-->
             <LinearLayout
                 android:id="@+id/calendarLinearLayout"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:baselineAligned="false"
@@ -329,10 +319,10 @@
                         android:id="@+id/time12am"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="6dp"
                         android:layout_marginTop="0dp"
                         android:gravity="center"
-                        android:textSize="14sp"
+                        android:textSize="15dp"
                         android:text="@string/am12"/>
 
                     <!--> 01AM <!-->
@@ -340,10 +330,10 @@
                         android:id="@+id/time01am"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="6dp"
                         android:layout_marginTop="60dp"
                         android:gravity="center"
-                        android:textSize="14sp"
+                        android:textSize="15dp"
                         android:text="@string/am1"/>
 
                     <!--> 02AM <!-->
@@ -351,10 +341,10 @@
                         android:id="@+id/time02am"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="6dp"
                         android:layout_marginTop="120dp"
                         android:gravity="center"
-                        android:textSize="14sp"
+                        android:textSize="15dp"
                         android:text="@string/am2"/>
 
                     <!--> 03AM <!-->
@@ -362,10 +352,10 @@
                         android:id="@+id/time03am"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="6dp"
                         android:layout_marginTop="180dp"
                         android:gravity="center"
-                        android:textSize="14sp"
+                        android:textSize="15dp"
                         android:text="@string/am3"/>
 
                     <!--> 04AM <!-->
@@ -373,10 +363,10 @@
                         android:id="@+id/time04am"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="6dp"
                         android:layout_marginTop="240dp"
                         android:gravity="center"
-                        android:textSize="14sp"
+                        android:textSize="15dp"
                         android:text="@string/am4"/>
 
                     <!--> 05AM <!-->
@@ -384,10 +374,10 @@
                         android:id="@+id/time5am"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="6dp"
                         android:layout_marginTop="300dp"
                         android:gravity="center"
-                        android:textSize="14sp"
+                        android:textSize="15dp"
                         android:text="@string/am5"/>
 
                     <!--> 06AM <!-->
@@ -395,10 +385,10 @@
                         android:id="@+id/time6am"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="6dp"
                         android:layout_marginTop="360dp"
                         android:gravity="center"
-                        android:textSize="14sp"
+                        android:textSize="15dp"
                         android:text="@string/am6"/>
 
                     <!--> 07AM <!-->
@@ -406,10 +396,10 @@
                         android:id="@+id/time7am"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="6dp"
                         android:layout_marginTop="420dp"
                         android:gravity="center"
-                        android:textSize="14sp"
+                        android:textSize="15dp"
                         android:text="@string/am7"/>
 
                     <!--> 08AM <!-->
@@ -417,10 +407,10 @@
                         android:id="@+id/time8am"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="6dp"
                         android:layout_marginTop="480dp"
                         android:gravity="center"
-                        android:textSize="14sp"
+                        android:textSize="15dp"
                         android:text="@string/am8"/>
 
                     <!--> 09AM <!-->
@@ -428,10 +418,10 @@
                         android:id="@+id/time9am"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="6dp"
                         android:layout_marginTop="540dp"
                         android:gravity="center"
-                        android:textSize="14sp"
+                        android:textSize="15dp"
                         android:text="@string/am9"/>
 
                     <!--> 10AM <!-->
@@ -439,10 +429,10 @@
                         android:id="@+id/time10am"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="6dp"
                         android:layout_marginTop="600dp"
                         android:gravity="center"
-                        android:textSize="14sp"
+                        android:textSize="15dp"
                         android:text="@string/am10"/>
 
                     <!--> 11AM <!-->
@@ -450,10 +440,10 @@
                         android:id="@+id/time11am"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="6dp"
                         android:layout_marginTop="660dp"
                         android:gravity="center"
-                        android:textSize="14sp"
+                        android:textSize="15dp"
                         android:text="@string/am11"/>
 
                     <!--> 12PM <!-->
@@ -461,10 +451,10 @@
                         android:id="@+id/time12pm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="6dp"
                         android:layout_marginTop="720dp"
                         android:gravity="center"
-                        android:textSize="14sp"
+                        android:textSize="15dp"
                         android:text="@string/pm12"/>
 
                     <!--> 01PM <!-->
@@ -472,10 +462,10 @@
                         android:id="@+id/time01pm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="6dp"
                         android:layout_marginTop="780dp"
                         android:gravity="center"
-                        android:textSize="14sp"
+                        android:textSize="15dp"
                         android:text="@string/pm1"/>
 
                     <!--> 02PM <!-->
@@ -483,10 +473,10 @@
                         android:id="@+id/time02pm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="6dp"
                         android:layout_marginTop="840dp"
                         android:gravity="center"
-                        android:textSize="14sp"
+                        android:textSize="15dp"
                         android:text="@string/pm2"/>
 
                     <!--> 03PM <!-->
@@ -494,10 +484,10 @@
                         android:id="@+id/time03pm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="6dp"
                         android:layout_marginTop="900dp"
                         android:gravity="center"
-                        android:textSize="14sp"
+                        android:textSize="15dp"
                         android:text="@string/pm3"/>
 
                     <!--> 04PM <!-->
@@ -505,10 +495,10 @@
                         android:id="@+id/time04pm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="6dp"
                         android:layout_marginTop="960dp"
                         android:gravity="center"
-                        android:textSize="14sp"
+                        android:textSize="15dp"
                         android:text="@string/pm4"/>
 
                     <!--> 05PM <!-->
@@ -516,10 +506,10 @@
                         android:id="@+id/time05pm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="6dp"
                         android:layout_marginTop="1020dp"
                         android:gravity="center"
-                        android:textSize="14sp"
+                        android:textSize="15dp"
                         android:text="@string/pm5"/>
 
                     <!--> 06PM <!-->
@@ -527,10 +517,10 @@
                         android:id="@+id/time06pm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="6dp"
                         android:layout_marginTop="1080dp"
                         android:gravity="center"
-                        android:textSize="14sp"
+                        android:textSize="15dp"
                         android:text="@string/pm6"/>
 
                     <!--> 07PM <!-->
@@ -538,10 +528,10 @@
                         android:id="@+id/time07pm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="6dp"
                         android:layout_marginTop="1140dp"
                         android:gravity="center"
-                        android:textSize="14sp"
+                        android:textSize="15dp"
                         android:text="@string/am7"/>
 
                     <!--> 08PM <!-->
@@ -549,10 +539,10 @@
                         android:id="@+id/time08pm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="6dp"
                         android:layout_marginTop="1200dp"
                         android:gravity="center"
-                        android:textSize="14sp"
+                        android:textSize="15dp"
                         android:text="@string/pm8"/>
 
                     <!--> 09PM <!-->
@@ -560,10 +550,10 @@
                         android:id="@+id/time09pm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="6dp"
                         android:layout_marginTop="1260dp"
                         android:gravity="center"
-                        android:textSize="14sp"
+                        android:textSize="15dp"
                         android:text="@string/pm9"/>
 
                     <!--> 10PM <!-->
@@ -571,10 +561,10 @@
                         android:id="@+id/time10pm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="6dp"
                         android:layout_marginTop="1320dp"
                         android:gravity="center"
-                        android:textSize="14sp"
+                        android:textSize="15dp"
                         android:text="@string/pm10"/>
 
                     <!--> 11PM <!-->
@@ -582,128 +572,135 @@
                         android:id="@+id/time11pm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="6dp"
                         android:layout_marginTop="1380dp"
                         android:gravity="center"
-                        android:textSize="14sp"
+                        android:textSize="15dp"
                         android:text="@string/pm11"/>
 
                 </RelativeLayout>
 
-                <!--> Separator between Hours and Events <!-->
+                <!--> Separator between columns <!-->
                 <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/gray" />
+                    android:background="@color/gray"
+                    android:layout_width = "1dp"
+                    android:layout_height="match_parent" />
 
                 <!--> Monday Events <!-->
                 <RelativeLayout
                     android:id="@+id/mondayEvents"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2">
+                    android:layout_wight="2">
 
                     <include layout="@layout/calendar_events" />
 
+                    <TextView
+                        android:id="@+id/someEventMonday"
+                        android:layout_width="fill_parent"
+                        android:layout_height="180dp"
+                        android:layout_marginTop="180dp"
+                        android:text="Some Event" />
+
                 </RelativeLayout>
 
-                <!--> Separator between Monday and Tuesday <!-->
+                <!--> Separator between columns <!-->
                 <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/gray" />
+                    android:background="@color/gray"
+                    android:layout_width = "1dp"
+                    android:layout_height="match_parent" />
 
                 <!--> Tuesday Events <!-->
                 <RelativeLayout
                     android:id="@+id/tuesdayEvents"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2">
+                    android:layout_wight="2">
 
                     <include layout="@layout/calendar_events" />
 
                 </RelativeLayout>
 
-                <!--> Separator between Tuesday and Wednesday <!-->
+                <!--> Separator between columns <!-->
                 <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/gray" />
+                    android:background="@color/gray"
+                    android:layout_width = "1dp"
+                    android:layout_height="match_parent" />
 
                 <!--> Wednesday Events <!-->
                 <RelativeLayout
                     android:id="@+id/wednesdayEvents"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2">
+                    android:layout_wight="2">
 
                     <include layout="@layout/calendar_events" />
 
                 </RelativeLayout>
 
-                <!--> Separator between Wednesday and Thursday <!-->
+                <!--> Separator between columns <!-->
                 <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/gray" />
+                    android:background="@color/gray"
+                    android:layout_width = "1dp"
+                    android:layout_height="match_parent" />
 
                 <!--> Thursday Events <!-->
                 <RelativeLayout
                     android:id="@+id/thursdayEvents"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2">
+                    android:layout_wight="2">
 
                     <include layout="@layout/calendar_events" />
 
                 </RelativeLayout>
 
-                <!--> Separator between Thursday and Friday <!-->
+                <!--> Separator between columns <!-->
                 <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/gray" />
+                    android:background="@color/gray"
+                    android:layout_width = "1dp"
+                    android:layout_height="match_parent" />
 
                 <!--> Friday Events <!-->
                 <RelativeLayout
                     android:id="@+id/fridayEvents"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2">
+                    android:layout_wight="2">
 
                     <include layout="@layout/calendar_events" />
 
                 </RelativeLayout>
 
-                <!--> Separator between Friday and Saturday <!-->
+                <!--> Separator between columns <!-->
                 <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/gray" />
+                    android:background="@color/gray"
+                    android:layout_width = "1dp"
+                    android:layout_height="match_parent" />
 
                 <!--> Saturday Events <!-->
                 <RelativeLayout
                     android:id="@+id/saturdayEvents"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2">
+                    android:layout_wight="2">
 
                     <include layout="@layout/calendar_events" />
 
                 </RelativeLayout>
 
-                <!--> Separator between Saturday and Sunday <!-->
+                <!--> Separator between columns <!-->
                 <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/gray" />
+                    android:background="@color/gray"
+                    android:layout_width = "1dp"
+                    android:layout_height="match_parent" />
 
                 <!--> Sunday Events <!-->
                 <RelativeLayout
                     android:id="@+id/sundayEvents"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2">
+                    android:layout_wight="2">
 
                     <include layout="@layout/calendar_events" />
 
