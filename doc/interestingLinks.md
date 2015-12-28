@@ -19,3 +19,7 @@ http://pastebin.com/jT4wQxeb
 
 http://androiddrawables.com/
 C:\Users\usuario\AppData\Local\Android\sdk\platforms\android-18\data\res
+
+* CalendarContractProvider
+
+http://www.grokkingandroid.com/androids-calendarcontract-provider/

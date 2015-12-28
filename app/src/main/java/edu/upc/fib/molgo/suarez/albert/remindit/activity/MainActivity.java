@@ -27,6 +27,26 @@ public class MainActivity extends ActionBarActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
+        switch(item.getItemId())
+        {
+            case R.id.add_event:
+
+                break;
+            case R.id.list_undone_tasks:
+
+                break;
+            case R.id.action_settings:
+
+                break;
+            case R.id.help:
+
+                break;
+            case R.id.about:
+
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
         return super.onOptionsItemSelected(item);
     }
 }

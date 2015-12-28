@@ -40,4 +40,13 @@
     <string name="pm10">10 PM</string>
     <string name="pm11">11 PM</string>
 
+    <string name="add_event">Add Event</string>
+    <string name="choose_type">Event Type</string>
+    <string name="meeting_type">Meeting</string>
+    <string name="task_type">Task</string>
+    <string name="ok_button">OK</string>
+    <string name="cancel_button">Cancel</string>
+
+
+
 </resources>
