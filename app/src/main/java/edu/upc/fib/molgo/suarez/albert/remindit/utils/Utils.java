@@ -1,7 +1,9 @@
 package edu.upc.fib.molgo.suarez.albert.remindit.utils;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Utils class
@@ -71,6 +73,22 @@ public class Utils {
         int minute = Utils.getMinute(date);
         if (minute < 10) result += "0" + minute; else result += minute;
         return result + "\n";
+    }
+
+    public static String[] getDaysOfWeek() {
+        String[] days = new String[7];
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar now = Calendar.getInstance();
+
+        int delta = -now.get(GregorianCalendar.DAY_OF_WEEK) + 2;
+        now.add(Calendar.DAY_OF_MONTH, delta);
+
+        for (int i = 0; i < 7; i++) {
+            String day = dateFormat.format(now.getTime());
+            days[i] = day.substring(0, 2);
+            now.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        return days;
     }
 
 }
