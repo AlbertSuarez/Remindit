@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -39,9 +38,6 @@ public class AddActivity extends Activity {
     public static final String HELP_TASK = "All dates must be in dd/mm/yyyy\nand the associated meeting must exist (optional)";
     public static final String HELP_MEETING = "All dates must be in dd/mm/yyyy format\nand all hours must be in hh:mm format";
     public static final String TOAST_ERROR = "Some field is in a wrong format";
-
-    public static final String TIME_TYPE = "time";
-    public static final String DATE_TYPE = "date";
 
     public static final String EVENT_TO_SEND = "EventToSend";
     public static final String ASSOCIATED_MEETING = "AssociatedMeeting";
@@ -186,6 +182,11 @@ public class AddActivity extends Activity {
                         startDate = dateFormat.parse(secondField.getText().toString());
                         endDate = dateFormat.parse(thirdField.getText().toString());
 
+                        if ((Utils.getYear(startDate) > Utils.getYear(endDate)) ||
+                                (Utils.getYear(startDate) == Utils.getYear(endDate) && Utils.getMonth(startDate) > Utils.getMonth(endDate)) ||
+                                (Utils.getYear(startDate) == Utils.getYear(endDate) && Utils.getMonth(startDate) == Utils.getMonth(endDate) && Utils.getDay(startDate) > Utils.getDay(endDate)))
+                            throw new ParseException("startDate bigger than endDate", 188);
+
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(startDate);
                         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -202,7 +203,6 @@ public class AddActivity extends Activity {
                         endDate = calendar.getTime();
 
                         event = new Task(startDate, endDate);
-                        Log.d("Event created", event.toString());
                         Intent i = new Intent(AddActivity.this, MainActivity.class);
                         i.putExtra(EVENT_TO_SEND, event);
                         i.putExtra(ASSOCIATED_MEETING, meetingAssociated);

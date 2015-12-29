@@ -22,7 +22,6 @@ import edu.upc.fib.molgo.suarez.albert.remindit.utils.Utils;
 
 public class MainActivity extends ActionBarActivity
 {
-
     public static final String MY_ACCOUNT_NAME = "albert.suarez.molgo";
     public static final String CALENDAR_NAME = "Remind it Calendar";
     public static final String EVENT_TO_ADD = "EventToAdd";
@@ -58,8 +57,7 @@ public class MainActivity extends ActionBarActivity
                 startActivityForResult(i, 0);
                 break;
             case R.id.list_undone_tasks:
-                Log.d("Added event", eventAdded.toString());
-                Log.d("Meeting event", descriptionAssociatedMeeting);
+
                 break;
             case R.id.action_settings:
 
