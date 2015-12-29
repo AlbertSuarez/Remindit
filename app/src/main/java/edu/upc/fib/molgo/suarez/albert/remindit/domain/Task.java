@@ -20,6 +20,7 @@ public class Task extends Event {
 
     
     public Task(int dayStart, int monthStart, int yearStart, int dayEnd, int monthEnd, int yearEnd) {
+        super();
         super.eventType = EventType.EVENT_TASK;
         this.dateStart = Utils.createDate(dayStart, monthStart, yearStart);
         this.dateEnd = Utils.createDate(dayEnd, monthEnd, yearEnd);

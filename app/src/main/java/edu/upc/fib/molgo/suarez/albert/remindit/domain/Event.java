@@ -1,10 +1,12 @@
 package edu.upc.fib.molgo.suarez.albert.remindit.domain;
 
+import java.io.Serializable;
+
 /**
  * Event class
  * @author albert.suarez.molgo
  */
-public abstract class Event {
+public class Event implements Serializable {
 
     public enum EventType {
         EVENT_MEETING,
@@ -19,6 +21,10 @@ public abstract class Event {
         return reminder;
     }
 
+    public Event() {
+
+    }
+
     public void setReminder(Reminder reminder) {
         this.reminder = reminder;
     }
@@ -29,5 +35,7 @@ public abstract class Event {
     }
 
     @Override
-    public abstract String toString();
+    public String toString() {
+        return null;
+    }
 }

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--> Add Event Title <!-->
     <LinearLayout
         android:id="@+id/addEventLayout"
         android:orientation="horizontal"
@@ -23,6 +26,7 @@
 
     </LinearLayout>
 
+    <!--> RadioGroup Choose <!-->
     <LinearLayout
         android:id="@+id/chooseEventLayout"
         android:orientation="vertical"
@@ -66,10 +70,19 @@
 
     </LinearLayout>
 
+    <!--> Space between RadioGroup and fields <!-->
     <Space
         android:layout_width="match_parent"
-        android:layout_height="400dp" />
+        android:layout_height="50dp" />
 
+
+
+    <!--> Space between fields and buttons<!-->
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
+
+    <!--> OK and CANCEL Buttons <!-->
     <LinearLayout
         android:id="@+id/buttonsLayout"
         android:orientation="horizontal"

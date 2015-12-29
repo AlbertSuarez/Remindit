@@ -1,6 +1,7 @@
 package edu.upc.fib.molgo.suarez.albert.remindit.activity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CalendarContract;
@@ -8,11 +9,13 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.Calendar;
 
 import edu.upc.fib.molgo.suarez.albert.remindit.R;
+import edu.upc.fib.molgo.suarez.albert.remindit.domain.Event;
 import edu.upc.fib.molgo.suarez.albert.remindit.utils.Utils;
 
 public class MainActivity extends ActionBarActivity
@@ -20,6 +23,7 @@ public class MainActivity extends ActionBarActivity
 
     public static final String MY_ACCOUNT_NAME = "albert.suarez.molgo";
     public static final String CALENDAR_NAME = "Remind it Calendar";
+    public static final String EVENT_TO_ADD = "EventToAdd";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -43,7 +47,10 @@ public class MainActivity extends ActionBarActivity
         switch(item.getItemId())
         {
             case R.id.add_event:
-
+                Event event = new Event();
+                Intent i = new Intent(MainActivity.this, AddActivity.class);
+                i.putExtra(EVENT_TO_ADD, event);
+                startActivityForResult(i, 0);
                 break;
             case R.id.list_undone_tasks:
 
@@ -58,7 +65,7 @@ public class MainActivity extends ActionBarActivity
 
                 break;
             default:
-                throw new IllegalArgumentException();
+
         }
         return super.onOptionsItemSelected(item);
     }

@@ -21,6 +21,7 @@ public class Meeting extends Event {
 
 
     public Meeting(int day, int month, int year, int hourStart, int minuteStart, int hourEnd, int minuteEnd, String description) {
+        super();
         super.eventType = EventType.EVENT_MEETING;
         Date d = Utils.createDate(day, month, year);
         this.dateStart = Utils.createHour(d, hourStart, minuteStart);
