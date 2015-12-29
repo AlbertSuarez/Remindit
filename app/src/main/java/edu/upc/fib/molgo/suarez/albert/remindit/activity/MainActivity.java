@@ -72,6 +72,8 @@ public class MainActivity extends ActionBarActivity
         TextView friday = (TextView) findViewById(R.id.fridayText1);
         TextView saturday = (TextView) findViewById(R.id.saturdayText1);
         TextView sunday = (TextView) findViewById(R.id.sundayText1);
+        TextView month = (TextView) findViewById(R.id.currentMonthTextView);
+        TextView year = (TextView) findViewById(R.id.currentYearTextView);
 
         String[] days = Utils.getDaysOfWeek();
 
@@ -82,6 +84,8 @@ public class MainActivity extends ActionBarActivity
         friday.setText(days[4]);
         saturday.setText(days[5]);
         sunday.setText(days[6]);
+        month.setText(Utils.compress(days[7]));
+        year.setText(days[8]);
     }
 
     private void initializeProvider()

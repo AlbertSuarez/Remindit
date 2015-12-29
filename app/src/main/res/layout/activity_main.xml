@@ -18,8 +18,9 @@
         android:layout_marginTop="0dp">
 
         <!--> Current Month Text View <!-->
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/currentMonth"
+            android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="36dp"
             android:layout_weight="1">
@@ -28,29 +29,29 @@
                 android:id="@+id/currentMonthTextView"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
                 android:gravity="center"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
+                android:textColor="@color/softblack"
                 android:text="" />
 
             <TextView
                 android:id="@+id/currentYearTextView"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
                 android:gravity="center"
-                android:textSize="13sp"
+                android:textSize="10sp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
+                android:textColor="@color/softblack"
                 android:text="" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
         <!--> Monday Text View <!-->
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/monday"
+            android:orientation="vertical"
+            android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="36dp"
             android:layout_weight="2">
@@ -59,10 +60,7 @@
                 android:id="@+id/mondayText1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="6dp"
-                android:textSize="30sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@color/gray"
                 android:text="" />
@@ -71,19 +69,18 @@
                 android:id="@+id/mondayText2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="6dp"
-                android:textSize="15sp"
+                android:textSize="10sp"
                 android:textStyle="bold"
                 android:textColor="@color/gray"
                 android:text="@string/monday_name" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
         <!--> Tuesday Text View <!-->
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/tuesday"
+            android:orientation="vertical"
+            android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="36dp"
             android:layout_weight="2">
@@ -92,10 +89,7 @@
                 android:id="@+id/tuesdayText1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="6dp"
-                android:textSize="30sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@color/gray"
                 android:text="" />
@@ -104,19 +98,18 @@
                 android:id="@+id/tuesdayText2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="6dp"
-                android:textSize="15sp"
+                android:textSize="10sp"
                 android:textStyle="bold"
                 android:textColor="@color/gray"
                 android:text="@string/tuesday_name" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
         <!--> Wednesday Text View <!-->
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/wednesday"
+            android:gravity="center"
+            android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="36dp"
             android:layout_weight="2">
@@ -125,10 +118,7 @@
                 android:id="@+id/wednesdayText1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="6dp"
-                android:textSize="30sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@color/gray"
                 android:text="" />
@@ -137,19 +127,18 @@
                 android:id="@+id/wednesdayText2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="6dp"
-                android:textSize="15sp"
+                android:textSize="10sp"
                 android:textStyle="bold"
                 android:textColor="@color/gray"
                 android:text="@string/wednesday_name" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
         <!--> Thursday Text View <!-->
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/thursday"
+            android:gravity="center"
+            android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="36dp"
             android:layout_weight="2">
@@ -158,10 +147,7 @@
                 android:id="@+id/thursdayText1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="6dp"
-                android:textSize="30sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@color/gray"
                 android:text="" />
@@ -170,19 +156,18 @@
                 android:id="@+id/thursdayText2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="6dp"
-                android:textSize="15sp"
+                android:textSize="10sp"
                 android:textStyle="bold"
                 android:textColor="@color/gray"
                 android:text="@string/thursday_name" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
         <!--> Friday Text View <!-->
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/friday"
+            android:gravity="center"
+            android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="36dp"
             android:layout_weight="2">
@@ -191,10 +176,7 @@
                 android:id="@+id/fridayText1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="6dp"
-                android:textSize="30sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@color/gray"
                 android:text="" />
@@ -203,19 +185,18 @@
                 android:id="@+id/fridayText2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="6dp"
-                android:textSize="15sp"
+                android:textSize="10sp"
                 android:textStyle="bold"
                 android:textColor="@color/gray"
                 android:text="@string/friday_name" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
         <!--> Saturday Text View <!-->
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/saturday"
+            android:gravity="center"
+            android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="36dp"
             android:layout_weight="2">
@@ -224,10 +205,7 @@
                 android:id="@+id/saturdayText1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="6dp"
-                android:textSize="30sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@color/gray"
                 android:text="" />
@@ -236,20 +214,19 @@
                 android:id="@+id/saturdayText2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="6dp"
-                android:textSize="15sp"
+                android:textSize="10sp"
                 android:textStyle="bold"
                 android:textColor="@color/gray"
                 android:text="@string/saturday_name" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
         <!--> Sunday Text View <!-->
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/sunday"
             android:layout_width="0dp"
+            android:gravity="center"
+            android:orientation="vertical"
             android:layout_height="36dp"
             android:layout_weight="2">
 
@@ -257,10 +234,7 @@
                 android:id="@+id/sundayText1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="6dp"
-                android:textSize="30sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@color/gray"
                 android:text="" />
@@ -269,15 +243,12 @@
                 android:id="@+id/sundayText2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="6dp"
-                android:textSize="15sp"
+                android:textSize="10sp"
                 android:textStyle="bold"
                 android:textColor="@color/gray"
                 android:text="@string/sunday_name" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -596,7 +567,7 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/gray" />
+                    android:background="@color/softgray" />
 
                 <!--> Monday Events <!-->
                 <RelativeLayout
@@ -613,7 +584,7 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/gray" />
+                    android:background="@color/softgray" />
 
                 <!--> Tuesday Events <!-->
                 <RelativeLayout
@@ -630,7 +601,7 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/gray" />
+                    android:background="@color/softgray" />
 
                 <!--> Wednesday Events <!-->
                 <RelativeLayout
@@ -647,7 +618,7 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/gray" />
+                    android:background="@color/softgray" />
 
                 <!--> Thursday Events <!-->
                 <RelativeLayout
@@ -664,7 +635,7 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/gray" />
+                    android:background="@color/softgray" />
 
                 <!--> Friday Events <!-->
                 <RelativeLayout
@@ -681,7 +652,7 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/gray" />
+                    android:background="@color/softgray" />
 
                 <!--> Saturday Events <!-->
                 <RelativeLayout
@@ -698,7 +669,7 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/gray" />
+                    android:background="@color/softgray" />
 
                 <!--> Sunday Events <!-->
                 <RelativeLayout

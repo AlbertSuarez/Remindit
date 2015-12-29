@@ -75,20 +75,49 @@ public class Utils {
         return result + "\n";
     }
 
+    /**
+     * days[0]-[6]: number of the days
+     * days[7]: month of the first day of the week
+     * days[8]: year of the first day of the week
+     */
     public static String[] getDaysOfWeek() {
-        String[] days = new String[7];
+        String[] days = new String[9];
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Calendar now = Calendar.getInstance();
 
         int delta = -now.get(GregorianCalendar.DAY_OF_WEEK) + 2;
         now.add(Calendar.DAY_OF_MONTH, delta);
 
+        String year = "-1";
+        String month = "-1";
+
         for (int i = 0; i < 7; i++) {
             String day = dateFormat.format(now.getTime());
             days[i] = day.substring(0, 2);
+            if (i == 0) {
+                month = day.substring(3, 5);
+                year = day.substring(6);
+            }
             now.add(Calendar.DAY_OF_MONTH, 1);
         }
+        days[7] = month;
+        days[8] = year;
         return days;
     }
 
+    public static String compress(String month) {
+        if (month.equals("01")) return "JA";
+        if (month.equals("02")) return "FE";
+        if (month.equals("03")) return "MR";
+        if (month.equals("04")) return "AP";
+        if (month.equals("05")) return "MY";
+        if (month.equals("06")) return "JN";
+        if (month.equals("07")) return "JL";
+        if (month.equals("08")) return "AU";
+        if (month.equals("09")) return "SE";
+        if (month.equals("10")) return "OC";
+        if (month.equals("11")) return "NO";
+        if (month.equals("12")) return "DE";
+        return "ERR";
+    }
 }
