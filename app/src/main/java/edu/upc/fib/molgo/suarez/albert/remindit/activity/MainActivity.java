@@ -7,10 +7,12 @@ import android.net.Uri;
 import android.provider.CalendarContract;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -24,6 +26,9 @@ public class MainActivity extends ActionBarActivity
     public static final String MY_ACCOUNT_NAME = "albert.suarez.molgo";
     public static final String CALENDAR_NAME = "Remind it Calendar";
     public static final String EVENT_TO_ADD = "EventToAdd";
+
+    Event eventAdded;
+    String descriptionAssociatedMeeting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -53,7 +58,8 @@ public class MainActivity extends ActionBarActivity
                 startActivityForResult(i, 0);
                 break;
             case R.id.list_undone_tasks:
-
+                Log.d("Added event", eventAdded.toString());
+                Log.d("Meeting event", descriptionAssociatedMeeting);
                 break;
             case R.id.action_settings:
 
@@ -68,6 +74,15 @@ public class MainActivity extends ActionBarActivity
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) return;
+        eventAdded = (Event) data.getSerializableExtra(AddActivity.EVENT_TO_SEND);
+        if (!eventAdded.isMeeting()) {
+            descriptionAssociatedMeeting = data.getStringExtra(AddActivity.ASSOCIATED_MEETING);
+        }
     }
 
     private void initializeView()

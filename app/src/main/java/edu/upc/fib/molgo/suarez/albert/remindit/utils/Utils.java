@@ -1,5 +1,6 @@
 package edu.upc.fib.molgo.suarez.albert.remindit.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -62,7 +63,7 @@ public class Utils {
     }
 
     public static String dateToString(Date date) {
-        return Utils.getDay(date) + "/" + Utils.getMonth(date) +  "/" + Utils.getYear(date) + "\n";
+        return Utils.getDay(date) + "/" + (Utils.getMonth(date) + 1) +  "/" + Utils.getYear(date) + "\n";
     }
 
     public static String hourToString(Date date) {
@@ -119,5 +120,21 @@ public class Utils {
         if (month.equals("11")) return "NO";
         if (month.equals("12")) return "DE";
         return "ERR";
+    }
+
+    public static int getHour(String hour) throws ParseException{
+        String[] parts = hour.split(":");
+        if (parts.length != 2) throw new ParseException("Wrong format", 127);
+        int result = Integer.parseInt(parts[0]);
+        if (result < 0 || result >= 24) throw new ParseException("Format incorrect", 129);
+        return result;
+    }
+
+    public static int getMinute(String hour) throws ParseException{
+        String[] parts = hour.split(":");
+        if (parts.length != 2) throw new ParseException("Wrong format", 134);
+        int result = Integer.parseInt(parts[1]);
+        if (result < 0 || result >= 60) throw new ParseException("Format incorrect", 136);
+        return result;
     }
 }

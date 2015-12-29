@@ -27,6 +27,14 @@ public class Task extends Event {
         this.done = false;
     }
 
+    public Task(Date dateStart, Date dateEnd) {
+        super();
+        super.eventType = EventType.EVENT_TASK;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
+        this.done = false;
+    }
+
     public Date getDateStart() {
         return dateStart;
     }

@@ -30,6 +30,15 @@ public class Meeting extends Event {
         this.tasks = new LinkedHashSet<>();
     }
 
+    public Meeting(Date dateStart, Date dateEnd, String description) {
+        super();
+        super.eventType = EventType.EVENT_MEETING;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
+        this.description = description;
+        this.tasks = new LinkedHashSet<>();
+    }
+
     public Date getDate() {
         return dateStart;
     }
