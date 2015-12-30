@@ -39,6 +39,34 @@ public class Meeting extends Event {
         this.tasks = new LinkedHashSet<>();
     }
 
+    public int getDay() {
+        return Utils.getDay(dateStart);
+    }
+
+    public int getMonth() {
+        return Utils.getMonth(dateStart);
+    }
+
+    public int getYear() {
+        return Utils.getYear(dateStart);
+    }
+
+    public int getStartHour() {
+        return Utils.getHour(dateStart);
+    }
+
+    public int getStartMinute() {
+        return Utils.getMinute(dateStart);
+    }
+
+    public int getEndHour() {
+        return Utils.getHour(dateEnd);
+    }
+
+    public int getEndMinute() {
+        return Utils.getMinute(dateEnd);
+    }
+
     public Date getDate() {
         return dateStart;
     }
@@ -80,7 +108,7 @@ public class Meeting extends Event {
 
     public void addTask(Task t) {
         tasks.add(t);
-        t.setMeetingAssociated(this);
+        t.setMeetingAssociated(description);
     }
 
     public void eraseTask(Task t) {

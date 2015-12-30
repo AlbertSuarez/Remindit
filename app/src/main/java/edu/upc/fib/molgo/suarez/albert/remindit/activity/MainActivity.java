@@ -5,26 +5,35 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CalendarContract;
+import android.provider.CalendarContract.Events;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 import edu.upc.fib.molgo.suarez.albert.remindit.R;
 import edu.upc.fib.molgo.suarez.albert.remindit.domain.Event;
+import edu.upc.fib.molgo.suarez.albert.remindit.domain.Meeting;
+import edu.upc.fib.molgo.suarez.albert.remindit.domain.Task;
 import edu.upc.fib.molgo.suarez.albert.remindit.utils.Utils;
 
 public class MainActivity extends ActionBarActivity
 {
-    public static final String MY_ACCOUNT_NAME = "albert.suarez.molgo";
+    public static final String MY_ACCOUNT_NAME = "albert";
     public static final String CALENDAR_NAME = "Remind it Calendar";
     public static final String EVENT_TO_ADD = "EventToAdd";
+    public static final String TOAST_ERROR_FIND_ID = "Error to find Calendar";
+    public static final String CALENDAR_TIME_ZONE = "Europe/Berlin";
+    public static final String OWNER_ACCOUNT = "some.account@googlemail.com";
+    public static final String UTC_TIME_ZONE = "UTC";
+    public static final int UNDONE_TASK = 0;
+    public static final int DONE_TASK = 1;
 
     Event eventAdded;
     String descriptionAssociatedMeeting;
@@ -75,12 +84,28 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
         if (data == null) return;
         eventAdded = (Event) data.getSerializableExtra(AddActivity.EVENT_TO_SEND);
         if (!eventAdded.isMeeting()) {
             descriptionAssociatedMeeting = data.getStringExtra(AddActivity.ASSOCIATED_MEETING);
         }
+
+        if (eventAdded.isMeeting())
+        {
+            Meeting meeting = (Meeting) eventAdded;
+            addMeeting(meeting.getDescription(), meeting.getDay(), meeting.getMonth(),meeting.getYear(),
+                    meeting.getStartHour(), meeting.getStartMinute(), meeting.getEndHour(), meeting.getEndMinute());
+        }
+        else
+        {
+            Task task = (Task) eventAdded;
+            task.setMeetingAssociated(descriptionAssociatedMeeting);
+            addTask(task.getTitle(), task.getStartDay(), task.getStartMonth(), task.getStartYear(),
+                    task.getEndDay(), task.getEndMonth(), task.getEndYear(), task.getMeetingAssociated());
+        }
+
     }
 
     private void initializeView()
@@ -110,42 +135,132 @@ public class MainActivity extends ActionBarActivity
 
     private void initializeProvider()
     {
+        // Object that represents the values we want to add
         ContentValues values = new ContentValues();
         values.put(CalendarContract.Calendars.ACCOUNT_NAME,             MY_ACCOUNT_NAME);
         values.put(CalendarContract.Calendars.ACCOUNT_TYPE,             CalendarContract.ACCOUNT_TYPE_LOCAL);
         values.put(CalendarContract.Calendars.NAME,                     CALENDAR_NAME);
         values.put(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,    CALENDAR_NAME);
-        values.put(CalendarContract.Calendars.CALENDAR_COLOR,           0xFFFF0000);
-        values.put(CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL,    CalendarContract.Calendars.CAL_ACCESS_OWNER);
-        values.put(CalendarContract.Calendars.OWNER_ACCOUNT,            "some.account@googlemail.com");
-        values.put(CalendarContract.Calendars.CALENDAR_TIME_ZONE,       "Europe/Berlin");
-        values.put(CalendarContract.Calendars.SYNC_EVENTS,              1);
+        values.put(CalendarContract.Calendars.CALENDAR_COLOR, 0xFFFF0000);
+        values.put(CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL, CalendarContract.Calendars.CAL_ACCESS_OWNER);
+        values.put(CalendarContract.Calendars.OWNER_ACCOUNT, OWNER_ACCOUNT);
+        values.put(CalendarContract.Calendars.CALENDAR_TIME_ZONE, CALENDAR_TIME_ZONE);
+        values.put(CalendarContract.Calendars.SYNC_EVENTS, 1);
 
+        // Additional query parameters
         Uri.Builder builder = CalendarContract.Calendars.CONTENT_URI.buildUpon();
-        builder.appendQueryParameter(CalendarContract.Calendars.ACCOUNT_NAME,   MY_ACCOUNT_NAME);
-        builder.appendQueryParameter(CalendarContract.Calendars.ACCOUNT_TYPE,   CalendarContract.ACCOUNT_TYPE_LOCAL);
-        builder.appendQueryParameter(CalendarContract.CALLER_IS_SYNCADAPTER,    "true");
+        builder.appendQueryParameter(CalendarContract.Calendars.ACCOUNT_NAME, MY_ACCOUNT_NAME);
+        builder.appendQueryParameter(CalendarContract.Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL);
+        builder.appendQueryParameter(CalendarContract.CALLER_IS_SYNCADAPTER, "true");
 
         Uri uri = getContentResolver().insert(builder.build(), values);
     }
 
+
     private long getCalendarId()
     {
         String[] projection = new String[]{CalendarContract.Calendars._ID};
-        String selection = CalendarContract.Calendars.ACCOUNT_NAME + " = ? " +
-                        CalendarContract.Calendars.ACCOUNT_TYPE + " = ? ";
-
+        String selection =
+                CalendarContract.Calendars.ACCOUNT_NAME +
+                        " = ? " ;
         String[] selArgs =
-                new String[]{MY_ACCOUNT_NAME, CalendarContract.ACCOUNT_TYPE_LOCAL};
-        Cursor cursor = getContentResolver().
-                query(
-                        CalendarContract.Calendars.CONTENT_URI,
-                        projection,
-                        selection,
-                        selArgs,
-                        null);
-        if (cursor.moveToFirst()) return cursor.getLong(0);
+                new String[]{
+                        MY_ACCOUNT_NAME};
+        Cursor cursor =
+                getContentResolver().
+                        query(
+                                CalendarContract.Calendars.CONTENT_URI,
+                                projection,
+                                selection,
+                                selArgs,
+                                null);
+        if (cursor.moveToFirst()) {
+            return cursor.getLong(0);
+        }
         return -1;
+    }
+
+    private long addTask(String title, int startDay, int startMonth, int startYear, int endDay, int endMonth, int endYear, String associatedMeeting)
+    {
+        final long calendarId = getCalendarId();
+        if (calendarId == -1) {
+            Toast.makeText(MainActivity.this, TOAST_ERROR_FIND_ID, Toast.LENGTH_LONG).show();
+            return -1;
+        }
+        // SET start date
+        Calendar startCalendar = new GregorianCalendar(startDay, startMonth, startYear);
+        startCalendar.setTimeZone(TimeZone.getTimeZone(UTC_TIME_ZONE));
+        startCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        startCalendar.set(Calendar.MINUTE, 0);
+        startCalendar.set(Calendar.SECOND, 0);
+        startCalendar.set(Calendar.MILLISECOND, 0);
+        long startTime = startCalendar.getTimeInMillis();
+        // SET end date
+        Calendar endCalendar = new GregorianCalendar(endDay, endMonth, endYear);
+        endCalendar.setTimeZone(TimeZone.getTimeZone(UTC_TIME_ZONE));
+        endCalendar.set(Calendar.HOUR_OF_DAY, 23);
+        endCalendar.set(Calendar.MINUTE, 59);
+        endCalendar.set(Calendar.SECOND, 59);
+        endCalendar.set(Calendar.MILLISECOND, 999);
+        long endTime = endCalendar.getTimeInMillis();
+
+        // Initialize the object that represents the values we want to add
+        ContentValues values = new ContentValues();
+        values.put(Events.DTSTART,                  startTime);
+        values.put(Events.DTEND,                    endTime);
+        // How to indicate undone tasks -> In the title
+        values.put(Events.TITLE,                    title);
+        values.put(Events.CALENDAR_ID,              calendarId);
+        values.put(Events.EVENT_TIMEZONE,           CALENDAR_TIME_ZONE);
+        // How to indicate the optional associated meeting -> In the description
+        values.put(Events.DESCRIPTION,              associatedMeeting);
+        values.put(Events.ACCESS_LEVEL,             Events.ACCESS_PRIVATE);
+        values.put(Events.SELF_ATTENDEE_STATUS,     Events.STATUS_CONFIRMED);
+        values.put(Events.ALL_DAY,                  UNDONE_TASK);
+        values.put(Events.ORGANIZER,                OWNER_ACCOUNT);
+        values.put(Events.GUESTS_CAN_INVITE_OTHERS, 1);
+        values.put(Events.GUESTS_CAN_MODIFY,        1);
+        values.put(Events.AVAILABILITY,             Events.AVAILABILITY_BUSY);
+
+        Uri uri = getContentResolver().insert(Events.CONTENT_URI, values);
+        return new Long(uri.getLastPathSegment());
+    }
+
+    private long addMeeting(String description, int day, int month, int year, int startHour, int startMinute, int endHour, int endMinute)
+    {
+        final long calendarId = getCalendarId();
+        if (calendarId == -1) {
+            Toast.makeText(MainActivity.this, TOAST_ERROR_FIND_ID, Toast.LENGTH_LONG).show();
+            return -1;
+        }
+        // SET start date
+        Calendar startCalendar = new GregorianCalendar(day, month, year, startHour, startMinute, 0);
+        startCalendar.setTimeZone(TimeZone.getTimeZone(UTC_TIME_ZONE));
+        startCalendar.set(Calendar.MILLISECOND, 0);
+        long startTime = startCalendar.getTimeInMillis();
+        // SET end date
+        Calendar endCalendar = new GregorianCalendar(day, month, year, endHour, endMinute, 0);
+        endCalendar.setTimeZone(TimeZone.getTimeZone(UTC_TIME_ZONE));
+        endCalendar.set(Calendar.MILLISECOND, 0);
+        long endTime = endCalendar.getTimeInMillis();
+
+        // Initialize the object that represents the values we want to add
+        ContentValues values = new ContentValues();
+        values.put(Events.DTSTART,                  startTime);
+        values.put(Events.DTEND,                    endTime);
+        values.put(Events.TITLE,                    description);
+        values.put(Events.CALENDAR_ID,              calendarId);
+        values.put(Events.EVENT_TIMEZONE,           CALENDAR_TIME_ZONE);
+        values.put(Events.ACCESS_LEVEL,             Events.ACCESS_PRIVATE);
+        values.put(Events.SELF_ATTENDEE_STATUS,     Events.STATUS_CONFIRMED);
+        values.put(Events.ALL_DAY,                  0);
+        values.put(Events.ORGANIZER,                OWNER_ACCOUNT);
+        values.put(Events.GUESTS_CAN_INVITE_OTHERS, 1);
+        values.put(Events.GUESTS_CAN_MODIFY,        1);
+        values.put(Events.AVAILABILITY,             Events.AVAILABILITY_BUSY);
+
+        Uri uri = getContentResolver().insert(Events.CONTENT_URI, values);
+        return new Long(uri.getLastPathSegment());
     }
 
 }

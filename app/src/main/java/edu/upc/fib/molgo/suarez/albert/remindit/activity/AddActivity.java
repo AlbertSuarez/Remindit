@@ -29,6 +29,7 @@ public class AddActivity extends Activity {
 
     public static final String EMPTY = "";
     public static final String FIRST_TITLE_MEETING = "Date";
+    public static final String FIRST_TITLE_TASK = "Title";
     public static final String SECOND_TITLE_MEETING = "Start time";
     public static final String SECOND_TITLE_TASK = "Start date";
     public static final String THIRD_TITLE_MEETING = "End time";
@@ -37,7 +38,7 @@ public class AddActivity extends Activity {
     public static final String FOURTH_TITLE_TASK = "Associated meeting";
     public static final String HELP_TASK = "All dates must be in dd/mm/yyyy\nand the associated meeting must exist (optional)";
     public static final String HELP_MEETING = "All dates must be in dd/mm/yyyy format\nand all hours must be in hh:mm format";
-    public static final String TOAST_ERROR = "Some field is in a wrong format";
+    public static final String TOAST_ERROR = "Some field is in a wrong format or empty";
 
     public static final String EVENT_TO_SEND = "EventToSend";
     public static final String ASSOCIATED_MEETING = "AssociatedMeeting";
@@ -114,8 +115,9 @@ public class AddActivity extends Activity {
                         help.setText(HELP_MEETING);
                         break;
                     case R.id.task_button:
-                        firstOption.setText(EMPTY);
-                        firstField.setVisibility(View.INVISIBLE);
+                        firstOption.setText(FIRST_TITLE_TASK);
+                        firstField.setVisibility(View.VISIBLE);
+                        firstField.setInputType(InputType.TYPE_CLASS_TEXT);
                         secondOption.setText(SECOND_TITLE_TASK);
                         secondField.setVisibility(View.VISIBLE);
                         secondField.setInputType(InputType.TYPE_DATETIME_VARIATION_DATE);
@@ -167,7 +169,6 @@ public class AddActivity extends Activity {
                         endDate = calendar.getTime();
 
                         event = new Meeting(startDate, endDate, description);
-                        Log.d("Event created", event.toString());
                         Intent i = new Intent(AddActivity.this, MainActivity.class);
                         i.putExtra(EVENT_TO_SEND, event);
                         setResult(RESULT_OK, i);
@@ -175,12 +176,15 @@ public class AddActivity extends Activity {
                     }
                     else if (taskButton.isChecked()) {
                         Date startDate, endDate;
-                        String meetingAssociated = "";
+                        String title;
+                        String meetingAssociated = EMPTY;
 
+                        if (firstField.getText().toString().isEmpty()) throw new ParseException("Empty Title", 183);
                         if (!fourthField.getText().toString().isEmpty()) meetingAssociated = fourthField.getText().toString();
 
                         startDate = dateFormat.parse(secondField.getText().toString());
                         endDate = dateFormat.parse(thirdField.getText().toString());
+                        title = firstField.getText().toString();
 
                         if ((Utils.getYear(startDate) > Utils.getYear(endDate)) ||
                                 (Utils.getYear(startDate) == Utils.getYear(endDate) && Utils.getMonth(startDate) > Utils.getMonth(endDate)) ||
@@ -202,7 +206,8 @@ public class AddActivity extends Activity {
                         calendar.set(Calendar.MILLISECOND, 0);
                         endDate = calendar.getTime();
 
-                        event = new Task(startDate, endDate);
+                        event = new Task(title, startDate, endDate);
+                        Log.d("Event created", event.toString());
                         Intent i = new Intent(AddActivity.this, MainActivity.class);
                         i.putExtra(EVENT_TO_SEND, event);
                         i.putExtra(ASSOCIATED_MEETING, meetingAssociated);

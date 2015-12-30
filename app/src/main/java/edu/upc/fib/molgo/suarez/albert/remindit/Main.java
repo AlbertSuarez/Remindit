@@ -11,8 +11,8 @@ public class Main {
     public static void main(String[] arg0) {
         Reminder reminder = new Reminder();
         Meeting m = new Meeting(10, 5, 2015, 10, 0, 11, 0, "Startup android");
-        Task t1 = new Task(10, 5, 2015, 20, 5, 2015);
-        Task t2 = new Task(10, 5, 2015, 15, 5, 2015);
+        Task t1 = new Task("Task1", 10, 5, 2015, 20, 5, 2015);
+        Task t2 = new Task("Task2", 10, 5, 2015, 15, 5, 2015);
         m.addTask(t1);
         m.addTask(t2);
         reminder.addEvent(m);
