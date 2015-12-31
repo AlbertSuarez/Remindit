@@ -5,6 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
+import java.util.concurrent.CancellationException;
+
+import edu.upc.fib.molgo.suarez.albert.remindit.activity.MainActivity;
 
 /**
  * Utils class
@@ -12,12 +16,25 @@ import java.util.GregorianCalendar;
  */
 public class Utils {
 
+    public static String[] days = new String[9];
+
     public static Date createDate(int day, int month, int year) {
         Calendar cDate = Calendar.getInstance();
         cDate.set(Calendar.DATE, day);
         cDate.set(Calendar.MONTH, month);
         cDate.set(Calendar.YEAR, year);
         return cDate.getTime();
+    }
+
+    public static long createDate(int day, int month, int year, int hour, int minute) {
+        Calendar cDate = Calendar.getInstance();
+        cDate.setTimeZone(TimeZone.getTimeZone(MainActivity.UTC_TIME_ZONE));
+        cDate.set(Calendar.DATE, day);
+        cDate.set(Calendar.MONTH, month);
+        cDate.set(Calendar.YEAR, year);
+        cDate.set(Calendar.HOUR_OF_DAY, hour);
+        cDate.set(Calendar.MINUTE, minute);
+        return cDate.getTimeInMillis();
     }
 
     public static Date createHour(Date date, int hour, int minute) {
@@ -82,7 +99,6 @@ public class Utils {
      * days[8]: year of the first day of the week
      */
     public static String[] getDaysOfWeek() {
-        String[] days = new String[9];
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Calendar now = Calendar.getInstance();
 
@@ -100,6 +116,64 @@ public class Utils {
                 year = day.substring(6);
             }
             now.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        days[7] = month;
+        days[8] = year;
+        return days;
+    }
+
+    public static String[] nextWeek() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar calendar = Calendar.getInstance();
+
+        int delta = -calendar.get(GregorianCalendar.DAY_OF_WEEK) + 2;
+        calendar.add(Calendar.DAY_OF_MONTH, delta);
+
+        calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(days[0]));
+        calendar.set(Calendar.MONTH, Integer.parseInt(days[7])-1);
+        calendar.set(Calendar.YEAR, Integer.parseInt(days[8]));
+
+        calendar.add(Calendar.DAY_OF_MONTH, 7);
+        String year = "-1";
+        String month = "-1";
+
+        for (int i = 0; i < 7; i++) {
+            String day = dateFormat.format(calendar.getTime());
+            days[i] = day.substring(0, 2);
+            if (i == 0) {
+                month = day.substring(3, 5);
+                year = day.substring(6);
+            }
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        days[7] = month;
+        days[8] = year;
+        return days;
+    }
+
+    public static String[] previousWeek() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar calendar = Calendar.getInstance();
+
+        int delta = -calendar.get(GregorianCalendar.DAY_OF_WEEK) + 2;
+        calendar.add(Calendar.DAY_OF_MONTH, delta);
+
+        calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(days[0]));
+        calendar.set(Calendar.MONTH, Integer.parseInt(days[7])-1);
+        calendar.set(Calendar.YEAR, Integer.parseInt(days[8]));
+
+        calendar.add(Calendar.DAY_OF_MONTH, -7);
+        String year = "-1";
+        String month = "-1";
+
+        for (int i = 0; i < 7; i++) {
+            String day = dateFormat.format(calendar.getTime());
+            days[i] = day.substring(0, 2);
+            if (i == 0) {
+                month = day.substring(3, 5);
+                year = day.substring(6);
+            }
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
         days[7] = month;
         days[8] = year;

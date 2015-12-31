@@ -20,6 +20,19 @@ public class Meeting extends Event {
     private Set<Task> tasks;
 
 
+    public Meeting() {}
+
+    public Meeting(long id, int day, int month, int year, int hourStart, int minuteStart, int hourEnd, int minuteEnd, String description) {
+        super();
+        super.eventType = EventType.EVENT_MEETING;
+        this.id = id;
+        Date d = Utils.createDate(day, month, year);
+        this.dateStart = Utils.createHour(d, hourStart, minuteStart);
+        this.dateEnd = Utils.createHour(d, hourEnd, minuteEnd);
+        this.description = description;
+        this.tasks = new LinkedHashSet<>();
+    }
+
     public Meeting(int day, int month, int year, int hourStart, int minuteStart, int hourEnd, int minuteEnd, String description) {
         super();
         super.eventType = EventType.EVENT_MEETING;
@@ -33,6 +46,16 @@ public class Meeting extends Event {
     public Meeting(Date dateStart, Date dateEnd, String description) {
         super();
         super.eventType = EventType.EVENT_MEETING;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
+        this.description = description;
+        this.tasks = new LinkedHashSet<>();
+    }
+
+    public Meeting(long id, Date dateStart, Date dateEnd, String description) {
+        super();
+        super.eventType = EventType.EVENT_MEETING;
+        this.id = id;
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
         this.description = description;

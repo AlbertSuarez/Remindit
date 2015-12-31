@@ -10,22 +10,25 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
+import java.util.ArrayList;
+import java.util.Date;
 
 import edu.upc.fib.molgo.suarez.albert.remindit.R;
 import edu.upc.fib.molgo.suarez.albert.remindit.domain.Event;
 import edu.upc.fib.molgo.suarez.albert.remindit.domain.Meeting;
 import edu.upc.fib.molgo.suarez.albert.remindit.domain.Task;
+import edu.upc.fib.molgo.suarez.albert.remindit.utils.OnSwipeTouchListener;
 import edu.upc.fib.molgo.suarez.albert.remindit.utils.Utils;
 
 public class MainActivity extends ActionBarActivity
 {
-    public static final String MY_ACCOUNT_NAME = "albert";
+    public static final String MY_ACCOUNT_NAME = "albert.suarez.molgo";
     public static final String CALENDAR_NAME = "Remind it Calendar";
     public static final String EVENT_TO_ADD = "EventToAdd";
     public static final String TOAST_ERROR_FIND_ID = "Error to find Calendar";
@@ -34,6 +37,8 @@ public class MainActivity extends ActionBarActivity
     public static final String UTC_TIME_ZONE = "UTC";
     public static final int UNDONE_TASK = 0;
     public static final int DONE_TASK = 1;
+    public static final int MEETING = 1;
+    public static final int TASK = 0;
 
     Event eventAdded;
     String descriptionAssociatedMeeting;
@@ -95,7 +100,7 @@ public class MainActivity extends ActionBarActivity
         if (eventAdded.isMeeting())
         {
             Meeting meeting = (Meeting) eventAdded;
-            addMeeting(meeting.getDescription(), meeting.getDay(), meeting.getMonth(),meeting.getYear(),
+            addMeeting(meeting.getDescription(), meeting.getDay(), meeting.getMonth(), meeting.getYear(),
                     meeting.getStartHour(), meeting.getStartMinute(), meeting.getEndHour(), meeting.getEndMinute());
         }
         else
@@ -105,6 +110,12 @@ public class MainActivity extends ActionBarActivity
             addTask(task.getTitle(), task.getStartDay(), task.getStartMonth(), task.getStartYear(),
                     task.getEndDay(), task.getEndMonth(), task.getEndYear(), task.getMeetingAssociated());
         }
+        updateView();
+
+    }
+
+    private void updateView()
+    {
 
     }
 
@@ -121,6 +132,54 @@ public class MainActivity extends ActionBarActivity
         TextView year = (TextView) findViewById(R.id.currentYearTextView);
 
         String[] days = Utils.getDaysOfWeek();
+
+        monday.setText(days[0]);
+        tuesday.setText(days[1]);
+        wednesday.setText(days[2]);
+        thursday.setText(days[3]);
+        friday.setText(days[4]);
+        saturday.setText(days[5]);
+        sunday.setText(days[6]);
+        month.setText(Utils.compress(days[7]));
+        year.setText(days[8]);
+
+        // Initialize swipes
+        LinearLayout mainLayout = (LinearLayout) findViewById(R.id.mainLayout);
+        mainLayout.setOnTouchListener(new OnSwipeTouchListener(this) {
+            public void onSwipeRight() {
+                modifyDays(false);
+            }
+            public void onSwipeLeft() {
+                modifyDays(true);
+            }
+
+        });
+        ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView);
+        scrollView.setOnTouchListener(new OnSwipeTouchListener(this) {
+            public void onSwipeRight() {
+                modifyDays(false);
+            }
+            public void onSwipeLeft() {
+                modifyDays(true);
+            }
+        });
+    }
+
+    private void modifyDays(boolean increase)
+    {
+        TextView monday = (TextView) findViewById(R.id.mondayText1);
+        TextView tuesday = (TextView) findViewById(R.id.tuesdayText1);
+        TextView wednesday = (TextView) findViewById(R.id.wednesdayText1);
+        TextView thursday = (TextView) findViewById(R.id.thursdayText1);
+        TextView friday = (TextView) findViewById(R.id.fridayText1);
+        TextView saturday = (TextView) findViewById(R.id.saturdayText1);
+        TextView sunday = (TextView) findViewById(R.id.sundayText1);
+        TextView month = (TextView) findViewById(R.id.currentMonthTextView);
+        TextView year = (TextView) findViewById(R.id.currentYearTextView);
+
+        String[] days;
+        if (increase) days = Utils.nextWeek();
+        else days = Utils.previousWeek();
 
         monday.setText(days[0]);
         tuesday.setText(days[1]);
@@ -156,16 +215,11 @@ public class MainActivity extends ActionBarActivity
         Uri uri = getContentResolver().insert(builder.build(), values);
     }
 
-
     private long getCalendarId()
     {
         String[] projection = new String[]{CalendarContract.Calendars._ID};
-        String selection =
-                CalendarContract.Calendars.ACCOUNT_NAME +
-                        " = ? " ;
-        String[] selArgs =
-                new String[]{
-                        MY_ACCOUNT_NAME};
+        String selection = CalendarContract.Calendars.ACCOUNT_NAME + " = ? " ;
+        String[] selArgs = new String[]{MY_ACCOUNT_NAME};
         Cursor cursor =
                 getContentResolver().
                         query(
@@ -174,9 +228,7 @@ public class MainActivity extends ActionBarActivity
                                 selection,
                                 selArgs,
                                 null);
-        if (cursor.moveToFirst()) {
-            return cursor.getLong(0);
-        }
+        if (cursor.moveToFirst()) return cursor.getLong(0);
         return -1;
     }
 
@@ -188,21 +240,9 @@ public class MainActivity extends ActionBarActivity
             return -1;
         }
         // SET start date
-        Calendar startCalendar = new GregorianCalendar(startDay, startMonth, startYear);
-        startCalendar.setTimeZone(TimeZone.getTimeZone(UTC_TIME_ZONE));
-        startCalendar.set(Calendar.HOUR_OF_DAY, 0);
-        startCalendar.set(Calendar.MINUTE, 0);
-        startCalendar.set(Calendar.SECOND, 0);
-        startCalendar.set(Calendar.MILLISECOND, 0);
-        long startTime = startCalendar.getTimeInMillis();
+        long startTime = Utils.createDate(startDay, startMonth, startYear, 0, 0);
         // SET end date
-        Calendar endCalendar = new GregorianCalendar(endDay, endMonth, endYear);
-        endCalendar.setTimeZone(TimeZone.getTimeZone(UTC_TIME_ZONE));
-        endCalendar.set(Calendar.HOUR_OF_DAY, 23);
-        endCalendar.set(Calendar.MINUTE, 59);
-        endCalendar.set(Calendar.SECOND, 59);
-        endCalendar.set(Calendar.MILLISECOND, 999);
-        long endTime = endCalendar.getTimeInMillis();
+        long endTime = Utils.createDate(endDay, endMonth, endYear, 0, 0);
 
         // Initialize the object that represents the values we want to add
         ContentValues values = new ContentValues();
@@ -218,7 +258,7 @@ public class MainActivity extends ActionBarActivity
         values.put(Events.SELF_ATTENDEE_STATUS,     Events.STATUS_CONFIRMED);
         values.put(Events.ALL_DAY,                  UNDONE_TASK);
         values.put(Events.ORGANIZER,                OWNER_ACCOUNT);
-        values.put(Events.GUESTS_CAN_INVITE_OTHERS, 1);
+        values.put(Events.GUESTS_CAN_INVITE_OTHERS, TASK);
         values.put(Events.GUESTS_CAN_MODIFY,        1);
         values.put(Events.AVAILABILITY,             Events.AVAILABILITY_BUSY);
 
@@ -234,15 +274,9 @@ public class MainActivity extends ActionBarActivity
             return -1;
         }
         // SET start date
-        Calendar startCalendar = new GregorianCalendar(day, month, year, startHour, startMinute, 0);
-        startCalendar.setTimeZone(TimeZone.getTimeZone(UTC_TIME_ZONE));
-        startCalendar.set(Calendar.MILLISECOND, 0);
-        long startTime = startCalendar.getTimeInMillis();
+        long startTime = Utils.createDate(day, month, year, startHour, startMinute);
         // SET end date
-        Calendar endCalendar = new GregorianCalendar(day, month, year, endHour, endMinute, 0);
-        endCalendar.setTimeZone(TimeZone.getTimeZone(UTC_TIME_ZONE));
-        endCalendar.set(Calendar.MILLISECOND, 0);
-        long endTime = endCalendar.getTimeInMillis();
+        long endTime = Utils.createDate(day, month, year, endHour, endMinute);
 
         // Initialize the object that represents the values we want to add
         ContentValues values = new ContentValues();
@@ -255,7 +289,7 @@ public class MainActivity extends ActionBarActivity
         values.put(Events.SELF_ATTENDEE_STATUS,     Events.STATUS_CONFIRMED);
         values.put(Events.ALL_DAY,                  0);
         values.put(Events.ORGANIZER,                OWNER_ACCOUNT);
-        values.put(Events.GUESTS_CAN_INVITE_OTHERS, 1);
+        values.put(Events.GUESTS_CAN_INVITE_OTHERS, MEETING);
         values.put(Events.GUESTS_CAN_MODIFY,        1);
         values.put(Events.AVAILABILITY,             Events.AVAILABILITY_BUSY);
 
@@ -263,4 +297,153 @@ public class MainActivity extends ActionBarActivity
         return new Long(uri.getLastPathSegment());
     }
 
+    private Meeting findMeetingByDescription(String description)
+    {
+        String[] projection = new String[]{
+                Events._ID,
+                Events.TITLE,
+                Events.DTSTART,
+                Events.DTEND
+        };
+        String selection = Events.TITLE + " = ? " ;
+        String[] selArgs = new String[]{description};
+        Cursor cursor =
+                getContentResolver().
+                        query(
+                                Events.CONTENT_URI,
+                                projection,
+                                selection,
+                                selArgs,
+                                null);
+        if (cursor.moveToFirst()) {
+            return new Meeting( cursor.getLong(0),
+                                new Date(cursor.getLong(2)),
+                                new Date(cursor.getLong(3)),
+                                cursor.getString(1));
+        }
+        return new Meeting();
+    }
+
+    private Meeting findMeetingById(long id)
+    {
+        String[] projection = new String[]{
+                Events._ID,
+                Events.TITLE,
+                Events.DTSTART,
+                Events.DTEND
+        };
+        String selection = Events._ID + " = ? " ;
+        String[] selArgs = new String[]{Long.toString(id)};
+        Cursor cursor =
+                getContentResolver().
+                        query(
+                                Events.CONTENT_URI,
+                                projection,
+                                selection,
+                                selArgs,
+                                null);
+        if (cursor.moveToFirst()) {
+            return new Meeting( cursor.getLong(0),
+                                new Date(cursor.getLong(2)),
+                                new Date(cursor.getLong(3)),
+                                cursor.getString(1));
+        }
+        return new Meeting();
+    }
+
+    private Task findTaskByTitle(String title)
+    {
+        String[] projection = new String[]{
+                Events._ID,
+                Events.TITLE,
+                Events.DTSTART,
+                Events.DTEND,
+                Events.ALL_DAY,
+                Events.DESCRIPTION
+        };
+        String selection = Events.TITLE + " = ? " ;
+        String[] selArgs = new String[]{title};
+        Cursor cursor =
+                getContentResolver().
+                        query(
+                                Events.CONTENT_URI,
+                                projection,
+                                selection,
+                                selArgs,
+                                null);
+        if (cursor.moveToFirst()) {
+            boolean done;
+            if (cursor.getInt(4) == DONE_TASK) done = true;
+            else done = false;
+            return new Task(    cursor.getLong(0),
+                                cursor.getString(1),
+                                new Date(cursor.getLong(2)),
+                                new Date(cursor.getLong(3)),
+                                done,
+                                cursor.getString(5));
+        }
+        return new Task();
+    }
+
+    private ArrayList<Event> findByWeek(Date firstDay, Date lastDay)
+    {
+        ArrayList<Event> result = new ArrayList<>();
+        ArrayList<Event> events = list();
+        for (Event e : events) {
+            if (e.isMeeting()) {
+                Meeting m = (Meeting) e;
+                if (Utils.compareTo(m.getDate(), firstDay) == 1 && Utils.compareTo(m.getDate(), lastDay) == -1) {
+                    result.add(m);
+                }
+            }
+            else {
+                Task t = (Task) e;
+                if (Utils.compareTo(t.getDateStart(), firstDay) == 1 && Utils.compareTo(t.getDateStart(), lastDay) == -1) {
+                    result.add(t);
+                }
+            }
+        }
+        return result;
+    }
+
+    private ArrayList<Event> list()
+    {
+        ArrayList<Event> events = new ArrayList<>();
+        final long calendarId = getCalendarId();
+        if (calendarId == -1) {
+            Toast.makeText(MainActivity.this, TOAST_ERROR_FIND_ID, Toast.LENGTH_LONG).show();
+            return events;
+        }
+        String[] projection = new String[]{
+                Events.GUESTS_CAN_INVITE_OTHERS,
+                Events._ID,
+                Events.TITLE,
+                Events.DTSTART,
+                Events.DTEND,
+                Events.ALL_DAY,
+                Events.DESCRIPTION
+        };
+        String selection = Events.CALENDAR_ID + " = ? " ;
+        String[] selArgs = new String[]{Long.toString(calendarId)};
+        Cursor cursor =
+                getContentResolver().
+                        query(
+                                Events.CONTENT_URI,
+                                projection,
+                                selection,
+                                selArgs,
+                                null);
+        while (cursor.moveToNext()) {
+            int type = cursor.getInt(0);
+            if (type == MEETING)
+                events.add(new Meeting(cursor.getLong(1), new Date(cursor.getLong(3)), new Date(cursor.getLong(4)), cursor.getString(2)));
+            else if (type == TASK) {
+                boolean done;
+                if (cursor.getInt(5) == DONE_TASK) done = true;
+                else done = false;
+                events.add(new Task(cursor.getLong(1), cursor.getString(2), new Date(cursor.getLong(3)), new Date(cursor.getLong(4)), done, cursor.getString(6)));
+            }
+        }
+        return events;
+    }
 }

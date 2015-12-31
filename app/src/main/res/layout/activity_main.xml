@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activity.MainActivity"
+    android:id="@+id/mainLayout"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -30,7 +31,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 android:textColor="@color/softblack"
                 android:text="" />
@@ -252,12 +253,128 @@
 
     </LinearLayout>
 
-    <!--> Divider between Header and ScrollView <!-->
+    <!--> Divider between Header and Tasks <!-->
     <View
         android:id="@+id/dividerView"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/daysLinearLayout"
+        android:background="@color/gray" />
+
+    <!--> Tasks Header <!-->
+    <LinearLayout
+        android:id="@+id/tasksLinearLayout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false">
+
+        <!--> Empty Layout <!-->
+        <LinearLayout
+            android:id="@+id/emptyLayout"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="15dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/emptyText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/softblack"
+                android:text="" />
+
+        </LinearLayout>
+
+        <!--> Monday Task <!-->
+        <LinearLayout
+            android:id="@+id/mondayTasks"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
+
+        </LinearLayout>
+
+        <!--> Tuesday Tasks <!-->
+        <LinearLayout
+            android:id="@+id/tuesdayTasks"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
+
+
+        </LinearLayout>
+
+        <!--> Wednesday Tasks <!-->
+        <LinearLayout
+            android:id="@+id/wednesdayTasks"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
+
+        </LinearLayout>
+
+        <!--> Thursday Tasks <!-->
+        <LinearLayout
+            android:id="@+id/thursdayTasks"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
+
+        </LinearLayout>
+
+        <!--> Friday Tasks <!-->
+        <LinearLayout
+            android:id="@+id/fridayTasks"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
+
+        </LinearLayout>
+
+        <!--> Saturday Tasks <!-->
+        <LinearLayout
+            android:id="@+id/saturdayTasks"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
+
+        </LinearLayout>
+
+        <!--> Sunday Tasks <!-->
+        <LinearLayout
+            android:id="@+id/sundayTasks"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--> Divider between Tasks and ScrollView <!-->
+    <View
+        android:id="@+id/dividerView2"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tasksLinearLayout"
         android:background="@color/gray" />
 
     <!--> ScrollView <!-->
@@ -688,4 +805,4 @@
 
     </ScrollView>
 
-</RelativeLayout>
+</LinearLayout>

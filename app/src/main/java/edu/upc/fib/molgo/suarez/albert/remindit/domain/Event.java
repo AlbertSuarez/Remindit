@@ -13,6 +13,8 @@ public class Event implements Serializable {
         EVENT_TASK
     }
 
+    protected long id;
+
     protected EventType eventType;
 
     protected Reminder reminder;

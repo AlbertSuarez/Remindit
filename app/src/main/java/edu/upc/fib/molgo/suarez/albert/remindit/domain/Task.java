@@ -20,7 +20,19 @@ public class Task extends Event {
 
     private String meetingAssociated;
 
-    
+
+    public Task() {}
+
+    public Task(long id, String title, int dayStart, int monthStart, int yearStart, int dayEnd, int monthEnd, int yearEnd) {
+        super();
+        super.eventType = EventType.EVENT_TASK;
+        this.id = id;
+        this.title = title;
+        this.dateStart = Utils.createDate(dayStart, monthStart, yearStart);
+        this.dateEnd = Utils.createDate(dayEnd, monthEnd, yearEnd);
+        this.done = false;
+    }
+
     public Task(String title, int dayStart, int monthStart, int yearStart, int dayEnd, int monthEnd, int yearEnd) {
         super();
         super.eventType = EventType.EVENT_TASK;
@@ -38,6 +50,28 @@ public class Task extends Event {
         this.dateEnd = dateEnd;
         this.done = false;
     }
+
+    public Task(long id, String title, Date dateStart, Date dateEnd) {
+        super();
+        super.eventType = EventType.EVENT_TASK;
+        this.id = id;
+        this.title = title;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
+        this.done = false;
+    }
+
+    public Task(long id, String title, Date dateStart, Date dateEnd, boolean done, String meetingAssociated) {
+        super();
+        super.eventType = EventType.EVENT_TASK;
+        this.id = id;
+        this.title = title;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
+        this.done = done;
+        this.meetingAssociated = meetingAssociated;
+    }
+
 
     public Date getDateStart() {
         return dateStart;

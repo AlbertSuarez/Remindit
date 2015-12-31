@@ -207,7 +207,6 @@ public class AddActivity extends Activity {
                         endDate = calendar.getTime();
 
                         event = new Task(title, startDate, endDate);
-                        Log.d("Event created", event.toString());
                         Intent i = new Intent(AddActivity.this, MainActivity.class);
                         i.putExtra(EVENT_TO_SEND, event);
                         i.putExtra(ASSOCIATED_MEETING, meetingAssociated);
