@@ -41,6 +41,7 @@ public class MainActivity extends ActionBarActivity
     public static final String MY_ACCOUNT_NAME =            "albert.suarez.molgo";
     public static final String CALENDAR_NAME =              "Remind it Calendar";
     public static final String EVENT_TO_ADD =               "EventToAdd";
+    public static final String UNDONE_TASKS_TO_SHOW =       "UndoneTasksToShow";
     public static final String TOAST_ERROR_FIND_ID =        "Error to find Calendar";
     public static final String TOAST_ERROR_FORMAT_DATE =    "Error to format Date";
     public static final String CALENDAR_TIME_ZONE =         "Europe/Berlin";
@@ -94,11 +95,12 @@ public class MainActivity extends ActionBarActivity
                 startActivityForResult(i, 0);
                 break;
             case R.id.list_undone_tasks:
-                ArrayList<Event> e = findByWeek(Utils.getFirstDayOfTheCurrentWeek(), Utils.getLastDayOfTheCurrentWeek());
-                Log.d("#### Find by week:", e.toString());
+                Intent i2 = new Intent(MainActivity.this, UndoneTasksActivity.class);
+                i2.putExtra(UNDONE_TASKS_TO_SHOW, findUndoneTasks());
+                startActivityForResult(i2, 0);
                 break;
             case R.id.action_settings:
-
+                Log.d("#### FIND BY WEEK", findByWeek(Utils.getFirstDayOfTheCurrentWeek(), Utils.getLastDayOfTheCurrentWeek()).toString());
                 break;
             case R.id.help:
 
@@ -549,6 +551,10 @@ public class MainActivity extends ActionBarActivity
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             Date firstDay = dateFormat.parse(firstDayString);
             Date lastDay = dateFormat.parse(lastDayString);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(lastDay);
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            lastDay = calendar.getTime();
             for (Event e : events) {
                 if (e.isMeeting()) {
                     Meeting m = (Meeting) e;
@@ -570,6 +576,19 @@ public class MainActivity extends ActionBarActivity
             Toast.makeText(MainActivity.this, TOAST_ERROR_FORMAT_DATE, Toast.LENGTH_LONG).show();
         }
         return result;
+    }
+
+    private ArrayList<Task> findUndoneTasks()
+    {
+        ArrayList<Event> list = list();
+        ArrayList<Task> undoneTasks = new ArrayList<>();
+        for (Event e : list) {
+            if (!e.isMeeting()) {
+                Task t = (Task) e;
+                if (!t.isDone()) undoneTasks.add(t);
+            }
+        }
+        return undoneTasks;
     }
 
     private ArrayList<Event> list()
@@ -599,9 +618,7 @@ public class MainActivity extends ActionBarActivity
             if (type == MEETING)
                 events.add(new Meeting(cursor.getLong(1), new Date(cursor.getLong(3)), new Date(cursor.getLong(4)), cursor.getString(2)));
             else if (type == TASK) {
-                boolean done;
-                if (cursor.getInt(5) == DONE_TASK) done = true;
-                else done = false;
+                boolean done = (cursor.getInt(5) == DONE_TASK);
                 events.add(new Task(cursor.getLong(1), cursor.getString(2), new Date(cursor.getLong(3)), new Date(cursor.getLong(4)), done, cursor.getString(6)));
             }
         }
