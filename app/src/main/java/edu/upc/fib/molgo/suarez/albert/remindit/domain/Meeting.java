@@ -94,6 +94,18 @@ public class Meeting extends Event {
         return dateStart;
     }
 
+    public int getTotalStartMinute() {
+        int hour = Utils.getHour(dateStart);
+        int minute = Utils.getMinute(dateStart);
+        return hour*60+minute;
+    }
+
+    public int getTotalEndMinute() {
+        int hour = Utils.getHour(dateEnd);
+        int minute = Utils.getMinute(dateEnd);
+        return hour*60+minute;
+    }
+
     public void setDate(int day, int month, int year) {
         int hourStart, minuteStart, hourEnd, minuteEnd;
         hourStart = Utils.getHour(dateStart);

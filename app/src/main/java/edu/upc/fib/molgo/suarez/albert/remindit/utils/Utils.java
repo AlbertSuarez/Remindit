@@ -1,5 +1,7 @@
 package edu.upc.fib.molgo.suarez.albert.remindit.utils;
 
+import android.util.Log;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -49,6 +51,20 @@ public class Utils {
         Calendar cDay = Calendar.getInstance();
         cDay.setTime(date);
         return cDay.get(Calendar.DATE);
+    }
+
+    public static String getDayOfWeekInString(Date date) {
+        Calendar cDay = Calendar.getInstance();
+        cDay.setTime(date);
+        int day = cDay.get(Calendar.DAY_OF_WEEK);
+        if (day == Calendar.MONDAY) return MainActivity.MONDAY;
+        if (day == Calendar.TUESDAY) return MainActivity.TUESDAY;
+        if (day == Calendar.WEDNESDAY) return MainActivity.WEDNESDAY;
+        if (day == Calendar.THURSDAY) return MainActivity.THURSDAY;
+        if (day == Calendar.FRIDAY) return MainActivity.FRIDAY;
+        if (day == Calendar.SATURDAY) return MainActivity.SATURDAY;
+        if (day == Calendar.SUNDAY) return MainActivity.SUNDAY;
+        return "";
     }
 
     public static int getMonth(Date date) {
@@ -210,5 +226,33 @@ public class Utils {
         int result = Integer.parseInt(parts[1]);
         if (result < 0 || result >= 60) throw new ParseException("Format incorrect", 136);
         return result;
+    }
+
+    public static String getNextWeekDay(String day) {
+        if (day.equals(MainActivity.MONDAY)) return MainActivity.TUESDAY;
+        if (day.equals(MainActivity.TUESDAY)) return MainActivity.WEDNESDAY;
+        if (day.equals(MainActivity.WEDNESDAY)) return MainActivity.THURSDAY;
+        if (day.equals(MainActivity.THURSDAY)) return MainActivity.FRIDAY;
+        if (day.equals(MainActivity.FRIDAY)) return MainActivity.SATURDAY;
+        if (day.equals(MainActivity.SATURDAY)) return MainActivity.SUNDAY;
+        if (day.equals(MainActivity.SUNDAY)) return MainActivity.MONDAY;
+        return "";
+    }
+
+    public static String getFirstDayOfTheCurrentWeek() {
+        return days[0] + "/" + days[7] + "/" + days[8];
+    }
+
+    public static String getLastDayOfTheCurrentWeek() {
+        String month, year;
+        if (Integer.parseInt(days[6]) < Integer.parseInt(days[0])) {
+            if (days[7].equals("12")) {
+                month = "01";
+                year = Integer.toString(Integer.parseInt(days[8])+1);
+            }
+            else {month = Integer.toString(Integer.parseInt(days[7])+1); year = days[8];}
+        }
+        else {month = days[7]; year = days[8];}
+        return days[6] + "/" + month + "/" + year;
     }
 }

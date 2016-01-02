@@ -72,7 +72,6 @@ public class Task extends Event {
         this.meetingAssociated = meetingAssociated;
     }
 
-
     public Date getDateStart() {
         return dateStart;
     }
@@ -115,6 +114,10 @@ public class Task extends Event {
 
     public int getEndYear() {
         return Utils.getYear(dateEnd);
+    }
+
+    public int getNumberOfDays() {
+        return getEndDay() - getStartDay();
     }
 
     public boolean isDone() {

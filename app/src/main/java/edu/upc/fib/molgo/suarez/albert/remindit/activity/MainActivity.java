@@ -2,20 +2,27 @@ package edu.upc.fib.molgo.suarez.albert.remindit.activity;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -23,33 +30,47 @@ import edu.upc.fib.molgo.suarez.albert.remindit.R;
 import edu.upc.fib.molgo.suarez.albert.remindit.domain.Event;
 import edu.upc.fib.molgo.suarez.albert.remindit.domain.Meeting;
 import edu.upc.fib.molgo.suarez.albert.remindit.domain.Task;
+import edu.upc.fib.molgo.suarez.albert.remindit.utils.MeetingButton;
 import edu.upc.fib.molgo.suarez.albert.remindit.utils.OnSwipeTouchListener;
 import edu.upc.fib.molgo.suarez.albert.remindit.utils.Utils;
 
 public class MainActivity extends ActionBarActivity
 {
-    public static final String MY_ACCOUNT_NAME = "albert.suarez.molgo";
-    public static final String CALENDAR_NAME = "Remind it Calendar";
-    public static final String EVENT_TO_ADD = "EventToAdd";
-    public static final String TOAST_ERROR_FIND_ID = "Error to find Calendar";
-    public static final String CALENDAR_TIME_ZONE = "Europe/Berlin";
-    public static final String OWNER_ACCOUNT = "some.account@googlemail.com";
-    public static final String UTC_TIME_ZONE = "UTC";
-    public static final int UNDONE_TASK = 0;
-    public static final int DONE_TASK = 1;
-    public static final int MEETING = 1;
-    public static final int TASK = 0;
+    public static final String MY_ACCOUNT_NAME =            "albert.suarez.molgo";
+    public static final String CALENDAR_NAME =              "Remind it Calendar";
+    public static final String EVENT_TO_ADD =               "EventToAdd";
+    public static final String TOAST_ERROR_FIND_ID =        "Error to find Calendar";
+    public static final String TOAST_ERROR_FORMAT_DATE =    "Error to format Date";
+    public static final String CALENDAR_TIME_ZONE =         "Europe/Berlin";
+    public static final String OWNER_ACCOUNT =              "some.account@googlemail.com";
+    public static final String UTC_TIME_ZONE =              "UTC";
+    public static final String SETTINGS_VARIABLE_KEY =      "settings";
+    public static final String SETTINGS_VARIABLE_2_KEY =    "settings2";
+    public static final String CALENDAR_ID_KEY =            "calendarId";
+    public static final int UNDONE_TASK =                   0;
+    public static final int DONE_TASK =                     1;
+    public static final int MEETING =                       1;
+    public static final int TASK =                          0;
+
+    public static final String MONDAY =                     "monday";
+    public static final String TUESDAY =                    "tuesday";
+    public static final String WEDNESDAY =                  "wednesday";
+    public static final String THURSDAY =                   "thursday";
+    public static final String FRIDAY =                     "friday";
+    public static final String SATURDAY =                   "saturday";
+    public static final String SUNDAY =                     "sunday";
 
     Event eventAdded;
     String descriptionAssociatedMeeting;
+    long calendarId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initializeProvider();
         initializeView();
+        initializeProvider();
     }
 
     @Override
@@ -71,7 +92,8 @@ public class MainActivity extends ActionBarActivity
                 startActivityForResult(i, 0);
                 break;
             case R.id.list_undone_tasks:
-
+                ArrayList<Event> e = findByWeek("28/12/2015", "03/01/2016");
+                Log.d("#### Find by week:", e.toString());
                 break;
             case R.id.action_settings:
 
@@ -80,7 +102,7 @@ public class MainActivity extends ActionBarActivity
 
                 break;
             case R.id.about:
-
+                deleteAll();
                 break;
             default:
 
@@ -111,11 +133,87 @@ public class MainActivity extends ActionBarActivity
                     task.getEndDay(), task.getEndMonth(), task.getEndYear(), task.getMeetingAssociated());
         }
         updateView();
+    }
 
+    private void deleteEventsView()
+    {
+        RelativeLayout parentView;
+        // Meeting Buttons
+        parentView = (RelativeLayout) findViewById(R.id.mondayEvents);
+        for (int i = 0; i < parentView.getChildCount(); i++) {
+            View childView = parentView.getChildAt(i);
+            if (childView instanceof MeetingButton) childView.setVisibility(View.INVISIBLE);
+        }
+        parentView = (RelativeLayout) findViewById(R.id.tuesdayEvents);
+        for (int i = 0; i < parentView.getChildCount(); i++) {
+            View childView = parentView.getChildAt(i);
+            if (childView instanceof MeetingButton) childView.setVisibility(View.INVISIBLE);
+        }
+        parentView = (RelativeLayout) findViewById(R.id.wednesdayEvents);
+        for (int i = 0; i < parentView.getChildCount(); i++) {
+            View childView = parentView.getChildAt(i);
+            if (childView instanceof MeetingButton) childView.setVisibility(View.INVISIBLE);
+        }
+        parentView = (RelativeLayout) findViewById(R.id.thursdayEvents);
+        for (int i = 0; i < parentView.getChildCount(); i++) {
+            View childView = parentView.getChildAt(i);
+            if (childView instanceof MeetingButton) childView.setVisibility(View.INVISIBLE);
+        }
+        parentView = (RelativeLayout) findViewById(R.id.fridayEvents);
+        for (int i = 0; i < parentView.getChildCount(); i++) {
+            View childView = parentView.getChildAt(i);
+            if (childView instanceof MeetingButton) childView.setVisibility(View.INVISIBLE);
+        }
+        parentView = (RelativeLayout) findViewById(R.id.saturdayEvents);
+        for (int i = 0; i < parentView.getChildCount(); i++) {
+            View childView = parentView.getChildAt(i);
+            if (childView instanceof MeetingButton) childView.setVisibility(View.INVISIBLE);
+        }
+        parentView = (RelativeLayout) findViewById(R.id.sundayEvents);
+        for (int i = 0; i < parentView.getChildCount(); i++) {
+            View childView = parentView.getChildAt(i);
+            if (childView instanceof MeetingButton) childView.setVisibility(View.INVISIBLE);
+        }
+
+        //Tasks Buttons
+        LinearLayout tasksLayout;
+        tasksLayout = (LinearLayout) findViewById(R.id.mondayTasks);
+        for (int i = 0; i < tasksLayout.getChildCount(); i++) parentView.getChildAt(i).setVisibility(View.INVISIBLE);
+        tasksLayout = (LinearLayout) findViewById(R.id.tuesdayTasks);
+        for (int i = 0; i < tasksLayout.getChildCount(); i++) parentView.getChildAt(i).setVisibility(View.INVISIBLE);
+        tasksLayout = (LinearLayout) findViewById(R.id.wednesdayTasks);
+        for (int i = 0; i < tasksLayout.getChildCount(); i++) parentView.getChildAt(i).setVisibility(View.INVISIBLE);
+        tasksLayout = (LinearLayout) findViewById(R.id.thursdayTasks);
+        for (int i = 0; i < tasksLayout.getChildCount(); i++) parentView.getChildAt(i).setVisibility(View.INVISIBLE);
+        tasksLayout = (LinearLayout) findViewById(R.id.fridayTasks);
+        for (int i = 0; i < tasksLayout.getChildCount(); i++) parentView.getChildAt(i).setVisibility(View.INVISIBLE);
+        tasksLayout = (LinearLayout) findViewById(R.id.saturdayTasks);
+        for (int i = 0; i < tasksLayout.getChildCount(); i++) parentView.getChildAt(i).setVisibility(View.INVISIBLE);
+        tasksLayout = (LinearLayout) findViewById(R.id.sundayTasks);
+        for (int i = 0; i < tasksLayout.getChildCount(); i++) parentView.getChildAt(i).setVisibility(View.INVISIBLE);
     }
 
     private void updateView()
     {
+        deleteEventsView();
+
+        String startDay = Utils.getFirstDayOfTheCurrentWeek();
+        String endDay = Utils.getLastDayOfTheCurrentWeek();
+        ArrayList<Event> events = findByWeek(startDay, endDay);
+        for (Event e : events) {
+            if (e.isMeeting()) {
+                Meeting m = (Meeting) e;
+                String day = Utils.getDayOfWeekInString(m.getDate());
+                String text = m.getDescription();
+                int startMinute = m.getTotalStartMinute();
+                int endMinute = m.getTotalEndMinute();
+                createMeetingButton(day, text, startMinute, endMinute);
+            }
+            else {
+                Task t = (Task) e;
+
+            }
+        }
 
     }
 
@@ -148,9 +246,12 @@ public class MainActivity extends ActionBarActivity
         mainLayout.setOnTouchListener(new OnSwipeTouchListener(this) {
             public void onSwipeRight() {
                 modifyDays(false);
+                updateView();
             }
+
             public void onSwipeLeft() {
                 modifyDays(true);
+                updateView();
             }
 
         });
@@ -158,9 +259,12 @@ public class MainActivity extends ActionBarActivity
         scrollView.setOnTouchListener(new OnSwipeTouchListener(this) {
             public void onSwipeRight() {
                 modifyDays(false);
+                updateView();
             }
+
             public void onSwipeLeft() {
                 modifyDays(true);
+                updateView();
             }
         });
     }
@@ -193,6 +297,26 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void initializeProvider()
+    {
+        SharedPreferences settings = getSharedPreferences(SETTINGS_VARIABLE_KEY, 0);
+        boolean silent = settings.getBoolean(SETTINGS_VARIABLE_2_KEY, false);
+        if (!silent) {
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putBoolean(SETTINGS_VARIABLE_2_KEY, true);
+            editor.commit();
+            createNewCalendar();
+            calendarId = getCalendarId();
+            if (calendarId == -1) Toast.makeText(MainActivity.this, TOAST_ERROR_FIND_ID, Toast.LENGTH_LONG).show();
+            editor.putLong(CALENDAR_ID_KEY, calendarId);
+            editor.commit();
+        }
+        else {
+            calendarId = settings.getLong(CALENDAR_ID_KEY, -1);
+            updateView();
+        }
+    }
+
+    private void createNewCalendar()
     {
         // Object that represents the values we want to add
         ContentValues values = new ContentValues();
@@ -234,11 +358,6 @@ public class MainActivity extends ActionBarActivity
 
     private long addTask(String title, int startDay, int startMonth, int startYear, int endDay, int endMonth, int endYear, String associatedMeeting)
     {
-        final long calendarId = getCalendarId();
-        if (calendarId == -1) {
-            Toast.makeText(MainActivity.this, TOAST_ERROR_FIND_ID, Toast.LENGTH_LONG).show();
-            return -1;
-        }
         // SET start date
         long startTime = Utils.createDate(startDay, startMonth, startYear, 0, 0);
         // SET end date
@@ -268,11 +387,6 @@ public class MainActivity extends ActionBarActivity
 
     private long addMeeting(String description, int day, int month, int year, int startHour, int startMinute, int endHour, int endMinute)
     {
-        final long calendarId = getCalendarId();
-        if (calendarId == -1) {
-            Toast.makeText(MainActivity.this, TOAST_ERROR_FIND_ID, Toast.LENGTH_LONG).show();
-            return -1;
-        }
         // SET start date
         long startTime = Utils.createDate(day, month, year, startHour, startMinute);
         // SET end date
@@ -321,6 +435,7 @@ public class MainActivity extends ActionBarActivity
                                 new Date(cursor.getLong(3)),
                                 cursor.getString(1));
         }
+        cursor.close();
         return new Meeting();
     }
 
@@ -348,6 +463,7 @@ public class MainActivity extends ActionBarActivity
                                 new Date(cursor.getLong(3)),
                                 cursor.getString(1));
         }
+        cursor.close();
         return new Meeting();
     }
 
@@ -382,26 +498,34 @@ public class MainActivity extends ActionBarActivity
                                 done,
                                 cursor.getString(5));
         }
+        cursor.close();
         return new Task();
     }
 
-    private ArrayList<Event> findByWeek(Date firstDay, Date lastDay)
+    private ArrayList<Event> findByWeek(String firstDayString, String lastDayString)
     {
         ArrayList<Event> result = new ArrayList<>();
         ArrayList<Event> events = list();
-        for (Event e : events) {
-            if (e.isMeeting()) {
-                Meeting m = (Meeting) e;
-                if (Utils.compareTo(m.getDate(), firstDay) == 1 && Utils.compareTo(m.getDate(), lastDay) == -1) {
-                    result.add(m);
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date firstDay = dateFormat.parse(firstDayString);
+            Date lastDay = dateFormat.parse(lastDayString);
+            for (Event e : events) {
+                if (e.isMeeting()) {
+                    Meeting m = (Meeting) e;
+                    if (Utils.compareTo(m.getDate(), firstDay) == 1 && Utils.compareTo(m.getDate(), lastDay) == -1) {
+                        result.add(m);
+                    }
+                } else {
+                    Task t = (Task) e;
+                    if (Utils.compareTo(t.getDateStart(), firstDay) == 1 && Utils.compareTo(t.getDateStart(), lastDay) == -1) {
+                        result.add(t);
+                    }
                 }
             }
-            else {
-                Task t = (Task) e;
-                if (Utils.compareTo(t.getDateStart(), firstDay) == 1 && Utils.compareTo(t.getDateStart(), lastDay) == -1) {
-                    result.add(t);
-                }
-            }
+        }
+        catch (ParseException pe) {
+            Toast.makeText(MainActivity.this, TOAST_ERROR_FORMAT_DATE, Toast.LENGTH_LONG).show();
         }
         return result;
     }
@@ -409,11 +533,6 @@ public class MainActivity extends ActionBarActivity
     private ArrayList<Event> list()
     {
         ArrayList<Event> events = new ArrayList<>();
-        final long calendarId = getCalendarId();
-        if (calendarId == -1) {
-            Toast.makeText(MainActivity.this, TOAST_ERROR_FIND_ID, Toast.LENGTH_LONG).show();
-            return events;
-        }
         String[] projection = new String[]{
                 Events.GUESTS_CAN_INVITE_OTHERS,
                 Events._ID,
@@ -444,6 +563,69 @@ public class MainActivity extends ActionBarActivity
                 events.add(new Task(cursor.getLong(1), cursor.getString(2), new Date(cursor.getLong(3)), new Date(cursor.getLong(4)), done, cursor.getString(6)));
             }
         }
+        cursor.close();
         return events;
+    }
+
+    private void deleteAll()
+    {
+        String[] selArgs =
+                new String[]{Long.toString(calendarId)};
+        String selection = Events.CALENDAR_ID + " = ? " ;
+        int deleted =
+                getContentResolver().
+                        delete(
+                                Events.CONTENT_URI,
+                                selection,
+                                selArgs);
+    }
+
+    private void createMeetingButton(String day, String text, int startTime, int endTime)
+    {
+        RelativeLayout dayLayout;
+        if (day.equals(MONDAY)) dayLayout = (RelativeLayout) findViewById(R.id.mondayEvents);
+        else if (day.equals(TUESDAY)) dayLayout = (RelativeLayout) findViewById(R.id.tuesdayEvents);
+        else if (day.equals(WEDNESDAY)) dayLayout = (RelativeLayout) findViewById(R.id.wednesdayEvents);
+        else if (day.equals(THURSDAY)) dayLayout = (RelativeLayout) findViewById(R.id.thursdayEvents);
+        else if (day.equals(FRIDAY)) dayLayout = (RelativeLayout) findViewById(R.id.fridayEvents);
+        else if (day.equals(SATURDAY)) dayLayout = (RelativeLayout) findViewById(R.id.saturdayEvents);
+        else if (day.equals(SUNDAY)) dayLayout = (RelativeLayout) findViewById(R.id.sundayEvents);
+        else return;
+
+        int duration = endTime - startTime;
+        int durationInPx = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, duration, getResources().getDisplayMetrics());
+        int marginInPx = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, startTime, getResources().getDisplayMetrics());
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, durationInPx);
+        params.setMargins(0, marginInPx, 0, 0);
+        dayLayout.addView(new MeetingButton(this, text), params);
+    }
+
+    // TODO Falta per crear
+    private void createTaskButton(String day, String text, int startTime, int endTime)
+    {
+        RelativeLayout dayLayout;
+        if (day.equals(MONDAY)) dayLayout = (RelativeLayout) findViewById(R.id.mondayEvents);
+        else if (day.equals(TUESDAY)) dayLayout = (RelativeLayout) findViewById(R.id.tuesdayEvents);
+        else if (day.equals(WEDNESDAY)) dayLayout = (RelativeLayout) findViewById(R.id.wednesdayEvents);
+        else if (day.equals(THURSDAY)) dayLayout = (RelativeLayout) findViewById(R.id.thursdayEvents);
+        else if (day.equals(FRIDAY)) dayLayout = (RelativeLayout) findViewById(R.id.fridayEvents);
+        else if (day.equals(SATURDAY)) dayLayout = (RelativeLayout) findViewById(R.id.saturdayEvents);
+        else if (day.equals(SUNDAY)) dayLayout = (RelativeLayout) findViewById(R.id.sundayEvents);
+        else return;
+
+        int duration = endTime - startTime;
+        int durationInPx = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, duration, getResources().getDisplayMetrics());
+        int marginInPx = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, startTime, getResources().getDisplayMetrics());
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, durationInPx);
+        params.setMargins(0, marginInPx, 0, 0);
+        dayLayout.addView(new MeetingButton(this, text), params);
     }
 }
