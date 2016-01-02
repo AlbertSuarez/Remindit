@@ -1,6 +1,9 @@
 package edu.upc.fib.molgo.suarez.albert.remindit.domain;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import edu.upc.fib.molgo.suarez.albert.remindit.utils.Utils;
 
@@ -116,8 +119,18 @@ public class Task extends Event {
         return Utils.getYear(dateEnd);
     }
 
-    public int getNumberOfDays() {
-        return getEndDay() - getStartDay();
+    public List<Date> getAllDays() {
+        List<Date> list = new LinkedList<>();
+        Date d = dateStart;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(d);
+        while(!Utils.isSameDay(d, dateEnd)) {
+            list.add(d);
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            d = calendar.getTime();
+        }
+        list.add(dateEnd);
+        return list;
     }
 
     public boolean isDone() {

@@ -1,14 +1,11 @@
 package edu.upc.fib.molgo.suarez.albert.remindit.utils;
 
-import android.util.Log;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
-import java.util.concurrent.CancellationException;
 
 import edu.upc.fib.molgo.suarez.albert.remindit.activity.MainActivity;
 
@@ -254,5 +251,70 @@ public class Utils {
         }
         else {month = days[7]; year = days[8];}
         return days[6] + "/" + month + "/" + year;
+    }
+
+    public static int dayOfWeekToInteger(String day) {
+        if (day.equals(MainActivity.MONDAY)) return 1;
+        if (day.equals(MainActivity.TUESDAY)) return 2;
+        if (day.equals(MainActivity.WEDNESDAY)) return 3;
+        if (day.equals(MainActivity.THURSDAY)) return 4;
+        if (day.equals(MainActivity.FRIDAY)) return 5;
+        if (day.equals(MainActivity.SATURDAY)) return 6;
+        if (day.equals(MainActivity.SUNDAY)) return 7;
+        return -1;
+    }
+
+    public static String integerToDayOfWeek(int day) {
+        if (day == 1) return MainActivity.MONDAY;
+        if (day == 2) return MainActivity.TUESDAY;
+        if (day == 3) return MainActivity.WEDNESDAY;
+        if (day == 4) return MainActivity.THURSDAY;
+        if (day == 5) return MainActivity.FRIDAY;
+        if (day == 6) return MainActivity.SATURDAY;
+        if (day == 7) return MainActivity.SUNDAY;
+        return "";
+    }
+
+    public static boolean isSameDay(Date date1, Date date2) {
+        if (getDay(date1) == getDay(date2) && getMonth(date1) == getMonth(date2) && getYear(date1) == getYear(date2)) return true;
+        return false;
+    }
+
+    public static boolean isSameWeek(Date date1, Date date2) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date1);
+        int count = 0;
+        while (!isSameDay(date1, date2)) {
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            ++count;
+            date1 = calendar.getTime();
+            if (count > 6) return false;
+        }
+        if (dayOfWeekToInteger(getDayOfWeekInString(date2)) < dayOfWeekToInteger(getDayOfWeekInString(date1))) return false;
+        return true;
+    }
+
+    /**
+     * limits[0] = first day of the current week
+     * limits[1] = last day of the current week
+     */
+    public static Date[] getLimitsOfCurrentWeek() {
+        Date[] limits = new Date[2];
+        Date date = new Date();
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String s = days[0] + "/" + days[7] + "/" + days[8];
+            date = dateFormat.parse(s);
+            limits[0] = date;
+        }
+        catch (ParseException pe) {
+            pe.getStackTrace();
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_MONTH, 7);
+        date = calendar.getTime();
+        limits[1] = date;
+        return limits;
     }
 }

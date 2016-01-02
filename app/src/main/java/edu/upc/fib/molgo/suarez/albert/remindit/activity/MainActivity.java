@@ -32,6 +32,7 @@ import edu.upc.fib.molgo.suarez.albert.remindit.domain.Meeting;
 import edu.upc.fib.molgo.suarez.albert.remindit.domain.Task;
 import edu.upc.fib.molgo.suarez.albert.remindit.utils.MeetingButton;
 import edu.upc.fib.molgo.suarez.albert.remindit.utils.OnSwipeTouchListener;
+import edu.upc.fib.molgo.suarez.albert.remindit.utils.TaskButton;
 import edu.upc.fib.molgo.suarez.albert.remindit.utils.Utils;
 
 public class MainActivity extends ActionBarActivity
@@ -92,7 +93,7 @@ public class MainActivity extends ActionBarActivity
                 startActivityForResult(i, 0);
                 break;
             case R.id.list_undone_tasks:
-                ArrayList<Event> e = findByWeek("28/12/2015", "03/01/2016");
+                ArrayList<Event> e = findByWeek(Utils.getFirstDayOfTheCurrentWeek(), Utils.getLastDayOfTheCurrentWeek());
                 Log.d("#### Find by week:", e.toString());
                 break;
             case R.id.action_settings:
@@ -142,55 +143,55 @@ public class MainActivity extends ActionBarActivity
         parentView = (RelativeLayout) findViewById(R.id.mondayEvents);
         for (int i = 0; i < parentView.getChildCount(); i++) {
             View childView = parentView.getChildAt(i);
-            if (childView instanceof MeetingButton) childView.setVisibility(View.INVISIBLE);
+            if (childView instanceof MeetingButton) childView.setVisibility(View.GONE);
         }
         parentView = (RelativeLayout) findViewById(R.id.tuesdayEvents);
         for (int i = 0; i < parentView.getChildCount(); i++) {
             View childView = parentView.getChildAt(i);
-            if (childView instanceof MeetingButton) childView.setVisibility(View.INVISIBLE);
+            if (childView instanceof MeetingButton) childView.setVisibility(View.GONE);
         }
         parentView = (RelativeLayout) findViewById(R.id.wednesdayEvents);
         for (int i = 0; i < parentView.getChildCount(); i++) {
             View childView = parentView.getChildAt(i);
-            if (childView instanceof MeetingButton) childView.setVisibility(View.INVISIBLE);
+            if (childView instanceof MeetingButton) childView.setVisibility(View.GONE);
         }
         parentView = (RelativeLayout) findViewById(R.id.thursdayEvents);
         for (int i = 0; i < parentView.getChildCount(); i++) {
             View childView = parentView.getChildAt(i);
-            if (childView instanceof MeetingButton) childView.setVisibility(View.INVISIBLE);
+            if (childView instanceof MeetingButton) childView.setVisibility(View.GONE);
         }
         parentView = (RelativeLayout) findViewById(R.id.fridayEvents);
         for (int i = 0; i < parentView.getChildCount(); i++) {
             View childView = parentView.getChildAt(i);
-            if (childView instanceof MeetingButton) childView.setVisibility(View.INVISIBLE);
+            if (childView instanceof MeetingButton) childView.setVisibility(View.GONE);
         }
         parentView = (RelativeLayout) findViewById(R.id.saturdayEvents);
         for (int i = 0; i < parentView.getChildCount(); i++) {
             View childView = parentView.getChildAt(i);
-            if (childView instanceof MeetingButton) childView.setVisibility(View.INVISIBLE);
+            if (childView instanceof MeetingButton) childView.setVisibility(View.GONE);
         }
         parentView = (RelativeLayout) findViewById(R.id.sundayEvents);
         for (int i = 0; i < parentView.getChildCount(); i++) {
             View childView = parentView.getChildAt(i);
-            if (childView instanceof MeetingButton) childView.setVisibility(View.INVISIBLE);
+            if (childView instanceof MeetingButton) childView.setVisibility(View.GONE);
         }
 
         //Tasks Buttons
         LinearLayout tasksLayout;
         tasksLayout = (LinearLayout) findViewById(R.id.mondayTasks);
-        for (int i = 0; i < tasksLayout.getChildCount(); i++) parentView.getChildAt(i).setVisibility(View.INVISIBLE);
+        for (int i = 0; i < tasksLayout.getChildCount(); i++) tasksLayout.getChildAt(i).setVisibility(View.GONE);
         tasksLayout = (LinearLayout) findViewById(R.id.tuesdayTasks);
-        for (int i = 0; i < tasksLayout.getChildCount(); i++) parentView.getChildAt(i).setVisibility(View.INVISIBLE);
+        for (int i = 0; i < tasksLayout.getChildCount(); i++) tasksLayout.getChildAt(i).setVisibility(View.GONE);
         tasksLayout = (LinearLayout) findViewById(R.id.wednesdayTasks);
-        for (int i = 0; i < tasksLayout.getChildCount(); i++) parentView.getChildAt(i).setVisibility(View.INVISIBLE);
+        for (int i = 0; i < tasksLayout.getChildCount(); i++) tasksLayout.getChildAt(i).setVisibility(View.GONE);
         tasksLayout = (LinearLayout) findViewById(R.id.thursdayTasks);
-        for (int i = 0; i < tasksLayout.getChildCount(); i++) parentView.getChildAt(i).setVisibility(View.INVISIBLE);
+        for (int i = 0; i < tasksLayout.getChildCount(); i++) tasksLayout.getChildAt(i).setVisibility(View.GONE);
         tasksLayout = (LinearLayout) findViewById(R.id.fridayTasks);
-        for (int i = 0; i < tasksLayout.getChildCount(); i++) parentView.getChildAt(i).setVisibility(View.INVISIBLE);
+        for (int i = 0; i < tasksLayout.getChildCount(); i++) tasksLayout.getChildAt(i).setVisibility(View.GONE);
         tasksLayout = (LinearLayout) findViewById(R.id.saturdayTasks);
-        for (int i = 0; i < tasksLayout.getChildCount(); i++) parentView.getChildAt(i).setVisibility(View.INVISIBLE);
+        for (int i = 0; i < tasksLayout.getChildCount(); i++) tasksLayout.getChildAt(i).setVisibility(View.GONE);
         tasksLayout = (LinearLayout) findViewById(R.id.sundayTasks);
-        for (int i = 0; i < tasksLayout.getChildCount(); i++) parentView.getChildAt(i).setVisibility(View.INVISIBLE);
+        for (int i = 0; i < tasksLayout.getChildCount(); i++) tasksLayout.getChildAt(i).setVisibility(View.GONE);
     }
 
     private void updateView()
@@ -211,7 +212,26 @@ public class MainActivity extends ActionBarActivity
             }
             else {
                 Task t = (Task) e;
-
+                Date dSt = new Date();
+                Date dEnd = new Date();
+                Date dAnt = new Date();
+                Date[] limits = Utils.getLimitsOfCurrentWeek();
+                int count = 0;
+                for (Date d : t.getAllDays()) {
+                    if (Utils.compareTo(d, limits[0]) == 1 && Utils.compareTo(d, limits[1]) == -1) {
+                        if (count == 0) dSt = d;
+                        ++count;
+                        dAnt = d;
+                    }
+                }
+                if (count > 0) dEnd = dAnt;
+                String startDate = Utils.getDayOfWeekInString(dSt);
+                String endDate = Utils.getDayOfWeekInString(dEnd);
+                int start = Utils.dayOfWeekToInteger(startDate);
+                int end = Utils.dayOfWeekToInteger(endDate);
+                for (int i = start; i <= end; i++) {
+                    createTaskButton(Utils.integerToDayOfWeek(i), t.getTitle());
+                }
             }
         }
 
@@ -518,8 +538,11 @@ public class MainActivity extends ActionBarActivity
                     }
                 } else {
                     Task t = (Task) e;
-                    if (Utils.compareTo(t.getDateStart(), firstDay) == 1 && Utils.compareTo(t.getDateStart(), lastDay) == -1) {
-                        result.add(t);
+                    for (Date d : t.getAllDays()) {
+                        if (Utils.compareTo(d, firstDay) == 1 && Utils.compareTo(d, lastDay) == -1) {
+                            result.add(t);
+                            break;
+                        }
                     }
                 }
             }
@@ -604,28 +627,18 @@ public class MainActivity extends ActionBarActivity
         dayLayout.addView(new MeetingButton(this, text), params);
     }
 
-    // TODO Falta per crear
-    private void createTaskButton(String day, String text, int startTime, int endTime)
+    private void createTaskButton(String day, String text)
     {
-        RelativeLayout dayLayout;
-        if (day.equals(MONDAY)) dayLayout = (RelativeLayout) findViewById(R.id.mondayEvents);
-        else if (day.equals(TUESDAY)) dayLayout = (RelativeLayout) findViewById(R.id.tuesdayEvents);
-        else if (day.equals(WEDNESDAY)) dayLayout = (RelativeLayout) findViewById(R.id.wednesdayEvents);
-        else if (day.equals(THURSDAY)) dayLayout = (RelativeLayout) findViewById(R.id.thursdayEvents);
-        else if (day.equals(FRIDAY)) dayLayout = (RelativeLayout) findViewById(R.id.fridayEvents);
-        else if (day.equals(SATURDAY)) dayLayout = (RelativeLayout) findViewById(R.id.saturdayEvents);
-        else if (day.equals(SUNDAY)) dayLayout = (RelativeLayout) findViewById(R.id.sundayEvents);
+        LinearLayout dayLayout;
+        if (day.equals(MONDAY)) dayLayout = (LinearLayout) findViewById(R.id.mondayTasks);
+        else if (day.equals(TUESDAY)) dayLayout = (LinearLayout) findViewById(R.id.tuesdayTasks);
+        else if (day.equals(WEDNESDAY)) dayLayout = (LinearLayout) findViewById(R.id.wednesdayTasks);
+        else if (day.equals(THURSDAY)) dayLayout = (LinearLayout) findViewById(R.id.thursdayTasks);
+        else if (day.equals(FRIDAY)) dayLayout = (LinearLayout) findViewById(R.id.fridayTasks);
+        else if (day.equals(SATURDAY)) dayLayout = (LinearLayout) findViewById(R.id.saturdayTasks);
+        else if (day.equals(SUNDAY)) dayLayout = (LinearLayout) findViewById(R.id.sundayTasks);
         else return;
 
-        int duration = endTime - startTime;
-        int durationInPx = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, duration, getResources().getDisplayMetrics());
-        int marginInPx = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, startTime, getResources().getDisplayMetrics());
-
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, durationInPx);
-        params.setMargins(0, marginInPx, 0, 0);
-        dayLayout.addView(new MeetingButton(this, text), params);
+        dayLayout.addView(new TaskButton(this, text));
     }
 }
