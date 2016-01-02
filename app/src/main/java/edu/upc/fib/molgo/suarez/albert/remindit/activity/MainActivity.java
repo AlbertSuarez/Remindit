@@ -24,6 +24,7 @@ import android.widget.Toast;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import edu.upc.fib.molgo.suarez.albert.remindit.R;
@@ -380,8 +381,17 @@ public class MainActivity extends ActionBarActivity
     {
         // SET start date
         long startTime = Utils.createDate(startDay, startMonth, startYear, 0, 0);
+        // Fix stupid error
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(startTime);
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        startTime = calendar.getTimeInMillis();
         // SET end date
         long endTime = Utils.createDate(endDay, endMonth, endYear, 0, 0);
+        // Fix stupid error
+        calendar.setTimeInMillis(endTime);
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        endTime = calendar.getTimeInMillis();
 
         // Initialize the object that represents the values we want to add
         ContentValues values = new ContentValues();
@@ -409,8 +419,17 @@ public class MainActivity extends ActionBarActivity
     {
         // SET start date
         long startTime = Utils.createDate(day, month, year, startHour, startMinute);
+        // Fix stupid error
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(startTime);
+        calendar.add(Calendar.HOUR_OF_DAY, 5);
+        startTime = calendar.getTimeInMillis();
         // SET end date
         long endTime = Utils.createDate(day, month, year, endHour, endMinute);
+        // Fix stupid error
+        calendar.setTimeInMillis(endTime);
+        calendar.add(Calendar.HOUR_OF_DAY, 5);
+        endTime = calendar.getTimeInMillis();
 
         // Initialize the object that represents the values we want to add
         ContentValues values = new ContentValues();

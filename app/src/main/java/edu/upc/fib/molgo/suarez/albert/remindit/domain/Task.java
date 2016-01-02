@@ -149,6 +149,10 @@ public class Task extends Event {
         this.meetingAssociated = meetingAssociated;
     }
 
+    public boolean hasAMeetingAssociated() {
+        return !this.meetingAssociated.equals("");
+    }
+
     @Override
     public String toString() {
         String result = "";
@@ -157,7 +161,7 @@ public class Task extends Event {
         result += "End date: " + Utils.dateToString(dateEnd);
         if (done) result += "DONE" + "\n";
         else result += "NOT DONE" + "\n";
-        if (meetingAssociated != null)
+        if (hasAMeetingAssociated())
             result += "Associated with a meeting with \'" + meetingAssociated + "\' description \n";
         else
             result += "It is not associated with a meeting \n";
