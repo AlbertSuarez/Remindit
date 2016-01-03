@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.opengl.Visibility;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,6 +17,7 @@ import edu.upc.fib.molgo.suarez.albert.remindit.R;
 import edu.upc.fib.molgo.suarez.albert.remindit.domain.Event;
 import edu.upc.fib.molgo.suarez.albert.remindit.domain.Meeting;
 import edu.upc.fib.molgo.suarez.albert.remindit.domain.Task;
+import edu.upc.fib.molgo.suarez.albert.remindit.utils.MeetingButton;
 import edu.upc.fib.molgo.suarez.albert.remindit.utils.TaskButton;
 
 public class DayViewActivity extends Activity {
@@ -43,7 +46,13 @@ public class DayViewActivity extends Activity {
         for (Event e : eventsOfDay) {
             if (e.isMeeting()) {
                 Meeting m = (Meeting) e;
-
+                int startMinute = m.getTotalStartMinute();
+                int endMinute = m.getTotalEndMinute();
+                int durationInPx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, endMinute - startMinute, getResources().getDisplayMetrics());
+                int marginInPx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, startMinute, getResources().getDisplayMetrics());
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, durationInPx);
+                params.setMargins(0, marginInPx, 0, 0);
+                meetingsToAdd.addView(new MeetingButton(this, m.getDescription()), params);
             }
             else {
                 Task t = (Task) e;
