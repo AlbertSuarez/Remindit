@@ -63,9 +63,10 @@ public class MainActivity extends ActionBarActivity
     public static final String SATURDAY =                   "saturday";
     public static final String SUNDAY =                     "sunday";
 
-    Event eventAdded;
-    String descriptionAssociatedMeeting;
-    long calendarId;
+    private Event eventAdded;
+    private String descriptionAssociatedMeeting;
+    private ArrayList<Task> undoneTasks;
+    private long calendarId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -119,24 +120,25 @@ public class MainActivity extends ActionBarActivity
     {
         if (data == null) return;
         eventAdded = (Event) data.getSerializableExtra(AddActivity.EVENT_TO_SEND);
-        if (!eventAdded.isMeeting()) {
-            descriptionAssociatedMeeting = data.getStringExtra(AddActivity.ASSOCIATED_MEETING);
-        }
+        if (eventAdded != null) {
+            if (!eventAdded.isMeeting()) {
+                descriptionAssociatedMeeting = data.getStringExtra(AddActivity.ASSOCIATED_MEETING);
+            }
 
-        if (eventAdded.isMeeting())
-        {
-            Meeting meeting = (Meeting) eventAdded;
-            addMeeting(meeting.getDescription(), meeting.getDay(), meeting.getMonth(), meeting.getYear(),
-                    meeting.getStartHour(), meeting.getStartMinute(), meeting.getEndHour(), meeting.getEndMinute());
+            if (eventAdded.isMeeting()) {
+                Meeting meeting = (Meeting) eventAdded;
+                addMeeting(meeting.getDescription(), meeting.getDay(), meeting.getMonth(), meeting.getYear(),
+                        meeting.getStartHour(), meeting.getStartMinute(), meeting.getEndHour(), meeting.getEndMinute());
+            } else {
+                Task task = (Task) eventAdded;
+                task.setMeetingAssociated(descriptionAssociatedMeeting);
+                addTask(task.getTitle(), task.getStartDay(), task.getStartMonth(), task.getStartYear(),
+                        task.getEndDay(), task.getEndMonth(), task.getEndYear(), task.getMeetingAssociated());
+            }
+            updateView();
         }
-        else
-        {
-            Task task = (Task) eventAdded;
-            task.setMeetingAssociated(descriptionAssociatedMeeting);
-            addTask(task.getTitle(), task.getStartDay(), task.getStartMonth(), task.getStartYear(),
-                    task.getEndDay(), task.getEndMonth(), task.getEndYear(), task.getMeetingAssociated());
-        }
-        updateView();
+        undoneTasks = (ArrayList<Task>) data.getSerializableExtra(UndoneTasksActivity.TASKS_TO_MODIFY);
+        if (undoneTasks != null) modifyTasks();
     }
 
     private void deleteEventsView()
@@ -639,6 +641,20 @@ public class MainActivity extends ActionBarActivity
                                 selArgs);
     }
 
+    private void setDoneTaskByTitle(String title) {
+        ContentValues values = new ContentValues();
+        values.put(Events.ALL_DAY, DONE_TASK);
+        String selection = Events.TITLE + " = ? " ;
+        String[] selArgs = new String[]{title};
+        int updated =
+                getContentResolver().
+                        update(
+                                Events.CONTENT_URI,
+                                values,
+                                selection,
+                                selArgs);
+    }
+
     private void createMeetingButton(String day, String text, int startTime, int endTime)
     {
         RelativeLayout dayLayout;
@@ -676,5 +692,11 @@ public class MainActivity extends ActionBarActivity
         else return;
 
         dayLayout.addView(new TaskButton(this, text));
+    }
+
+    private void modifyTasks() {
+        for (Task t : undoneTasks) {
+            if (t.isDone()) setDoneTaskByTitle(t.getTitle());
+        }
     }
 }
