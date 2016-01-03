@@ -17,6 +17,20 @@ public class Utils {
 
     public static String[] days = new String[9];
 
+    public static final String JANUARY = "JANUARY";
+    public static final String FEBRUARY = "FEBRUARY";
+    public static final String MARCH = "MARCH";
+    public static final String APRIL = "APRIL";
+    public static final String MAY = "MAY";
+    public static final String JUNE = "JUNE";
+    public static final String JULY = "JULY";
+    public static final String AUGUST = "AUGUST";
+    public static final String SEPTEMBER = "SEPTEMBER";
+    public static final String OCTOBER = "OCTOBER";
+    public static final String NOVEMBER = "NOVEMBER";
+    public static final String DECEMBER = "DECEMBER";
+
+
     public static Date createDate(int day, int month, int year) {
         Calendar cDate = Calendar.getInstance();
         cDate.set(Calendar.DATE, day);
@@ -307,6 +321,30 @@ public class Utils {
         catch (ParseException pe) {
             pe.getStackTrace();
         }
+        return result;
+    }
+
+    public static String getDateInLongFormat(String date) {
+        String[] dateSeparated = date.split("/");
+        String result = "";
+        result += dateSeparated[0];
+        if (dateSeparated[0].equals("1")) result += "st ";
+        else if (dateSeparated[0].equals("2")) result += "nd ";
+        else if (dateSeparated[0].equals("3")) result += "rd ";
+        else result += "th ";
+        if (dateSeparated[1].equals("1")) result += JANUARY + " ";
+        else if (dateSeparated[1].equals("2")) result += FEBRUARY + " ";
+        else if (dateSeparated[1].equals("3")) result += MARCH + " ";
+        else if (dateSeparated[1].equals("4")) result += APRIL + " ";
+        else if (dateSeparated[1].equals("5")) result += MAY + " ";
+        else if (dateSeparated[1].equals("6")) result += JUNE + " ";
+        else if (dateSeparated[1].equals("7")) result += JULY + " ";
+        else if (dateSeparated[1].equals("8")) result += AUGUST + " ";
+        else if (dateSeparated[1].equals("9")) result += SEPTEMBER + " ";
+        else if (dateSeparated[1].equals("10")) result += OCTOBER + " ";
+        else if (dateSeparated[1].equals("11")) result += NOVEMBER + " ";
+        else if (dateSeparated[1].equals("12")) result += DECEMBER + " ";
+        result += dateSeparated[2];
         return result;
     }
 

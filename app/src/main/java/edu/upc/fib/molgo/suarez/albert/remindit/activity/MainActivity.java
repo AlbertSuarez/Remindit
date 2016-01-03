@@ -42,6 +42,8 @@ public class MainActivity extends ActionBarActivity
     public static final String CALENDAR_NAME =              "Remind it Calendar";
     public static final String EVENT_TO_ADD =               "EventToAdd";
     public static final String UNDONE_TASKS_TO_SHOW =       "UndoneTasksToShow";
+    public static final String EVENTS_DAY_TO_SHOW =         "EventsDayToShow";
+    public static final String DATE_IN_LONG_FORMAT =        "DateInLongFormat";
     public static final String TOAST_ERROR_FIND_ID =        "Error to find Calendar";
     public static final String TOAST_ERROR_FORMAT_DATE =    "Error to format Date";
     public static final String CALENDAR_TIME_ZONE =         "Europe/Berlin";
@@ -298,7 +300,10 @@ public class MainActivity extends ActionBarActivity
             @Override
             public void onClick(View v) {
                 ArrayList<Event> eventsOfDay = findByDay(Utils.getDateInStringOfCurrentWeek(0));
-                Log.d("#### EventsOfDay:", eventsOfDay.toString());
+                Intent i = new Intent(MainActivity.this, DayViewActivity.class);
+                i.putExtra(EVENTS_DAY_TO_SHOW, eventsOfDay);
+                i.putExtra(DATE_IN_LONG_FORMAT, Utils.getDateInLongFormat(Utils.getDateInStringOfCurrentWeek(0)));
+                startActivityForResult(i, 0);
             }
         });
         LinearLayout tuesdayLayout = (LinearLayout) findViewById(R.id.tuesday);
@@ -306,7 +311,10 @@ public class MainActivity extends ActionBarActivity
             @Override
             public void onClick(View v) {
                 ArrayList<Event> eventsOfDay = findByDay(Utils.getDateInStringOfCurrentWeek(1));
-                Log.d("#### EventsOfDay:", eventsOfDay.toString());
+                Intent i = new Intent(MainActivity.this, DayViewActivity.class);
+                i.putExtra(EVENTS_DAY_TO_SHOW, eventsOfDay);
+                i.putExtra(DATE_IN_LONG_FORMAT, Utils.getDateInLongFormat(Utils.getDateInStringOfCurrentWeek(1)));
+                startActivityForResult(i, 0);
             }
         });
         LinearLayout wednesdayLayout = (LinearLayout) findViewById(R.id.wednesday);
@@ -314,7 +322,10 @@ public class MainActivity extends ActionBarActivity
             @Override
             public void onClick(View v) {
                 ArrayList<Event> eventsOfDay = findByDay(Utils.getDateInStringOfCurrentWeek(2));
-                Log.d("#### EventsOfDay:", eventsOfDay.toString());
+                Intent i = new Intent(MainActivity.this, DayViewActivity.class);
+                i.putExtra(EVENTS_DAY_TO_SHOW, eventsOfDay);
+                i.putExtra(DATE_IN_LONG_FORMAT, Utils.getDateInLongFormat(Utils.getDateInStringOfCurrentWeek(2)));
+                startActivityForResult(i, 0);
             }
         });
         LinearLayout thursdayLayout = (LinearLayout) findViewById(R.id.thursday);
@@ -322,7 +333,10 @@ public class MainActivity extends ActionBarActivity
             @Override
             public void onClick(View v) {
                 ArrayList<Event> eventsOfDay = findByDay(Utils.getDateInStringOfCurrentWeek(3));
-                Log.d("#### EventsOfDay:", eventsOfDay.toString());
+                Intent i = new Intent(MainActivity.this, DayViewActivity.class);
+                i.putExtra(EVENTS_DAY_TO_SHOW, eventsOfDay);
+                i.putExtra(DATE_IN_LONG_FORMAT, Utils.getDateInLongFormat(Utils.getDateInStringOfCurrentWeek(3)));
+                startActivityForResult(i, 0);
             }
         });
         LinearLayout fridayLayout = (LinearLayout) findViewById(R.id.friday);
@@ -330,7 +344,10 @@ public class MainActivity extends ActionBarActivity
             @Override
             public void onClick(View v) {
                 ArrayList<Event> eventsOfDay = findByDay(Utils.getDateInStringOfCurrentWeek(4));
-                Log.d("#### EventsOfDay:", eventsOfDay.toString());
+                Intent i = new Intent(MainActivity.this, DayViewActivity.class);
+                i.putExtra(EVENTS_DAY_TO_SHOW, eventsOfDay);
+                i.putExtra(DATE_IN_LONG_FORMAT, Utils.getDateInLongFormat(Utils.getDateInStringOfCurrentWeek(4)));
+                startActivityForResult(i, 0);
             }
         });
         LinearLayout saturdayLayout = (LinearLayout) findViewById(R.id.saturday);
@@ -338,7 +355,10 @@ public class MainActivity extends ActionBarActivity
             @Override
             public void onClick(View v) {
                 ArrayList<Event> eventsOfDay = findByDay(Utils.getDateInStringOfCurrentWeek(5));
-                Log.d("#### EventsOfDay:", eventsOfDay.toString());
+                Intent i = new Intent(MainActivity.this, DayViewActivity.class);
+                i.putExtra(EVENTS_DAY_TO_SHOW, eventsOfDay);
+                i.putExtra(DATE_IN_LONG_FORMAT, Utils.getDateInLongFormat(Utils.getDateInStringOfCurrentWeek(5)));
+                startActivityForResult(i, 0);
             }
         });
         LinearLayout sundayLayout = (LinearLayout) findViewById(R.id.sunday);
@@ -346,7 +366,10 @@ public class MainActivity extends ActionBarActivity
             @Override
             public void onClick(View v) {
                 ArrayList<Event> eventsOfDay = findByDay(Utils.getDateInStringOfCurrentWeek(6));
-                Log.d("#### EventsOfDay:", eventsOfDay.toString());
+                Intent i = new Intent(MainActivity.this, DayViewActivity.class);
+                i.putExtra(EVENTS_DAY_TO_SHOW, eventsOfDay);
+                i.putExtra(DATE_IN_LONG_FORMAT, Utils.getDateInLongFormat(Utils.getDateInStringOfCurrentWeek(6)));
+                startActivityForResult(i, 0);
             }
         });
 
