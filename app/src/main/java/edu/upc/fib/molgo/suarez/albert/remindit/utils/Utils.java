@@ -114,8 +114,7 @@ public class Utils {
     public static String[] getDaysOfWeek() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Calendar now = Calendar.getInstance();
-
-        int delta = -now.get(GregorianCalendar.DAY_OF_WEEK) + 2;
+        int delta = -now.get(GregorianCalendar.DAY_OF_WEEK)+2;
         now.add(Calendar.DAY_OF_MONTH, delta);
 
         String year = "-1";
@@ -292,6 +291,23 @@ public class Utils {
         }
         if (dayOfWeekToInteger(getDayOfWeekInString(date2)) < dayOfWeekToInteger(getDayOfWeekInString(date1))) return false;
         return true;
+    }
+
+    public static String getDateInStringOfCurrentWeek(int i) {
+        String result = "";
+        try {
+            result = getFirstDayOfTheCurrentWeek();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = dateFormat.parse(result);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.DAY_OF_MONTH, i);
+            result = dateToString(calendar.getTime());
+        }
+        catch (ParseException pe) {
+            pe.getStackTrace();
+        }
+        return result;
     }
 
     /**

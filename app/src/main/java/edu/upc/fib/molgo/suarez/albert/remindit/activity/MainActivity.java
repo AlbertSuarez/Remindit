@@ -292,6 +292,64 @@ public class MainActivity extends ActionBarActivity
                 updateView();
             }
         });
+
+        LinearLayout mondayLayout = (LinearLayout) findViewById(R.id.monday);
+        mondayLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<Event> eventsOfDay = findByDay(Utils.getDateInStringOfCurrentWeek(0));
+                Log.d("#### EventsOfDay:", eventsOfDay.toString());
+            }
+        });
+        LinearLayout tuesdayLayout = (LinearLayout) findViewById(R.id.tuesday);
+        tuesdayLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<Event> eventsOfDay = findByDay(Utils.getDateInStringOfCurrentWeek(1));
+                Log.d("#### EventsOfDay:", eventsOfDay.toString());
+            }
+        });
+        LinearLayout wednesdayLayout = (LinearLayout) findViewById(R.id.wednesday);
+        wednesdayLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<Event> eventsOfDay = findByDay(Utils.getDateInStringOfCurrentWeek(2));
+                Log.d("#### EventsOfDay:", eventsOfDay.toString());
+            }
+        });
+        LinearLayout thursdayLayout = (LinearLayout) findViewById(R.id.thursday);
+        thursdayLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<Event> eventsOfDay = findByDay(Utils.getDateInStringOfCurrentWeek(3));
+                Log.d("#### EventsOfDay:", eventsOfDay.toString());
+            }
+        });
+        LinearLayout fridayLayout = (LinearLayout) findViewById(R.id.friday);
+        fridayLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<Event> eventsOfDay = findByDay(Utils.getDateInStringOfCurrentWeek(4));
+                Log.d("#### EventsOfDay:", eventsOfDay.toString());
+            }
+        });
+        LinearLayout saturdayLayout = (LinearLayout) findViewById(R.id.saturday);
+        saturdayLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<Event> eventsOfDay = findByDay(Utils.getDateInStringOfCurrentWeek(5));
+                Log.d("#### EventsOfDay:", eventsOfDay.toString());
+            }
+        });
+        LinearLayout sundayLayout = (LinearLayout) findViewById(R.id.sunday);
+        sundayLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<Event> eventsOfDay = findByDay(Utils.getDateInStringOfCurrentWeek(6));
+                Log.d("#### EventsOfDay:", eventsOfDay.toString());
+            }
+        });
+
     }
 
     private void modifyDays(boolean increase)
@@ -580,6 +638,24 @@ public class MainActivity extends ActionBarActivity
         return result;
     }
 
+    private ArrayList<Event> findByDay(String day)
+    {
+        ArrayList<Event> all = list();
+        ArrayList<Event> result = new ArrayList<>();
+        for (Event e : all) {
+            if (e.isMeeting()) {
+                Meeting m = (Meeting) e;
+                if (Utils.dateToString(m.getDate()).equals(day)) result.add(m);
+            } else {
+                Task t = (Task) e;
+                for (Date date : t.getAllDays()) {
+                    if (Utils.dateToString(date).equals(day)) result.add(t);
+                }
+            }
+        }
+        return result;
+    }
+
     private ArrayList<Task> findUndoneTasks()
     {
         ArrayList<Event> list = list();
@@ -641,7 +717,8 @@ public class MainActivity extends ActionBarActivity
                                 selArgs);
     }
 
-    private void setDoneTaskByTitle(String title) {
+    private void setDoneTaskByTitle(String title)
+    {
         ContentValues values = new ContentValues();
         values.put(Events.ALL_DAY, DONE_TASK);
         String selection = Events.TITLE + " = ? " ;
@@ -694,7 +771,8 @@ public class MainActivity extends ActionBarActivity
         dayLayout.addView(new TaskButton(this, text));
     }
 
-    private void modifyTasks() {
+    private void modifyTasks()
+    {
         for (Task t : undoneTasks) {
             if (t.isDone()) setDoneTaskByTitle(t.getTitle());
         }

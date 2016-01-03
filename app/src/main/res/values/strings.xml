@@ -48,5 +48,5 @@
     <string name="cancel_button">Cancel</string>
 
     <string name="undone_tasks">Undone Tasks</string>
-
+    <string name="empty_info">There are not undone tasks currently...</string>
 </resources>

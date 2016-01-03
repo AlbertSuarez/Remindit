@@ -7,6 +7,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -39,6 +40,11 @@ public class UndoneTasksActivity extends Activity {
     }
 
     private void initializeView() {
+        if (!undoneTasks.isEmpty()) {
+            TextView emptyInfo = (TextView) findViewById(R.id.emptyUndoneTasksInfo);
+            emptyInfo.setVisibility(View.GONE);
+        }
+        else return;
         LinearLayout layoutToAdd = (LinearLayout) findViewById(R.id.undoneTaskLayout);
         int marginTenInPx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
         int marginOneInPx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics());
