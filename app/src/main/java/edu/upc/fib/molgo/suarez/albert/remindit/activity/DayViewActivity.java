@@ -56,7 +56,7 @@ public class DayViewActivity extends Activity {
             }
             else {
                 Task t = (Task) e;
-                tasksToAdd.addView(new TaskButton(this, t.getTitle()));
+                tasksToAdd.addView(new TaskButton(this, t.getTitle(), t.isDone()));
                 ++numberOfTasks;
             }
         }

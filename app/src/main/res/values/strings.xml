@@ -49,4 +49,8 @@
 
     <string name="undone_tasks">Undone Tasks</string>
     <string name="empty_info">There are not undone tasks currently...</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
 </resources>

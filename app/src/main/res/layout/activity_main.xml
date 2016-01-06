@@ -48,6 +48,35 @@
 
         </LinearLayout>
 
+        <!--> Sunday Text View <!-->
+        <LinearLayout
+            android:id="@+id/sunday"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_height="36dp"
+            android:layout_weight="2">
+
+            <TextView
+                android:id="@+id/sundayText1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/gray"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/sundayText2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="@color/gray"
+                android:text="@string/sunday_name" />
+
+        </LinearLayout>
+
         <!--> Monday Text View <!-->
         <LinearLayout
             android:id="@+id/monday"
@@ -222,35 +251,6 @@
 
         </LinearLayout>
 
-        <!--> Sunday Text View <!-->
-        <LinearLayout
-            android:id="@+id/sunday"
-            android:layout_width="0dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_height="36dp"
-            android:layout_weight="2">
-
-            <TextView
-                android:id="@+id/sundayText1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/gray"
-                android:text="" />
-
-            <TextView
-                android:id="@+id/sundayText2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="10sp"
-                android:textStyle="bold"
-                android:textColor="@color/gray"
-                android:text="@string/sunday_name" />
-
-        </LinearLayout>
-
     </LinearLayout>
 
     <!--> Divider between Header and Tasks <!-->
@@ -286,6 +286,17 @@
                 android:textStyle="bold"
                 android:textColor="@color/softblack"
                 android:text="" />
+
+        </LinearLayout>
+
+        <!--> Sunday Tasks <!-->
+        <LinearLayout
+            android:id="@+id/sundayTasks"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
 
         </LinearLayout>
 
@@ -351,17 +362,6 @@
             android:gravity="center"
             android:orientation="vertical"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2">
-
-        </LinearLayout>
-
-        <!--> Sunday Tasks <!-->
-        <LinearLayout
-            android:id="@+id/sundayTasks"
-            android:layout_width="0dp"
-            android:gravity="center"
-            android:orientation="vertical"
             android:layout_height="wrap_content"
             android:layout_weight="2">
 
@@ -686,6 +686,23 @@
                     android:layout_height="match_parent"
                     android:background="@color/softgray" />
 
+                <!--> Sunday Events <!-->
+                <RelativeLayout
+                    android:id="@+id/sundayEvents"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2">
+
+                    <include layout="@layout/calendar_events" />
+
+                </RelativeLayout>
+
+                <!--> Separator between Sunday and Monday <!-->
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/softgray" />
+
                 <!--> Monday Events <!-->
                 <RelativeLayout
                     android:id="@+id/mondayEvents"
@@ -774,23 +791,6 @@
                 <!--> Saturday Events <!-->
                 <RelativeLayout
                     android:id="@+id/saturdayEvents"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2">
-
-                    <include layout="@layout/calendar_events" />
-
-                </RelativeLayout>
-
-                <!--> Separator between Saturday and Sunday <!-->
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/softgray" />
-
-                <!--> Sunday Events <!-->
-                <RelativeLayout
-                    android:id="@+id/sundayEvents"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2">

@@ -1,6 +1,8 @@
 package edu.upc.fib.molgo.suarez.albert.remindit.activity;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -15,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -97,19 +100,37 @@ public class MainActivity extends ActionBarActivity
                 i.putExtra(EVENT_TO_ADD, event);
                 startActivityForResult(i, 0);
                 break;
+            case R.id.search_day:
+                final DatePicker datePicker = new DatePicker(this);
+                datePicker.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Change week")
+                        .setMessage("Select the day you want to go")
+                        .setView(datePicker)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Utils.setDaysOfWeek(datePicker.getCalendarView().getDate());
+                                updateView();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setIcon(getResources().getDrawable(R.drawable.ic_menu_forward))
+                        .show();
+                break;
             case R.id.list_undone_tasks:
                 Intent i2 = new Intent(MainActivity.this, UndoneTasksActivity.class);
                 i2.putExtra(UNDONE_TASKS_TO_SHOW, findUndoneTasks());
                 startActivityForResult(i2, 0);
                 break;
-            case R.id.action_settings:
-                Log.d("#### FIND BY WEEK", findByWeek(Utils.getFirstDayOfTheCurrentWeek(), Utils.getLastDayOfTheCurrentWeek()).toString());
-                break;
             case R.id.help:
 
                 break;
             case R.id.about:
-                deleteAll();
+
                 break;
             default:
 
@@ -140,7 +161,10 @@ public class MainActivity extends ActionBarActivity
             updateView();
         }
         undoneTasks = (ArrayList<Task>) data.getSerializableExtra(UndoneTasksActivity.TASKS_TO_MODIFY);
-        if (undoneTasks != null) modifyTasks();
+        if (undoneTasks != null) {
+            modifyTasks();
+            updateView();
+        }
     }
 
     private void deleteEventsView()
@@ -205,6 +229,26 @@ public class MainActivity extends ActionBarActivity
     {
         deleteEventsView();
 
+        TextView monday = (TextView) findViewById(R.id.mondayText1);
+        TextView tuesday = (TextView) findViewById(R.id.tuesdayText1);
+        TextView wednesday = (TextView) findViewById(R.id.wednesdayText1);
+        TextView thursday = (TextView) findViewById(R.id.thursdayText1);
+        TextView friday = (TextView) findViewById(R.id.fridayText1);
+        TextView saturday = (TextView) findViewById(R.id.saturdayText1);
+        TextView sunday = (TextView) findViewById(R.id.sundayText1);
+        TextView month = (TextView) findViewById(R.id.currentMonthTextView);
+        TextView year = (TextView) findViewById(R.id.currentYearTextView);
+
+        sunday.setText(Utils.days[0]);
+        monday.setText(Utils.days[1]);
+        tuesday.setText(Utils.days[2]);
+        wednesday.setText(Utils.days[3]);
+        thursday.setText(Utils.days[4]);
+        friday.setText(Utils.days[5]);
+        saturday.setText(Utils.days[6]);
+        month.setText(Utils.compress(Utils.days[7]));
+        year.setText(Utils.days[8]);
+
         String startDay = Utils.getFirstDayOfTheCurrentWeek();
         String endDay = Utils.getLastDayOfTheCurrentWeek();
         ArrayList<Event> events = findByWeek(startDay, endDay);
@@ -237,7 +281,7 @@ public class MainActivity extends ActionBarActivity
                 int start = Utils.dayOfWeekToInteger(startDate);
                 int end = Utils.dayOfWeekToInteger(endDate);
                 for (int i = start; i <= end; i++) {
-                    createTaskButton(Utils.integerToDayOfWeek(i), t.getTitle());
+                    createTaskButton(Utils.integerToDayOfWeek(i), t.getTitle(), t.isDone());
                 }
             }
         }
@@ -258,13 +302,13 @@ public class MainActivity extends ActionBarActivity
 
         String[] days = Utils.getDaysOfWeek();
 
-        monday.setText(days[0]);
-        tuesday.setText(days[1]);
-        wednesday.setText(days[2]);
-        thursday.setText(days[3]);
-        friday.setText(days[4]);
-        saturday.setText(days[5]);
-        sunday.setText(days[6]);
+        sunday.setText(days[0]);
+        monday.setText(days[1]);
+        tuesday.setText(days[2]);
+        wednesday.setText(days[3]);
+        thursday.setText(days[4]);
+        friday.setText(days[5]);
+        saturday.setText(days[6]);
         month.setText(Utils.compress(days[7]));
         year.setText(days[8]);
 
@@ -272,12 +316,12 @@ public class MainActivity extends ActionBarActivity
         LinearLayout mainLayout = (LinearLayout) findViewById(R.id.mainLayout);
         mainLayout.setOnTouchListener(new OnSwipeTouchListener(this) {
             public void onSwipeRight() {
-                modifyDays(false);
+                Utils.previousWeek();
                 updateView();
             }
 
             public void onSwipeLeft() {
-                modifyDays(true);
+                Utils.nextWeek();
                 updateView();
             }
 
@@ -285,18 +329,18 @@ public class MainActivity extends ActionBarActivity
         ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView);
         scrollView.setOnTouchListener(new OnSwipeTouchListener(this) {
             public void onSwipeRight() {
-                modifyDays(false);
+                Utils.previousWeek();
                 updateView();
             }
 
             public void onSwipeLeft() {
-                modifyDays(true);
+                Utils.nextWeek();
                 updateView();
             }
         });
 
-        LinearLayout mondayLayout = (LinearLayout) findViewById(R.id.monday);
-        mondayLayout.setOnClickListener(new View.OnClickListener() {
+        LinearLayout sundayLayout = (LinearLayout) findViewById(R.id.sunday);
+        sundayLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ArrayList<Event> eventsOfDay = findByDay(Utils.getDateInStringOfCurrentWeek(0));
@@ -306,8 +350,8 @@ public class MainActivity extends ActionBarActivity
                 startActivityForResult(i, 0);
             }
         });
-        LinearLayout tuesdayLayout = (LinearLayout) findViewById(R.id.tuesday);
-        tuesdayLayout.setOnClickListener(new View.OnClickListener() {
+        LinearLayout mondayLayout = (LinearLayout) findViewById(R.id.monday);
+        mondayLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ArrayList<Event> eventsOfDay = findByDay(Utils.getDateInStringOfCurrentWeek(1));
@@ -317,8 +361,8 @@ public class MainActivity extends ActionBarActivity
                 startActivityForResult(i, 0);
             }
         });
-        LinearLayout wednesdayLayout = (LinearLayout) findViewById(R.id.wednesday);
-        wednesdayLayout.setOnClickListener(new View.OnClickListener() {
+        LinearLayout tuesdayLayout = (LinearLayout) findViewById(R.id.tuesday);
+        tuesdayLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ArrayList<Event> eventsOfDay = findByDay(Utils.getDateInStringOfCurrentWeek(2));
@@ -328,8 +372,8 @@ public class MainActivity extends ActionBarActivity
                 startActivityForResult(i, 0);
             }
         });
-        LinearLayout thursdayLayout = (LinearLayout) findViewById(R.id.thursday);
-        thursdayLayout.setOnClickListener(new View.OnClickListener() {
+        LinearLayout wednesdayLayout = (LinearLayout) findViewById(R.id.wednesday);
+        wednesdayLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ArrayList<Event> eventsOfDay = findByDay(Utils.getDateInStringOfCurrentWeek(3));
@@ -339,8 +383,8 @@ public class MainActivity extends ActionBarActivity
                 startActivityForResult(i, 0);
             }
         });
-        LinearLayout fridayLayout = (LinearLayout) findViewById(R.id.friday);
-        fridayLayout.setOnClickListener(new View.OnClickListener() {
+        LinearLayout thursdayLayout = (LinearLayout) findViewById(R.id.thursday);
+        thursdayLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ArrayList<Event> eventsOfDay = findByDay(Utils.getDateInStringOfCurrentWeek(4));
@@ -350,8 +394,8 @@ public class MainActivity extends ActionBarActivity
                 startActivityForResult(i, 0);
             }
         });
-        LinearLayout saturdayLayout = (LinearLayout) findViewById(R.id.saturday);
-        saturdayLayout.setOnClickListener(new View.OnClickListener() {
+        LinearLayout fridayLayout = (LinearLayout) findViewById(R.id.friday);
+        fridayLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ArrayList<Event> eventsOfDay = findByDay(Utils.getDateInStringOfCurrentWeek(5));
@@ -361,8 +405,8 @@ public class MainActivity extends ActionBarActivity
                 startActivityForResult(i, 0);
             }
         });
-        LinearLayout sundayLayout = (LinearLayout) findViewById(R.id.sunday);
-        sundayLayout.setOnClickListener(new View.OnClickListener() {
+        LinearLayout saturdayLayout = (LinearLayout) findViewById(R.id.saturday);
+        saturdayLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ArrayList<Event> eventsOfDay = findByDay(Utils.getDateInStringOfCurrentWeek(6));
@@ -372,34 +416,6 @@ public class MainActivity extends ActionBarActivity
                 startActivityForResult(i, 0);
             }
         });
-
-    }
-
-    private void modifyDays(boolean increase)
-    {
-        TextView monday = (TextView) findViewById(R.id.mondayText1);
-        TextView tuesday = (TextView) findViewById(R.id.tuesdayText1);
-        TextView wednesday = (TextView) findViewById(R.id.wednesdayText1);
-        TextView thursday = (TextView) findViewById(R.id.thursdayText1);
-        TextView friday = (TextView) findViewById(R.id.fridayText1);
-        TextView saturday = (TextView) findViewById(R.id.saturdayText1);
-        TextView sunday = (TextView) findViewById(R.id.sundayText1);
-        TextView month = (TextView) findViewById(R.id.currentMonthTextView);
-        TextView year = (TextView) findViewById(R.id.currentYearTextView);
-
-        String[] days;
-        if (increase) days = Utils.nextWeek();
-        else days = Utils.previousWeek();
-
-        monday.setText(days[0]);
-        tuesday.setText(days[1]);
-        wednesday.setText(days[2]);
-        thursday.setText(days[3]);
-        friday.setText(days[4]);
-        saturday.setText(days[5]);
-        sunday.setText(days[6]);
-        month.setText(Utils.compress(days[7]));
-        year.setText(days[8]);
     }
 
     private void initializeProvider()
@@ -535,97 +551,6 @@ public class MainActivity extends ActionBarActivity
         return new Long(uri.getLastPathSegment());
     }
 
-    private Meeting findMeetingByDescription(String description)
-    {
-        String[] projection = new String[]{
-                Events._ID,
-                Events.TITLE,
-                Events.DTSTART,
-                Events.DTEND
-        };
-        String selection = Events.TITLE + " = ? " ;
-        String[] selArgs = new String[]{description};
-        Cursor cursor =
-                getContentResolver().
-                        query(
-                                Events.CONTENT_URI,
-                                projection,
-                                selection,
-                                selArgs,
-                                null);
-        if (cursor.moveToFirst()) {
-            return new Meeting( cursor.getLong(0),
-                                new Date(cursor.getLong(2)),
-                                new Date(cursor.getLong(3)),
-                                cursor.getString(1));
-        }
-        cursor.close();
-        return new Meeting();
-    }
-
-    private Meeting findMeetingById(long id)
-    {
-        String[] projection = new String[]{
-                Events._ID,
-                Events.TITLE,
-                Events.DTSTART,
-                Events.DTEND
-        };
-        String selection = Events._ID + " = ? " ;
-        String[] selArgs = new String[]{Long.toString(id)};
-        Cursor cursor =
-                getContentResolver().
-                        query(
-                                Events.CONTENT_URI,
-                                projection,
-                                selection,
-                                selArgs,
-                                null);
-        if (cursor.moveToFirst()) {
-            return new Meeting( cursor.getLong(0),
-                                new Date(cursor.getLong(2)),
-                                new Date(cursor.getLong(3)),
-                                cursor.getString(1));
-        }
-        cursor.close();
-        return new Meeting();
-    }
-
-    private Task findTaskByTitle(String title)
-    {
-        String[] projection = new String[]{
-                Events._ID,
-                Events.TITLE,
-                Events.DTSTART,
-                Events.DTEND,
-                Events.ALL_DAY,
-                Events.DESCRIPTION
-        };
-        String selection = Events.TITLE + " = ? " ;
-        String[] selArgs = new String[]{title};
-        Cursor cursor =
-                getContentResolver().
-                        query(
-                                Events.CONTENT_URI,
-                                projection,
-                                selection,
-                                selArgs,
-                                null);
-        if (cursor.moveToFirst()) {
-            boolean done;
-            if (cursor.getInt(4) == DONE_TASK) done = true;
-            else done = false;
-            return new Task(    cursor.getLong(0),
-                                cursor.getString(1),
-                                new Date(cursor.getLong(2)),
-                                new Date(cursor.getLong(3)),
-                                done,
-                                cursor.getString(5));
-        }
-        cursor.close();
-        return new Task();
-    }
-
     private ArrayList<Event> findByWeek(String firstDayString, String lastDayString)
     {
         ArrayList<Event> result = new ArrayList<>();
@@ -740,12 +665,12 @@ public class MainActivity extends ActionBarActivity
                                 selArgs);
     }
 
-    private void setDoneTaskByTitle(String title)
+    private void setDoneTaskById(long id)
     {
         ContentValues values = new ContentValues();
         values.put(Events.ALL_DAY, DONE_TASK);
-        String selection = Events.TITLE + " = ? " ;
-        String[] selArgs = new String[]{title};
+        String selection = Events._ID + " = ? " ;
+        String[] selArgs = new String[]{Long.toString(id)};
         int updated =
                 getContentResolver().
                         update(
@@ -779,7 +704,7 @@ public class MainActivity extends ActionBarActivity
         dayLayout.addView(new MeetingButton(this, text), params);
     }
 
-    private void createTaskButton(String day, String text)
+    private void createTaskButton(String day, String text, boolean isDone)
     {
         LinearLayout dayLayout;
         if (day.equals(MONDAY)) dayLayout = (LinearLayout) findViewById(R.id.mondayTasks);
@@ -791,13 +716,13 @@ public class MainActivity extends ActionBarActivity
         else if (day.equals(SUNDAY)) dayLayout = (LinearLayout) findViewById(R.id.sundayTasks);
         else return;
 
-        dayLayout.addView(new TaskButton(this, text));
+        dayLayout.addView(new TaskButton(this, text, isDone));
     }
 
     private void modifyTasks()
     {
         for (Task t : undoneTasks) {
-            if (t.isDone()) setDoneTaskByTitle(t.getTitle());
+            if (t.isDone()) setDoneTaskById(t.getId());
         }
     }
 }

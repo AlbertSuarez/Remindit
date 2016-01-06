@@ -27,6 +27,10 @@ public class Event implements Serializable {
 
     }
 
+    public long getId() {
+        return id;
+    }
+
     public void setReminder(Reminder reminder) {
         this.reminder = reminder;
     }

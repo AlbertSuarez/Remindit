@@ -1,6 +1,8 @@
 package edu.upc.fib.molgo.suarez.albert.remindit.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -50,23 +52,48 @@ public class UndoneTasksActivity extends Activity {
         int marginOneInPx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics());
         LinearLayout.LayoutParams layoutParams;
         for (Task t : undoneTasks) {
-            TaskLayout layout = new TaskLayout(this, t.getTitle(), Utils.dateToString(t.getDateStart()), Utils.dateToString(t.getDateEnd()), t.getMeetingAssociated());
+            final Long id = t.getId();
+            final TaskLayout layout = new TaskLayout(this, t.getTitle(), Utils.dateToString(t.getDateStart()), Utils.dateToString(t.getDateEnd()), t.getMeetingAssociated());
             layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             layoutParams.setMargins(marginTenInPx, 0, 0, marginTenInPx);
             layoutToAdd.addView(layout, layoutParams);
 
-            layout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // TODO Go to task view
-                }
-            });
-
-            View view = new View(this);
+            final View view = new View(this);
             view.setBackgroundColor(getResources().getColor(R.color.gray));
             layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, marginOneInPx);
             layoutParams.setMargins(0, 0, 0, marginTenInPx);
             layoutToAdd.addView(view, layoutParams);
+
+            layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new AlertDialog.Builder(UndoneTasksActivity.this)
+                            .setTitle("Set Done a task")
+                            .setMessage("Are you sure you want to set done this task?")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    for (Task t : undoneTasks) {
+                                        if (t.getId() == id) {
+                                            t.setDone(true);
+                                            break;
+                                        }
+                                    }
+                                    layout.setVisibility(View.GONE);
+                                    view.setVisibility(View.GONE);
+                                    TextView emptyInfo = (TextView) findViewById(R.id.emptyUndoneTasksInfo);
+                                    emptyInfo.setVisibility(View.VISIBLE);
+
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // do nothing
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_menu_edit)
+                            .show();
+                }
+            });
         }
     }
 }

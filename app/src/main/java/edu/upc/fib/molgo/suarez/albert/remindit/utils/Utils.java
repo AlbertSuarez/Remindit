@@ -128,7 +128,7 @@ public class Utils {
     public static String[] getDaysOfWeek() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Calendar now = Calendar.getInstance();
-        int delta = -now.get(GregorianCalendar.DAY_OF_WEEK)+2;
+        int delta = -now.get(GregorianCalendar.DAY_OF_WEEK) + 1;
         now.add(Calendar.DAY_OF_MONTH, delta);
 
         String year = "-1";
@@ -148,11 +148,34 @@ public class Utils {
         return days;
     }
 
+    public static void setDaysOfWeek(long date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(date);
+        int delta = -calendar.get(GregorianCalendar.DAY_OF_WEEK) + 1;
+        calendar.add(Calendar.DAY_OF_MONTH, delta);
+
+        String year = "-1";
+        String month = "-1";
+
+        for (int i = 0; i < 7; i++) {
+            String day = dateFormat.format(calendar.getTime());
+            days[i] = day.substring(0, 2);
+            if (i == 0) {
+                month = day.substring(3, 5);
+                year = day.substring(6);
+            }
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        days[7] = month;
+        days[8] = year;
+    }
+
     public static String[] nextWeek() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Calendar calendar = Calendar.getInstance();
 
-        int delta = -calendar.get(GregorianCalendar.DAY_OF_WEEK) + 2;
+        int delta = -calendar.get(GregorianCalendar.DAY_OF_WEEK) + 1;
         calendar.add(Calendar.DAY_OF_MONTH, delta);
 
         calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(days[0]));
@@ -181,7 +204,7 @@ public class Utils {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Calendar calendar = Calendar.getInstance();
 
-        int delta = -calendar.get(GregorianCalendar.DAY_OF_WEEK) + 2;
+        int delta = -calendar.get(GregorianCalendar.DAY_OF_WEEK) + 1;
         calendar.add(Calendar.DAY_OF_MONTH, delta);
 
         calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(days[0]));
@@ -291,20 +314,6 @@ public class Utils {
     public static boolean isSameDay(Date date1, Date date2) {
         if (getDay(date1) == getDay(date2) && getMonth(date1) == getMonth(date2) && getYear(date1) == getYear(date2)) return true;
         return false;
-    }
-
-    public static boolean isSameWeek(Date date1, Date date2) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date1);
-        int count = 0;
-        while (!isSameDay(date1, date2)) {
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
-            ++count;
-            date1 = calendar.getTime();
-            if (count > 6) return false;
-        }
-        if (dayOfWeekToInteger(getDayOfWeekInString(date2)) < dayOfWeekToInteger(getDayOfWeekInString(date1))) return false;
-        return true;
     }
 
     public static String getDateInStringOfCurrentWeek(int i) {

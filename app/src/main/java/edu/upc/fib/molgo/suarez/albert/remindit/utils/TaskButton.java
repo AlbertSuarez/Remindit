@@ -9,11 +9,13 @@ import edu.upc.fib.molgo.suarez.albert.remindit.R;
 
 public class TaskButton extends Button {
 
-    public TaskButton(Context context, String text) {
+    public TaskButton(Context context, String text, boolean isDone) {
         super(context);
-        setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        int heightInPx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics());
+        setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, heightInPx));
         setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
-        setBackgroundColor(getResources().getColor(R.color.darkorange));
+        if (isDone) setBackground(getResources().getDrawable(R.drawable.done_task_button));
+        else setBackground(getResources().getDrawable(R.drawable.undone_task_button));
         setText(text);
     }
 }
