@@ -1,19 +1,30 @@
 package edu.upc.fib.molgo.suarez.albert.remindit.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -34,14 +45,15 @@ public class AddActivity extends Activity {
     public static final String THIRD_TITLE_TASK = "End date";
     public static final String FOURTH_TITLE_MEETING = "Description";
     public static final String FOURTH_TITLE_TASK = "Associated meeting";
-    public static final String HELP_TASK = "All dates must be in dd/mm/yyyy\nand the associated meeting must exist (optional)";
-    public static final String HELP_MEETING = "All dates must be in dd/mm/yyyy format\nand all hours must be in hh:mm format";
+    public static final String HELP_TASK = "\n";
+    public static final String HELP_MEETING = "\n";
     public static final String TOAST_ERROR = "Some field is in a wrong format or empty";
-
+    public static final String EMPTY_MEETINGS = "There are not meetings to associate";
     public static final String EVENT_TO_SEND = "EventToSend";
     public static final String ASSOCIATED_MEETING = "AssociatedMeeting";
 
     private Event event;
+    private ArrayList<String> meetings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -49,6 +61,7 @@ public class AddActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_events);
         event = (Event) getIntent().getSerializableExtra(MainActivity.EVENT_TO_ADD);
+        meetings = (ArrayList<String>) getIntent().getSerializableExtra(MainActivity.LIST_MEETINGS);
         try {
             initializeView();
         } catch (ParseException e) {
@@ -96,28 +109,212 @@ public class AddActivity extends Activity {
                     case R.id.meeting_button:
                         firstOption.setText(FIRST_TITLE_MEETING);
                         firstField.setVisibility(View.VISIBLE);
+                        firstField.setText(EMPTY);
+                        firstField.setInputType(InputType.TYPE_DATETIME_VARIATION_DATE);
+                        firstField.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                final DatePicker datePicker = new DatePicker(AddActivity.this);
+                                datePicker.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                                new AlertDialog.Builder(AddActivity.this)
+                                        .setTitle("Select a day")
+                                        .setMessage("Select the meeting's day")
+                                        .setView(datePicker)
+                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                firstField.setText(Utils.getDayInString(datePicker.getCalendarView().getDate()));
+                                            }
+                                        })
+                                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                // do nothing
+                                            }
+                                        })
+                                        .setIcon(getResources().getDrawable(R.drawable.ic_menu_month))
+                                        .show();
+                            }
+                        });
                         secondOption.setText(SECOND_TITLE_MEETING);
                         secondField.setVisibility(View.VISIBLE);
-                        secondField.setInputType(InputType.TYPE_DATETIME_VARIATION_TIME);
+                        secondField.setText(EMPTY);
+                        secondField.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                final TimePicker timePicker = new TimePicker(AddActivity.this);
+                                timePicker.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                                new AlertDialog.Builder(AddActivity.this)
+                                        .setTitle("Select a start time")
+                                        .setMessage("Select the meeting's start time")
+                                        .setView(timePicker)
+                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                secondField.setText(Utils.hourAndMinuteToString(timePicker.getCurrentHour(), timePicker.getCurrentMinute()));
+                                            }
+                                        })
+                                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                // do nothing
+                                            }
+                                        })
+                                        .setIcon(getResources().getDrawable(R.drawable.ic_menu_recent_history))
+                                        .show();
+                            }
+                        });
                         thirdOption.setText(THIRD_TITLE_MEETING);
                         thirdField.setVisibility(View.VISIBLE);
-                        thirdField.setInputType(InputType.TYPE_DATETIME_VARIATION_TIME);
+                        thirdField.setText(EMPTY);
+                        thirdField.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                final TimePicker timePicker = new TimePicker(AddActivity.this);
+                                timePicker.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                                new AlertDialog.Builder(AddActivity.this)
+                                        .setTitle("Select a end time")
+                                        .setMessage("Select the meeting's end time")
+                                        .setView(timePicker)
+                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                thirdField.setText(Utils.hourAndMinuteToString(timePicker.getCurrentHour(), timePicker.getCurrentMinute()));
+                                            }
+                                        })
+                                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                // do nothing
+                                            }
+                                        })
+                                        .setIcon(getResources().getDrawable(R.drawable.ic_menu_recent_history))
+                                        .show();
+                            }
+                        });
                         fourthOption.setText(FOURTH_TITLE_MEETING);
                         fourthField.setVisibility(View.VISIBLE);
+                        fourthField.setText(EMPTY);
+                        fourthField.setOnClickListener(null);
                         help.setText(HELP_MEETING);
                         break;
                     case R.id.task_button:
                         firstOption.setText(FIRST_TITLE_TASK);
                         firstField.setVisibility(View.VISIBLE);
+                        firstField.setText(EMPTY);
                         firstField.setInputType(InputType.TYPE_CLASS_TEXT);
+                        firstField.setOnClickListener(null);
                         secondOption.setText(SECOND_TITLE_TASK);
                         secondField.setVisibility(View.VISIBLE);
+                        secondField.setText(EMPTY);
                         secondField.setInputType(InputType.TYPE_DATETIME_VARIATION_DATE);
+                        secondField.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                final DatePicker datePicker = new DatePicker(AddActivity.this);
+                                datePicker.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                                new AlertDialog.Builder(AddActivity.this)
+                                        .setTitle("Select a start day")
+                                        .setMessage("Select the task's start day")
+                                        .setView(datePicker)
+                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                secondField.setText(Utils.getDayInString(datePicker.getCalendarView().getDate()));
+                                            }
+                                        })
+                                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                // do nothing
+                                            }
+                                        })
+                                        .setIcon(getResources().getDrawable(R.drawable.ic_menu_month))
+                                        .show();
+                            }
+                        });
                         thirdOption.setText(THIRD_TITLE_TASK);
                         thirdField.setVisibility(View.VISIBLE);
+                        thirdField.setText(EMPTY);
                         thirdField.setInputType(InputType.TYPE_DATETIME_VARIATION_DATE);
+                        thirdField.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                final DatePicker datePicker = new DatePicker(AddActivity.this);
+                                datePicker.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                                new AlertDialog.Builder(AddActivity.this)
+                                        .setTitle("Select a end day")
+                                        .setMessage("Select the task's end day")
+                                        .setView(datePicker)
+                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                thirdField.setText(Utils.getDayInString(datePicker.getCalendarView().getDate()));
+                                            }
+                                        })
+                                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                // do nothing
+                                            }
+                                        })
+                                        .setIcon(getResources().getDrawable(R.drawable.ic_menu_month))
+                                        .show();
+                            }
+                        });
                         fourthOption.setText(FOURTH_TITLE_TASK);
                         fourthField.setVisibility(View.VISIBLE);
+                        fourthField.setText(EMPTY);
+                        fourthField.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (meetings.size() != 0) {
+                                    final RadioGroup group = new RadioGroup(AddActivity.this);
+                                    group.setOrientation(LinearLayout.VERTICAL);
+                                    for (String s : meetings) {
+                                        RadioButton button = new RadioButton(AddActivity.this);
+                                        button.setText(s);
+                                        group.addView(button);
+                                    }
+                                    new AlertDialog.Builder(AddActivity.this)
+                                            .setTitle("Select an associated meeting")
+                                            .setMessage("Select the associated meeting (if exists)")
+                                            .setView(group)
+                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    String text = EMPTY;
+                                                    for (int i = 0; i < group.getChildCount(); i++) {
+                                                        RadioButton button = (RadioButton) group.getChildAt(i);
+                                                        if (button.isChecked()) {
+                                                            text = button.getText().toString();
+                                                            break;
+                                                        }
+
+                                                    }
+                                                    fourthField.setText(text);
+                                                }
+                                            })
+                                            .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    // do nothing
+                                                }
+                                            })
+                                            .setIcon(getResources().getDrawable(R.drawable.ic_menu_attachment))
+                                            .show();
+                                }
+                                else {
+                                    final TextView textView = new TextView(AddActivity.this);
+                                    textView.setText(EMPTY_MEETINGS);
+                                    textView.setTypeface(null, Typeface.ITALIC);
+                                    new AlertDialog.Builder(AddActivity.this)
+                                            .setTitle("Select an associated meeting")
+                                            .setMessage("Select the associated meeting (if exists)")
+                                            .setView(textView)
+                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    fourthField.setText(EMPTY);
+                                                }
+                                            })
+                                            .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    // do nothing
+                                                }
+                                            })
+                                            .setIcon(getResources().getDrawable(R.drawable.ic_menu_attachment))
+                                            .show();
+                                }
+                            }
+                        });
                         help.setText(HELP_TASK);
                         break;
                     default:
@@ -136,7 +333,8 @@ public class AddActivity extends Activity {
                         Date startDate, endDate;
                         String description;
 
-                        if (fourthField.getText().toString().isEmpty()) throw new ParseException("Empty Description", 138);
+                        if (fourthField.getText().toString().isEmpty())
+                            throw new ParseException("Empty Description", 138);
                         description = fourthField.getText().toString();
 
                         startDate = dateFormat.parse(firstField.getText().toString());
@@ -165,14 +363,15 @@ public class AddActivity extends Activity {
                         i.putExtra(EVENT_TO_SEND, event);
                         setResult(RESULT_OK, i);
                         finish();
-                    }
-                    else if (taskButton.isChecked()) {
+                    } else if (taskButton.isChecked()) {
                         Date startDate, endDate;
                         String title;
                         String meetingAssociated = EMPTY;
 
-                        if (firstField.getText().toString().isEmpty()) throw new ParseException("Empty Title", 183);
-                        if (!fourthField.getText().toString().isEmpty()) meetingAssociated = fourthField.getText().toString();
+                        if (firstField.getText().toString().isEmpty())
+                            throw new ParseException("Empty Title", 183);
+                        if (!fourthField.getText().toString().isEmpty())
+                            meetingAssociated = fourthField.getText().toString();
 
                         startDate = dateFormat.parse(secondField.getText().toString());
                         endDate = dateFormat.parse(thirdField.getText().toString());
@@ -205,8 +404,7 @@ public class AddActivity extends Activity {
                         setResult(RESULT_OK, i);
                         finish();
                     }
-                }
-                catch (ParseException pe) {
+                } catch (ParseException pe) {
                     Toast.makeText(AddActivity.this, TOAST_ERROR, Toast.LENGTH_LONG).show();
                 }
             }

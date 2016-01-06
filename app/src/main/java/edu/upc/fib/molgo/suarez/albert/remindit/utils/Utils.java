@@ -120,6 +120,14 @@ public class Utils {
         return result + "\n";
     }
 
+    public static String hourAndMinuteToString(int hour, int minute) {
+        String result = "";
+        if (hour < 10) result += "0" + hour; else result += hour;
+        result += ":";
+        if (minute < 10) result += "0" + minute; else result += minute;
+        return result;
+    }
+
     /**
      * days[0]-[6]: number of the days
      * days[7]: month of the first day of the week
@@ -379,5 +387,11 @@ public class Utils {
         date = calendar.getTime();
         limits[1] = date;
         return limits;
+    }
+
+    public static String getDayInString(long date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(date);
+        return dateToString(calendar.getTime());
     }
 }

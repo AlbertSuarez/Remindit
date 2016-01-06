@@ -47,8 +47,11 @@ public class MainActivity extends ActionBarActivity
     public static final String UNDONE_TASKS_TO_SHOW =       "UndoneTasksToShow";
     public static final String EVENTS_DAY_TO_SHOW =         "EventsDayToShow";
     public static final String DATE_IN_LONG_FORMAT =        "DateInLongFormat";
+    public static final String LIST_MEETINGS =              "ListMeetings";
     public static final String TOAST_ERROR_FIND_ID =        "Error to find Calendar";
     public static final String TOAST_ERROR_FORMAT_DATE =    "Error to format Date";
+    public static final String TOAST_DELETE_SUCCESSFULLY =  "All data have been deleted successfully";
+    public static final String TOAST_ADD_SUCCESSFULLY =     "Event has been added successfully";
     public static final String CALENDAR_TIME_ZONE =         "Europe/Berlin";
     public static final String OWNER_ACCOUNT =              "some.account@googlemail.com";
     public static final String UTC_TIME_ZONE =              "UTC";
@@ -98,6 +101,7 @@ public class MainActivity extends ActionBarActivity
                 Event event = new Event();
                 Intent i = new Intent(MainActivity.this, AddActivity.class);
                 i.putExtra(EVENT_TO_ADD, event);
+                i.putExtra(LIST_MEETINGS, listDescriptionsMeetings());
                 startActivityForResult(i, 0);
                 break;
             case R.id.search_day:
@@ -126,11 +130,30 @@ public class MainActivity extends ActionBarActivity
                 i2.putExtra(UNDONE_TASKS_TO_SHOW, findUndoneTasks());
                 startActivityForResult(i2, 0);
                 break;
+            case R.id.delete:
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Delete All Data")
+                        .setMessage("Are you sure you want to delete all data?")
+                        .setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                deleteAll();
+                                updateView();
+                                Toast.makeText(MainActivity.this, TOAST_DELETE_SUCCESSFULLY, Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setIcon(getResources().getDrawable(R.drawable.ic_menu_close_clear_cancel))
+                        .show();
+                break;
             case R.id.help:
-
+                // TODO Help!
                 break;
             case R.id.about:
-
+                // TODO About!
                 break;
             default:
 
@@ -159,6 +182,8 @@ public class MainActivity extends ActionBarActivity
                         task.getEndDay(), task.getEndMonth(), task.getEndYear(), task.getMeetingAssociated());
             }
             updateView();
+            // TODO No add two meeting with the same schedule
+            Toast.makeText(MainActivity.this, TOAST_ADD_SUCCESSFULLY, Toast.LENGTH_LONG).show();
         }
         undoneTasks = (ArrayList<Task>) data.getSerializableExtra(UndoneTasksActivity.TASKS_TO_MODIFY);
         if (undoneTasks != null) {
@@ -617,6 +642,19 @@ public class MainActivity extends ActionBarActivity
         return undoneTasks;
     }
 
+    private ArrayList<String> listDescriptionsMeetings()
+    {
+        ArrayList<Event> all = list();
+        ArrayList<String> result = new ArrayList<>();
+        for (Event e : all) {
+            if (e.isMeeting()) {
+                Meeting m = (Meeting) e;
+                result.add(m.getDescription());
+            }
+        }
+        return result;
+    }
+
     private ArrayList<Event> list()
     {
         ArrayList<Event> events = new ArrayList<>();
@@ -702,6 +740,7 @@ public class MainActivity extends ActionBarActivity
                 ViewGroup.LayoutParams.WRAP_CONTENT, durationInPx);
         params.setMargins(0, marginInPx, 0, 0);
         dayLayout.addView(new MeetingButton(this, text), params);
+        // TODO Delete Meeting on click
     }
 
     private void createTaskButton(String day, String text, boolean isDone)
@@ -717,6 +756,7 @@ public class MainActivity extends ActionBarActivity
         else return;
 
         dayLayout.addView(new TaskButton(this, text, isDone));
+        // TODO Delete Task on click
     }
 
     private void modifyTasks()

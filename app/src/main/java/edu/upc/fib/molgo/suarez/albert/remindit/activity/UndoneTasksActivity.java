@@ -80,8 +80,15 @@ public class UndoneTasksActivity extends Activity {
                                     }
                                     layout.setVisibility(View.GONE);
                                     view.setVisibility(View.GONE);
-                                    TextView emptyInfo = (TextView) findViewById(R.id.emptyUndoneTasksInfo);
-                                    emptyInfo.setVisibility(View.VISIBLE);
+
+                                    int cont = 0;
+                                    for (Task t : undoneTasks) {
+                                        if (t.isDone()) ++cont;
+                                    }
+                                    if (cont == undoneTasks.size()) {
+                                        TextView emptyInfo = (TextView) findViewById(R.id.emptyUndoneTasksInfo);
+                                        emptyInfo.setVisibility(View.VISIBLE);
+                                    }
 
                                 }
                             })
