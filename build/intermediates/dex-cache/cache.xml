@@ -2,6 +2,13 @@
 <items version="2" >
 
     <item
+        jar="C:\Users\suaar\AndroidStudioProjects\Remindit\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\jars\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="C:\Users\suaar\AndroidStudioProjects\Remindit\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-21.0.3_0b230964cb7ec7bccced4bcbb5f688da3737c1a8.jar" />
+    </item>
+    <item
         jar="C:\Users\suaar\AndroidStudioProjects\Remindit\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\jars\classes.jar"
         jumboMode="false"
         revision="21.1.2"
@@ -14,13 +21,6 @@
         revision="21.1.2"
         sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
         <dex dex="C:\Users\suaar\AndroidStudioProjects\Remindit\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3_60fbd026a42a7acfc9c440d228d91bf56aab28f9.jar" />
-    </item>
-    <item
-        jar="C:\Users\suaar\AndroidStudioProjects\Remindit\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\jars\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="C:\Users\suaar\AndroidStudioProjects\Remindit\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-21.0.3_0b230964cb7ec7bccced4bcbb5f688da3737c1a8.jar" />
     </item>
     <item
         jar="C:\Users\suaar\AndroidStudioProjects\Remindit\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\jars\libs\internal_impl-21.0.3.jar"
