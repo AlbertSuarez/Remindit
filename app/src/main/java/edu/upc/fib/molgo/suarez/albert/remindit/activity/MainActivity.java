@@ -151,6 +151,7 @@ public class MainActivity extends ActionBarActivity
                 break;
             case R.id.help:
                 // TODO Help!
+                Log.d("List Events:", findByWeek(Utils.getFirstDayOfTheCurrentWeek(), Utils.getLastDayOfTheCurrentWeek()).toString());
                 break;
             case R.id.about:
                 // TODO About!
@@ -292,6 +293,8 @@ public class MainActivity extends ActionBarActivity
                 Date dEnd = new Date();
                 Date dAnt = new Date();
                 Date[] limits = Utils.getLimitsOfCurrentWeek();
+                Log.d("Limit inferior:", Utils.dateToString(limits[0]));
+                Log.d("Limit superior:", Utils.dateToString(limits[1]));
                 int count = 0;
                 for (Date d : t.getAllDays()) {
                     if (Utils.compareTo(d, limits[0]) == 1 && Utils.compareTo(d, limits[1]) == -1) {
@@ -301,6 +304,7 @@ public class MainActivity extends ActionBarActivity
                     }
                 }
                 if (count > 0) dEnd = dAnt;
+                Log.d("Count:", Integer.toString(count));
                 String startDate = Utils.getDayOfWeekInString(dSt);
                 String endDate = Utils.getDayOfWeekInString(dEnd);
                 int start = Utils.dayOfWeekToInteger(startDate);

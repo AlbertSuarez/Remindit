@@ -298,24 +298,24 @@ public class Utils {
     }
 
     public static int dayOfWeekToInteger(String day) {
-        if (day.equals(MainActivity.MONDAY)) return 1;
-        if (day.equals(MainActivity.TUESDAY)) return 2;
-        if (day.equals(MainActivity.WEDNESDAY)) return 3;
-        if (day.equals(MainActivity.THURSDAY)) return 4;
-        if (day.equals(MainActivity.FRIDAY)) return 5;
-        if (day.equals(MainActivity.SATURDAY)) return 6;
-        if (day.equals(MainActivity.SUNDAY)) return 7;
+        if (day.equals(MainActivity.SUNDAY)) return 1;
+        if (day.equals(MainActivity.MONDAY)) return 2;
+        if (day.equals(MainActivity.TUESDAY)) return 3;
+        if (day.equals(MainActivity.WEDNESDAY)) return 4;
+        if (day.equals(MainActivity.THURSDAY)) return 5;
+        if (day.equals(MainActivity.FRIDAY)) return 6;
+        if (day.equals(MainActivity.SATURDAY)) return 7;
         return -1;
     }
 
     public static String integerToDayOfWeek(int day) {
-        if (day == 1) return MainActivity.MONDAY;
-        if (day == 2) return MainActivity.TUESDAY;
-        if (day == 3) return MainActivity.WEDNESDAY;
-        if (day == 4) return MainActivity.THURSDAY;
-        if (day == 5) return MainActivity.FRIDAY;
-        if (day == 6) return MainActivity.SATURDAY;
-        if (day == 7) return MainActivity.SUNDAY;
+        if (day == 1) return MainActivity.SUNDAY;
+        if (day == 2) return MainActivity.MONDAY;
+        if (day == 3) return MainActivity.TUESDAY;
+        if (day == 4) return MainActivity.WEDNESDAY;
+        if (day == 5) return MainActivity.THURSDAY;
+        if (day == 6) return MainActivity.FRIDAY;
+        if (day == 7) return MainActivity.SATURDAY;
         return "";
     }
 
