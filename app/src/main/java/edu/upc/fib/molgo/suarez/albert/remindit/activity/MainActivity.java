@@ -52,6 +52,7 @@ public class MainActivity extends ActionBarActivity
     public static final String TOAST_ERROR_FORMAT_DATE =    "Error to format Date";
     public static final String TOAST_DELETE_SUCCESSFULLY =  "All data have been deleted successfully";
     public static final String TOAST_ADD_SUCCESSFULLY =     "Event has been added successfully";
+    public static final String TOAST_SAME_SCHEDULE =        "It has already exists a meeting with same schedule";
     public static final String CALENDAR_TIME_ZONE =         "Europe/Berlin";
     public static final String OWNER_ACCOUNT =              "some.account@googlemail.com";
     public static final String SETTINGS_VARIABLE_KEY =      "settings";
@@ -173,8 +174,13 @@ public class MainActivity extends ActionBarActivity
 
             if (eventAdded.isMeeting()) {
                 Meeting meeting = (Meeting) eventAdded;
-                addMeeting(meeting.getDescription(), meeting.getDay(), meeting.getMonth(), meeting.getYear(),
-                        meeting.getStartHour(), meeting.getStartMinute(), meeting.getEndHour(), meeting.getEndMinute());
+                if (!existsMeetingWithSameSchedule(meeting)) addMeeting(meeting.getDescription(), meeting.getDay(), meeting.getMonth(), meeting.getYear(),
+                                                                        meeting.getStartHour(), meeting.getStartMinute(), meeting.getEndHour(), meeting.getEndMinute());
+                else {
+                    Toast.makeText(MainActivity.this, TOAST_SAME_SCHEDULE, Toast.LENGTH_LONG).show();
+                    return;
+                }
+
             } else {
                 Task task = (Task) eventAdded;
                 task.setMeetingAssociated(descriptionAssociatedMeeting);
@@ -182,7 +188,6 @@ public class MainActivity extends ActionBarActivity
                         task.getEndDay(), task.getEndMonth(), task.getEndYear(), task.getMeetingAssociated());
             }
             updateView();
-            // TODO No add two meeting with the same schedule
             Toast.makeText(MainActivity.this, TOAST_ADD_SUCCESSFULLY, Toast.LENGTH_LONG).show();
         }
         undoneTasks = (ArrayList<Task>) data.getSerializableExtra(UndoneTasksActivity.TASKS_TO_MODIFY);
@@ -743,6 +748,21 @@ public class MainActivity extends ActionBarActivity
 
         dayLayout.addView(new TaskButton(this, text, isDone));
         // TODO Delete Task on click
+    }
+
+    private boolean existsMeetingWithSameSchedule(Meeting meeting)
+    {
+        ArrayList<Event> all = list();
+        for (Event e : all) {
+            if (e.isMeeting()) {
+                Meeting m = (Meeting) e;
+                if (Utils.isSameDay(m.getDate(), meeting.getDate()) &&
+                        ((Utils.compareTo(m.getHourEnd(), meeting.getHourStart()) >= 0 && Utils.compareTo(m.getHourEnd(), meeting.getHourEnd()) <= 0) ||
+                                (Utils.compareTo(m.getHourStart(), meeting.getHourEnd()) <= 0 && Utils.compareTo(m.getHourStart(), meeting.getHourStart()) >= 0)))
+                    return  true;
+            }
+        }
+        return false;
     }
 
     private void modifyTasks()
