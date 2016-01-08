@@ -41,12 +41,12 @@ public class Utils {
 
     public static long createDate(int day, int month, int year, int hour, int minute) {
         Calendar cDate = Calendar.getInstance();
-        cDate.setTimeZone(TimeZone.getTimeZone(MainActivity.UTC_TIME_ZONE));
         cDate.set(Calendar.DATE, day);
         cDate.set(Calendar.MONTH, month);
         cDate.set(Calendar.YEAR, year);
         cDate.set(Calendar.HOUR_OF_DAY, hour);
         cDate.set(Calendar.MINUTE, minute);
+        cDate.set(Calendar.SECOND, 0);
         return cDate.getTimeInMillis();
     }
 

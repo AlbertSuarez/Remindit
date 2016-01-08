@@ -54,7 +54,6 @@ public class MainActivity extends ActionBarActivity
     public static final String TOAST_ADD_SUCCESSFULLY =     "Event has been added successfully";
     public static final String CALENDAR_TIME_ZONE =         "Europe/Berlin";
     public static final String OWNER_ACCOUNT =              "some.account@googlemail.com";
-    public static final String UTC_TIME_ZONE =              "UTC";
     public static final String SETTINGS_VARIABLE_KEY =      "settings";
     public static final String SETTINGS_VARIABLE_2_KEY =    "settings2";
     public static final String CALENDAR_ID_KEY =            "calendarId";
@@ -511,17 +510,8 @@ public class MainActivity extends ActionBarActivity
     {
         // SET start date
         long startTime = Utils.createDate(startDay, startMonth, startYear, 0, 0);
-        // Fix stupid error
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(startTime);
-        calendar.add(Calendar.DAY_OF_MONTH, 1);
-        startTime = calendar.getTimeInMillis();
         // SET end date
         long endTime = Utils.createDate(endDay, endMonth, endYear, 0, 0);
-        // Fix stupid error
-        calendar.setTimeInMillis(endTime);
-        calendar.add(Calendar.DAY_OF_MONTH, 1);
-        endTime = calendar.getTimeInMillis();
 
         // Initialize the object that represents the values we want to add
         ContentValues values = new ContentValues();
@@ -535,10 +525,10 @@ public class MainActivity extends ActionBarActivity
         values.put(Events.DESCRIPTION,              associatedMeeting);
         values.put(Events.ACCESS_LEVEL,             Events.ACCESS_PRIVATE);
         values.put(Events.SELF_ATTENDEE_STATUS,     Events.STATUS_CONFIRMED);
-        values.put(Events.ALL_DAY,                  UNDONE_TASK);
+        values.put(Events.ALL_DAY,                  0);
         values.put(Events.ORGANIZER,                OWNER_ACCOUNT);
         values.put(Events.GUESTS_CAN_INVITE_OTHERS, TASK);
-        values.put(Events.GUESTS_CAN_MODIFY,        1);
+        values.put(Events.GUESTS_CAN_MODIFY,        UNDONE_TASK);
         values.put(Events.AVAILABILITY,             Events.AVAILABILITY_BUSY);
 
         Uri uri = getContentResolver().insert(Events.CONTENT_URI, values);
@@ -549,22 +539,14 @@ public class MainActivity extends ActionBarActivity
     {
         // SET start date
         long startTime = Utils.createDate(day, month, year, startHour, startMinute);
-        // Fix stupid error
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(startTime);
-        calendar.add(Calendar.HOUR_OF_DAY, 5);
-        startTime = calendar.getTimeInMillis();
         // SET end date
         long endTime = Utils.createDate(day, month, year, endHour, endMinute);
-        // Fix stupid error
-        calendar.setTimeInMillis(endTime);
-        calendar.add(Calendar.HOUR_OF_DAY, 5);
-        endTime = calendar.getTimeInMillis();
 
         // Initialize the object that represents the values we want to add
         ContentValues values = new ContentValues();
         values.put(Events.DTSTART,                  startTime);
         values.put(Events.DTEND,                    endTime);
+        values.put(Events.RRULE,                    "FREQ=DAILY;COUNT=20;BYDAY=MO,TU,WE,TH,FR;WKST=MO");
         values.put(Events.TITLE,                    description);
         values.put(Events.CALENDAR_ID,              calendarId);
         values.put(Events.EVENT_TIMEZONE,           CALENDAR_TIME_ZONE);
@@ -668,7 +650,7 @@ public class MainActivity extends ActionBarActivity
                 Events.TITLE,
                 Events.DTSTART,
                 Events.DTEND,
-                Events.ALL_DAY,
+                Events.GUESTS_CAN_MODIFY,
                 Events.DESCRIPTION
         };
         String selection = Events.CALENDAR_ID + " = ? " ;
@@ -710,7 +692,7 @@ public class MainActivity extends ActionBarActivity
     private void setDoneTaskById(long id)
     {
         ContentValues values = new ContentValues();
-        values.put(Events.ALL_DAY, DONE_TASK);
+        values.put(Events.GUESTS_CAN_MODIFY, DONE_TASK);
         String selection = Events._ID + " = ? " ;
         String[] selArgs = new String[]{Long.toString(id)};
         int updated =
