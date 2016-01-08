@@ -51,6 +51,8 @@ public class MainActivity extends ActionBarActivity
     public static final String TOAST_ERROR_FIND_ID =        "Error to find Calendar";
     public static final String TOAST_ERROR_FORMAT_DATE =    "Error to format Date";
     public static final String TOAST_DELETE_SUCCESSFULLY =  "All data have been deleted successfully";
+    public static final String TOAST_DELETE_MEETING =       "This meeting has been deleted successfully";
+    public static final String TOAST_TASK_MEETING =         "This task has been deleted successfully";
     public static final String TOAST_ADD_SUCCESSFULLY =     "Event has been added successfully";
     public static final String TOAST_SAME_SCHEDULE =        "It has already exists a meeting with same schedule";
     public static final String CALENDAR_TIME_ZONE =         "Europe/Berlin";
@@ -289,7 +291,7 @@ public class MainActivity extends ActionBarActivity
                 String text = m.getDescription();
                 int startMinute = m.getTotalStartMinute();
                 int endMinute = m.getTotalEndMinute();
-                createMeetingButton(day, text, startMinute, endMinute);
+                createMeetingButton(day, text, startMinute, endMinute, m.getId());
             }
             else {
                 Task t = (Task) e;
@@ -314,7 +316,7 @@ public class MainActivity extends ActionBarActivity
                 int start = Utils.dayOfWeekToInteger(startDate);
                 int end = Utils.dayOfWeekToInteger(endDate);
                 for (int i = start; i <= end; i++) {
-                    createTaskButton(Utils.integerToDayOfWeek(i), t.getTitle(), t.isDone());
+                    createTaskButton(Utils.integerToDayOfWeek(i), t.getTitle(), t.isDone(), t.getId());
                 }
             }
         }
@@ -694,6 +696,19 @@ public class MainActivity extends ActionBarActivity
                                 selArgs);
     }
 
+    private void deleteEventById(long id)
+    {
+        String[] selArgs =
+                new String[]{Long.toString(id)};
+        String selection = Events._ID + " = ? " ;
+        int deleted =
+                getContentResolver().
+                        delete(
+                                Events.CONTENT_URI,
+                                selection,
+                                selArgs);
+    }
+
     private void setDoneTaskById(long id)
     {
         ContentValues values = new ContentValues();
@@ -709,7 +724,7 @@ public class MainActivity extends ActionBarActivity
                                 selArgs);
     }
 
-    private void createMeetingButton(String day, String text, int startTime, int endTime)
+    private void createMeetingButton(String day, String text, int startTime, int endTime, final long id)
     {
         RelativeLayout dayLayout;
         if (day.equals(MONDAY)) dayLayout = (RelativeLayout) findViewById(R.id.mondayEvents);
@@ -730,11 +745,33 @@ public class MainActivity extends ActionBarActivity
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, durationInPx);
         params.setMargins(0, marginInPx, 0, 0);
-        dayLayout.addView(new MeetingButton(this, text), params);
-        // TODO Delete Meeting on click
+        MeetingButton mButton = new MeetingButton(this, text);
+        dayLayout.addView(mButton, params);
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Delete a Meeting")
+                        .setMessage("Are you sure you want to delete this meeting?")
+                        .setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                deleteEventById(id);
+                                updateView();
+                                Toast.makeText(MainActivity.this, TOAST_DELETE_MEETING, Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setIcon(getResources().getDrawable(R.drawable.ic_menu_close_clear_cancel))
+                        .show();
+            }
+        });
     }
 
-    private void createTaskButton(String day, String text, boolean isDone)
+    private void createTaskButton(String day, String text, boolean isDone, final long id)
     {
         LinearLayout dayLayout;
         if (day.equals(MONDAY)) dayLayout = (LinearLayout) findViewById(R.id.mondayTasks);
@@ -746,8 +783,30 @@ public class MainActivity extends ActionBarActivity
         else if (day.equals(SUNDAY)) dayLayout = (LinearLayout) findViewById(R.id.sundayTasks);
         else return;
 
-        dayLayout.addView(new TaskButton(this, text, isDone));
-        // TODO Delete Task on click
+        TaskButton tButton = new TaskButton(this, text, isDone);
+        dayLayout.addView(tButton);
+        tButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Delete a Task")
+                        .setMessage("Are you sure you want to delete this task?")
+                        .setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                deleteEventById(id);
+                                updateView();
+                                Toast.makeText(MainActivity.this, TOAST_TASK_MEETING, Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setIcon(getResources().getDrawable(R.drawable.ic_menu_close_clear_cancel))
+                        .show();
+            }
+        });
     }
 
     private boolean existsMeetingWithSameSchedule(Meeting meeting)
