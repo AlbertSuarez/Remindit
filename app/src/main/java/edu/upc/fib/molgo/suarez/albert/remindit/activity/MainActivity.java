@@ -108,6 +108,7 @@ public class MainActivity extends ActionBarActivity
                 break;
             case R.id.search_day:
                 final DatePicker datePicker = new DatePicker(this);
+                datePicker.setCalendarViewShown(false);
                 datePicker.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle("Change week")
@@ -117,6 +118,7 @@ public class MainActivity extends ActionBarActivity
                             public void onClick(DialogInterface dialog, int which) {
                                 Utils.setDaysOfWeek(datePicker.getCalendarView().getDate());
                                 updateView();
+                                // TODO Why peta en Android 21?
                             }
                         })
                         .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -135,7 +137,7 @@ public class MainActivity extends ActionBarActivity
             case R.id.delete:
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle("Delete All Data")
-                        .setMessage("Are you sure you want to delete all data?")
+                        .setMessage("Are you sure you want to delete the selected database?")
                         .setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 deleteAll();
@@ -152,11 +154,12 @@ public class MainActivity extends ActionBarActivity
                         .show();
                 break;
             case R.id.help:
-                // TODO Help!
-                Log.d("List Events:", findByWeek(Utils.getFirstDayOfTheCurrentWeek(), Utils.getLastDayOfTheCurrentWeek()).toString());
+                Intent i3 = new Intent(MainActivity.this, HelpActivity.class);
+                startActivity(i3);
                 break;
             case R.id.about:
-                // TODO About!
+                Intent i4 = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(i4);
                 break;
             default:
 

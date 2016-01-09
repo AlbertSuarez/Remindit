@@ -69,7 +69,7 @@ public class UndoneTasksActivity extends Activity {
                 public void onClick(View v) {
                     new AlertDialog.Builder(UndoneTasksActivity.this)
                             .setTitle("Set Done a task")
-                            .setMessage("Are you sure you want to set done this task?")
+                            .setMessage("Are you sure you want to set this task as done?")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     for (Task t : undoneTasks) {

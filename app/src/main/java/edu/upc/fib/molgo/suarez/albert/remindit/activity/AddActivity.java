@@ -48,7 +48,7 @@ public class AddActivity extends Activity {
     public static final String HELP_TASK = "\n";
     public static final String HELP_MEETING = "\n";
     public static final String TOAST_ERROR = "Some field is in a wrong format or empty";
-    public static final String EMPTY_MEETINGS = "There are not meetings to associate";
+    public static final String EMPTY_MEETINGS = "There is no meeting to associate";
     public static final String EVENT_TO_SEND = "EventToSend";
     public static final String ASSOCIATED_MEETING = "AssociatedMeeting";
 
@@ -71,6 +71,8 @@ public class AddActivity extends Activity {
 
     private void initializeView() throws ParseException {
         final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+        // TODO Change structure
 
         Button okButton = (Button) findViewById(R.id.okButton);
         Button cancelButton = (Button) findViewById(R.id.cancelButton);
@@ -268,7 +270,7 @@ public class AddActivity extends Activity {
                                     }
                                     new AlertDialog.Builder(AddActivity.this)
                                             .setTitle("Select an associated meeting")
-                                            .setMessage("Select the associated meeting (if exists)")
+                                            .setMessage("Select the associated meeting (if it exists)")
                                             .setView(group)
                                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog, int which) {
@@ -298,7 +300,7 @@ public class AddActivity extends Activity {
                                     textView.setTypeface(null, Typeface.ITALIC);
                                     new AlertDialog.Builder(AddActivity.this)
                                             .setTitle("Select an associated meeting")
-                                            .setMessage("Select the associated meeting (if exists)")
+                                            .setMessage("Select the associated meeting (if it exists)")
                                             .setView(textView)
                                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog, int which) {
@@ -324,6 +326,7 @@ public class AddActivity extends Activity {
             }
         });
 
+        // TODO Canviar de sitio botones OK i Cancel
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

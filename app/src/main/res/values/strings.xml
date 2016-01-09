@@ -40,14 +40,14 @@
     <string name="pm11">11 PM</string>
 
     <string name="add_event">Add Event</string>
-    <string name="choose_type">Event Type</string>
+    <string name="choose_type">Type of Event</string>
     <string name="meeting_type">Meeting</string>
     <string name="task_type">Task</string>
     <string name="ok_button">OK</string>
     <string name="cancel_button">Cancel</string>
 
     <string name="undone_tasks">Undone Tasks</string>
-    <string name="empty_info">There are not undone tasks currently...</string>
+    <string name="empty_info">There is currently no undone task...</string>
 
     <string name="yes">Yes</string>
     <string name="no">No</string>
