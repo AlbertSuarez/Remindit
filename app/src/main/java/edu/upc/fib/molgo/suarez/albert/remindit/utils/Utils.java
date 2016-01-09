@@ -394,4 +394,16 @@ public class Utils {
         calendar.setTimeInMillis(date);
         return dateToString(calendar.getTime());
     }
+
+    public static int getCurrentFirstDay() {
+        return Integer.parseInt(days[0]);
+    }
+
+    public static int getCurrentMonth() {
+        return Integer.parseInt(days[7]);
+    }
+
+    public static int getCurrentYear() {
+        return Integer.parseInt(days[8]);
+    }
 }

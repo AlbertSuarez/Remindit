@@ -11,6 +11,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -45,8 +47,8 @@ public class AddActivity extends Activity {
     public static final String THIRD_TITLE_TASK = "End date";
     public static final String FOURTH_TITLE_MEETING = "Description";
     public static final String FOURTH_TITLE_TASK = "Associated meeting";
-    public static final String HELP_TASK = "\n";
-    public static final String HELP_MEETING = "\n";
+    public static final String HELP_TASK = "Please, double tap the fields\nstart date, end date and associated meeting";
+    public static final String HELP_MEETING = "Please, double tap the fields\ndate, start time and end time";
     public static final String TOAST_ERROR = "Some field is in a wrong format or empty";
     public static final String EMPTY_MEETINGS = "There is no meeting to associate";
     public static final String EVENT_TO_SEND = "EventToSend";
@@ -71,9 +73,6 @@ public class AddActivity extends Activity {
 
     private void initializeView() throws ParseException {
         final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
-        // TODO Change structure
-
         Button okButton = (Button) findViewById(R.id.okButton);
         Button cancelButton = (Button) findViewById(R.id.cancelButton);
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +117,7 @@ public class AddActivity extends Activity {
                             public void onClick(View v) {
                                 final DatePicker datePicker = new DatePicker(AddActivity.this);
                                 datePicker.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                                datePicker.setCalendarViewShown(false);
                                 new AlertDialog.Builder(AddActivity.this)
                                         .setTitle("Select a day")
                                         .setMessage("Select the meeting's day")
@@ -144,9 +144,10 @@ public class AddActivity extends Activity {
                             public void onClick(View v) {
                                 final TimePicker timePicker = new TimePicker(AddActivity.this);
                                 timePicker.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                                timePicker.setIs24HourView(false);
                                 new AlertDialog.Builder(AddActivity.this)
                                         .setTitle("Select a start time")
-                                        .setMessage("Select the meeting's start time")
+                                        .setMessage("Select the meeting start time")
                                         .setView(timePicker)
                                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
@@ -170,9 +171,10 @@ public class AddActivity extends Activity {
                             public void onClick(View v) {
                                 final TimePicker timePicker = new TimePicker(AddActivity.this);
                                 timePicker.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                                timePicker.setIs24HourView(false);
                                 new AlertDialog.Builder(AddActivity.this)
                                         .setTitle("Select a end time")
-                                        .setMessage("Select the meeting's end time")
+                                        .setMessage("Select the meeting end time")
                                         .setView(timePicker)
                                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
@@ -209,9 +211,10 @@ public class AddActivity extends Activity {
                             public void onClick(View v) {
                                 final DatePicker datePicker = new DatePicker(AddActivity.this);
                                 datePicker.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                                datePicker.setCalendarViewShown(false);
                                 new AlertDialog.Builder(AddActivity.this)
                                         .setTitle("Select a start day")
-                                        .setMessage("Select the task's start day")
+                                        .setMessage("Select the task start day")
                                         .setView(datePicker)
                                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
@@ -236,9 +239,10 @@ public class AddActivity extends Activity {
                             public void onClick(View v) {
                                 final DatePicker datePicker = new DatePicker(AddActivity.this);
                                 datePicker.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                                datePicker.setCalendarViewShown(false);
                                 new AlertDialog.Builder(AddActivity.this)
                                         .setTitle("Select a end day")
-                                        .setMessage("Select the task's end day")
+                                        .setMessage("Select the task end day")
                                         .setView(datePicker)
                                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
@@ -326,7 +330,6 @@ public class AddActivity extends Activity {
             }
         });
 
-        // TODO Canviar de sitio botones OK i Cancel
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

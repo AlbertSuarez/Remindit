@@ -13,6 +13,7 @@
     <item name="darkred" type="color">#FFCC0000</item>
     <item name="gray" type="color">#595959</item>
     <item name="softgray" type="color">#b1b1b1</item>
+    <item name="extrasoftgray" type="color">#e1e1e1</item>
     <item name="softblack" type="color">#212121</item>
 
 
@@ -28,6 +29,9 @@
         <item>@color/darkorange</item>
         <item>@color/darkred</item>
         <item>@color/gray</item>
+        <item>@color/softgray</item>
+        <item>@color/extrasoftgray</item>
+        <item>@color/softblack</item>
     </integer-array>
 
 </resources> 

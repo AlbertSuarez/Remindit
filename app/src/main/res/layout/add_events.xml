@@ -205,20 +205,20 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/okButton"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:layout_marginStart="6dp"
-            android:text="@string/ok_button" />
-
-        <Button
             android:id="@+id/cancelButton"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:layout_marginStart="6dp"
             android:text="@string/cancel_button" />
+
+        <Button
+            android:id="@+id/okButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_marginStart="6dp"
+            android:text="@string/ok_button" />
 
     </LinearLayout>
 

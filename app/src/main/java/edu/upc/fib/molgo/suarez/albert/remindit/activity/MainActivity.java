@@ -110,6 +110,7 @@ public class MainActivity extends ActionBarActivity
                 final DatePicker datePicker = new DatePicker(this);
                 datePicker.setCalendarViewShown(false);
                 datePicker.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                datePicker.updateDate(Utils.getCurrentYear(), Utils.getCurrentMonth()-1, Utils.getCurrentFirstDay());
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle("Change week")
                         .setMessage("Select the day you want to go")
@@ -118,7 +119,6 @@ public class MainActivity extends ActionBarActivity
                             public void onClick(DialogInterface dialog, int which) {
                                 Utils.setDaysOfWeek(datePicker.getCalendarView().getDate());
                                 updateView();
-                                // TODO Why peta en Android 21?
                             }
                         })
                         .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
