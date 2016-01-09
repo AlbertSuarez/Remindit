@@ -20,8 +20,8 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
 
     private final class GestureListener extends GestureDetector.SimpleOnGestureListener {
 
-        private static final int SWIPE_THRESHOLD = 1;
-        private static final int SWIPE_VELOCITY_THRESHOLD = 1;
+        private static final int SWIPE_THRESHOLD = 60;
+        private static final int SWIPE_VELOCITY_THRESHOLD = 60;
 
         @Override
         public boolean onDown(MotionEvent e) {
@@ -36,39 +36,27 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
                 float diffX = e2.getX() - e1.getX();
                 if (Math.abs(diffX) > Math.abs(diffY)) {
                     if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                        if (diffX > 0) {
-                            onSwipeRight();
-                        } else {
-                            onSwipeLeft();
-                        }
+                        if (diffX > 0) onSwipeRight();
+                        else onSwipeLeft();
                     }
                     result = true;
                 }
                 else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
-                    if (diffY > 0) {
-                        onSwipeBottom();
-                    } else {
-                        onSwipeTop();
-                    }
+                    if (diffY > 0) onSwipeBottom();
+                    else onSwipeTop();
                 }
                 result = true;
 
-            } catch (Exception exception) {
+            }
+            catch (Exception exception) {
                 exception.printStackTrace();
             }
             return result;
         }
     }
 
-    public void onSwipeRight() {
-    }
-
-    public void onSwipeLeft() {
-    }
-
-    public void onSwipeTop() {
-    }
-
-    public void onSwipeBottom() {
-    }
+    public void onSwipeRight() {}
+    public void onSwipeLeft() {}
+    public void onSwipeTop() {}
+    public void onSwipeBottom() {}
 }

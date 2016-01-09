@@ -4,7 +4,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@color/extrasoftgray">
+    android:background="@drawable/background_degradable">
 
     <ImageView
         android:id="@+id/image"
@@ -21,6 +21,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Remind it!\nCopyright © 2016 Albert Suarez Molgo\nAll Rights Reserved.\n\nAndroid application developed at FIB\nFacultat d'Informàtica de Barcelona\nBarcelona School of Informatics (BarcelonaTech)"
-        android:textColor="@color/softblack"
+        android:textColor="@color/black"
         android:gravity="center" />
 </LinearLayout>

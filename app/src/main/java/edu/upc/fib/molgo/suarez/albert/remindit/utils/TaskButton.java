@@ -16,6 +16,7 @@ public class TaskButton extends Button {
         setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
         if (isDone) setBackground(getResources().getDrawable(R.drawable.done_task_button));
         else setBackground(getResources().getDrawable(R.drawable.undone_task_button));
+        setTextColor(getResources().getColor(R.color.white));
         setText(text);
     }
 }

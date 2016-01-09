@@ -1,9 +1,7 @@
 package edu.upc.fib.molgo.suarez.albert.remindit.activity;
 
 import android.app.Activity;
-import android.opengl.Visibility;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;

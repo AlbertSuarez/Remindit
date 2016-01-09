@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background_degradable">
 
     <!--> Add Event Title <!-->
     <LinearLayout
@@ -12,15 +13,15 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:layout_marginBottom="30dp">
+        android:layout_marginTop="23dp"
+        android:layout_marginBottom="13dp">
 
         <TextView
             android:id="@+id/addEventText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/add_event"
-            android:textColor="@color/darkblue"
+            android:textColor="@color/headers_horizontal"
             android:textSize="30sp"
             android:textStyle="bold" />
 
@@ -30,14 +31,14 @@
     <LinearLayout
         android:id="@+id/chooseEventLayout"
         android:orientation="vertical"
-        android:layout_marginStart="10dp"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/blue"
+            android:textColor="@color/gray"
             android:textSize="20sp"
             android:text="@string/choose_type"
             android:id="@+id/textView" />
@@ -210,6 +211,7 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:layout_marginStart="6dp"
+            android:background="@color/line"
             android:text="@string/cancel_button" />
 
         <Button
@@ -217,6 +219,7 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:textSize="15sp"
+            android:background="@color/line"
             android:layout_marginStart="6dp"
             android:text="@string/ok_button" />
 

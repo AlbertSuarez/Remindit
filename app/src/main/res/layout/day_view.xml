@@ -10,23 +10,32 @@
     android:padding="0dp" >
 
     <!--> Day Header <!-->
-    <TextView
-        android:id="@+id/dateTitle"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:textStyle="bold"
-        android:textSize="30sp"
-        android:textColor="@color/softblack"
-        android:text=""/>
+        android:background="@color/headers_horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/dateTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            android:text="31th December 2026"/>
+
+    </LinearLayout>
+
 
     <!--> Separator between day and tasks <!-->
     <View
         android:id="@+id/firstView"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/gray" />
+        android:layout_height="2dp"
+        android:background="@color/line" />
 
     <!--> Tasks header <!-->
     <LinearLayout
@@ -43,8 +52,8 @@
     <View
         android:id="@+id/secondView"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/gray" />
+        android:layout_height="2dp"
+        android:background="@color/line" />
 
     <!--> ScrollView <!-->
     <ScrollView
@@ -77,7 +86,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:padding="0dp">
+                    android:padding="0dp"
+                    android:background="@color/headers">
 
                     <include layout="@layout/calendar_events" />
 
@@ -89,6 +99,7 @@
                         android:layout_marginTop="0dp"
                         android:gravity="center"
                         android:textSize="14sp"
+                        android:textColor="@color/gray"
                         android:text="@string/am12"/>
 
                     <!--> 01AM <!-->
@@ -98,6 +109,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="60dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/am1"/>
 
@@ -108,6 +120,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="120dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/am2"/>
 
@@ -118,6 +131,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="180dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/am3"/>
 
@@ -128,6 +142,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="240dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/am4"/>
 
@@ -138,6 +153,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="300dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/am5"/>
 
@@ -148,6 +164,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="360dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/am6"/>
 
@@ -158,6 +175,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="420dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/am7"/>
 
@@ -168,6 +186,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="480dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/am8"/>
 
@@ -178,6 +197,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="540dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/am9"/>
 
@@ -188,6 +208,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="600dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/am10"/>
 
@@ -198,6 +219,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="660dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/am11"/>
 
@@ -208,6 +230,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="720dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/pm12"/>
 
@@ -218,6 +241,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="780dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/pm1"/>
 
@@ -228,6 +252,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="840dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/pm2"/>
 
@@ -238,6 +263,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="900dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/pm3"/>
 
@@ -249,6 +275,7 @@
                         android:layout_marginTop="960dp"
                         android:gravity="center"
                         android:textSize="14sp"
+                        android:textColor="@color/gray"
                         android:text="@string/pm4"/>
 
                     <!--> 05PM <!-->
@@ -258,6 +285,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="1020dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/pm5"/>
 
@@ -268,6 +296,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="1080dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/pm6"/>
 
@@ -278,6 +307,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="1140dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/am7"/>
 
@@ -288,6 +318,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="1200dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/pm8"/>
 
@@ -298,6 +329,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="1260dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/pm9"/>
 
@@ -308,6 +340,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="1320dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/pm10"/>
 
@@ -318,6 +351,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="1380dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/pm11"/>
 
@@ -327,14 +361,15 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/softgray" />
+                    android:background="@color/line" />
 
                 <!--> Events <!-->
                 <RelativeLayout
                     android:id="@+id/meetings"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2">
+                    android:layout_weight="2"
+                    android:background="@drawable/background_degradable">
 
                     <include layout="@layout/calendar_events" />
 

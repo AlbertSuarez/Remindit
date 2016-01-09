@@ -12,6 +12,7 @@ public class MeetingButton extends Button {
         super(context);
         setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
         setBackground(getResources().getDrawable(R.drawable.meeting_button));
+        setTextColor(getResources().getColor(R.color.white));
         setText(text);
     }
 }

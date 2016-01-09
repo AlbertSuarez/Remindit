@@ -11,7 +11,6 @@ import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -302,8 +301,6 @@ public class MainActivity extends ActionBarActivity
                 Date dEnd = new Date();
                 Date dAnt = new Date();
                 Date[] limits = Utils.getLimitsOfCurrentWeek();
-                Log.d("Limit inferior:", Utils.dateToString(limits[0]));
-                Log.d("Limit superior:", Utils.dateToString(limits[1]));
                 int count = 0;
                 for (Date d : t.getAllDays()) {
                     if (Utils.compareTo(d, limits[0]) == 1 && Utils.compareTo(d, limits[1]) == -1) {
@@ -313,7 +310,6 @@ public class MainActivity extends ActionBarActivity
                     }
                 }
                 if (count > 0) dEnd = dAnt;
-                Log.d("Count:", Integer.toString(count));
                 String startDate = Utils.getDayOfWeekInString(dSt);
                 String endDate = Utils.getDayOfWeekInString(dEnd);
                 int start = Utils.dayOfWeekToInteger(startDate);

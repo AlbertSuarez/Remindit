@@ -49,6 +49,7 @@ public class UndoneTasksActivity extends Activity {
         else return;
         LinearLayout layoutToAdd = (LinearLayout) findViewById(R.id.undoneTaskLayout);
         int marginTenInPx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
+        int marginEightInPx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics());
         int marginOneInPx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics());
         LinearLayout.LayoutParams layoutParams;
         for (Task t : undoneTasks) {
@@ -59,9 +60,9 @@ public class UndoneTasksActivity extends Activity {
             layoutToAdd.addView(layout, layoutParams);
 
             final View view = new View(this);
-            view.setBackgroundColor(getResources().getColor(R.color.gray));
+            view.setBackgroundColor(getResources().getColor(R.color.line));
             layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, marginOneInPx);
-            layoutParams.setMargins(0, 0, 0, marginTenInPx);
+            layoutParams.setMargins(0, 0, 0, marginEightInPx);
             layoutToAdd.addView(view, layoutParams);
 
             layout.setOnClickListener(new View.OnClickListener() {

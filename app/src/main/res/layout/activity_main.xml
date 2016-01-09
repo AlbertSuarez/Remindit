@@ -16,7 +16,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:baselineAligned="false"
-        android:layout_marginTop="0dp">
+        android:layout_marginTop="0dp"
+        android:background="@color/headers_horizontal">
 
         <!--> Current Month Text View <!-->
         <LinearLayout
@@ -33,7 +34,7 @@
                 android:gravity="center"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                android:textColor="@color/softblack"
+                android:textColor="@color/white"
                 android:text="" />
 
             <TextView
@@ -43,7 +44,7 @@
                 android:gravity="center"
                 android:textSize="10sp"
                 android:textStyle="bold"
-                android:textColor="@color/softblack"
+                android:textColor="@color/white"
                 android:text="" />
 
         </LinearLayout>
@@ -63,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
+                android:textColor="@color/white"
                 android:text="" />
 
             <TextView
@@ -72,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
+                android:textColor="@color/white"
                 android:text="@string/sunday_name" />
 
         </LinearLayout>
@@ -92,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
+                android:textColor="@color/white"
                 android:text="" />
 
             <TextView
@@ -101,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
+                android:textColor="@color/white"
                 android:text="@string/monday_name" />
 
         </LinearLayout>
@@ -121,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
+                android:textColor="@color/white"
                 android:text="" />
 
             <TextView
@@ -130,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
+                android:textColor="@color/white"
                 android:text="@string/tuesday_name" />
 
         </LinearLayout>
@@ -150,7 +151,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
+                android:textColor="@color/white"
                 android:text="" />
 
             <TextView
@@ -159,7 +160,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
+                android:textColor="@color/white"
                 android:text="@string/wednesday_name" />
 
         </LinearLayout>
@@ -179,7 +180,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
+                android:textColor="@color/white"
                 android:text="" />
 
             <TextView
@@ -188,7 +189,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
+                android:textColor="@color/white"
                 android:text="@string/thursday_name" />
 
         </LinearLayout>
@@ -208,7 +209,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
+                android:textColor="@color/white"
                 android:text="" />
 
             <TextView
@@ -217,7 +218,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
+                android:textColor="@color/white"
                 android:text="@string/friday_name" />
 
         </LinearLayout>
@@ -237,7 +238,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
+                android:textColor="@color/white"
                 android:text="" />
 
             <TextView
@@ -246,7 +247,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
                 android:textStyle="bold"
-                android:textColor="@color/gray"
+                android:textColor="@color/white"
                 android:text="@string/saturday_name" />
 
         </LinearLayout>
@@ -257,9 +258,9 @@
     <View
         android:id="@+id/dividerView"
         android:layout_width="fill_parent"
-        android:layout_height="1dp"
+        android:layout_height="2dp"
         android:layout_below="@+id/daysLinearLayout"
-        android:background="@color/gray" />
+        android:background="@color/line" />
 
     <!--> Tasks Header <!-->
     <LinearLayout
@@ -373,9 +374,9 @@
     <View
         android:id="@+id/dividerView2"
         android:layout_width="fill_parent"
-        android:layout_height="1dp"
+        android:layout_height="2dp"
         android:layout_below="@+id/tasksLinearLayout"
-        android:background="@color/gray" />
+        android:background="@color/line" />
 
     <!--> ScrollView <!-->
     <ScrollView
@@ -402,7 +403,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:baselineAligned="false"
-                android:padding="0dp" >
+                android:padding="0dp"
+                android:background="@drawable/background_degradable">
 
                 <!--> Hours <!-->
                 <RelativeLayout
@@ -410,7 +412,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:padding="0dp">
+                    android:padding="0dp"
+                    android:background="@color/headers">
 
                     <include layout="@layout/calendar_events" />
 
@@ -423,6 +426,7 @@
                         android:layout_marginTop="0dp"
                         android:gravity="center"
                         android:textSize="14sp"
+                        android:textColor="@color/gray"
                         android:text="@string/am12"/>
 
                     <!--> 01AM <!-->
@@ -433,6 +437,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="60dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/am1"/>
 
@@ -444,6 +449,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="120dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/am2"/>
 
@@ -455,6 +461,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="180dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/am3"/>
 
@@ -466,6 +473,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="240dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/am4"/>
 
@@ -477,6 +485,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="300dp"
                         android:gravity="center"
+                        android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:text="@string/am5"/>
 
@@ -487,6 +496,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="360dp"
+                        android:textColor="@color/gray"
                         android:gravity="center"
                         android:textSize="14sp"
                         android:text="@string/am6"/>
@@ -498,6 +508,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="420dp"
+                        android:textColor="@color/gray"
                         android:gravity="center"
                         android:textSize="14sp"
                         android:text="@string/am7"/>
@@ -509,6 +520,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="480dp"
+                        android:textColor="@color/gray"
                         android:gravity="center"
                         android:textSize="14sp"
                         android:text="@string/am8"/>
@@ -520,6 +532,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="540dp"
+                        android:textColor="@color/gray"
                         android:gravity="center"
                         android:textSize="14sp"
                         android:text="@string/am9"/>
@@ -531,6 +544,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="600dp"
+                        android:textColor="@color/gray"
                         android:gravity="center"
                         android:textSize="14sp"
                         android:text="@string/am10"/>
@@ -542,6 +556,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="660dp"
+                        android:textColor="@color/gray"
                         android:gravity="center"
                         android:textSize="14sp"
                         android:text="@string/am11"/>
@@ -553,6 +568,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="720dp"
+                        android:textColor="@color/gray"
                         android:gravity="center"
                         android:textSize="14sp"
                         android:text="@string/pm12"/>
@@ -564,6 +580,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="780dp"
+                        android:textColor="@color/gray"
                         android:gravity="center"
                         android:textSize="14sp"
                         android:text="@string/pm1"/>
@@ -575,6 +592,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="840dp"
+                        android:textColor="@color/gray"
                         android:gravity="center"
                         android:textSize="14sp"
                         android:text="@string/pm2"/>
@@ -586,6 +604,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="900dp"
+                        android:textColor="@color/gray"
                         android:gravity="center"
                         android:textSize="14sp"
                         android:text="@string/pm3"/>
@@ -597,6 +616,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="960dp"
+                        android:textColor="@color/gray"
                         android:gravity="center"
                         android:textSize="14sp"
                         android:text="@string/pm4"/>
@@ -608,6 +628,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="1020dp"
+                        android:textColor="@color/gray"
                         android:gravity="center"
                         android:textSize="14sp"
                         android:text="@string/pm5"/>
@@ -619,6 +640,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="1080dp"
+                        android:textColor="@color/gray"
                         android:gravity="center"
                         android:textSize="14sp"
                         android:text="@string/pm6"/>
@@ -630,6 +652,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="1140dp"
+                        android:textColor="@color/gray"
                         android:gravity="center"
                         android:textSize="14sp"
                         android:text="@string/am7"/>
@@ -641,6 +664,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="1200dp"
+                        android:textColor="@color/gray"
                         android:gravity="center"
                         android:textSize="14sp"
                         android:text="@string/pm8"/>
@@ -652,6 +676,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="1260dp"
+                        android:textColor="@color/gray"
                         android:gravity="center"
                         android:textSize="14sp"
                         android:text="@string/pm9"/>
@@ -663,6 +688,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="1320dp"
+                        android:textColor="@color/gray"
                         android:gravity="center"
                         android:textSize="14sp"
                         android:text="@string/pm10"/>
@@ -674,6 +700,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="1380dp"
+                        android:textColor="@color/gray"
                         android:gravity="center"
                         android:textSize="14sp"
                         android:text="@string/pm11"/>
@@ -684,7 +711,7 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/softgray" />
+                    android:background="@color/white" />
 
                 <!--> Sunday Events <!-->
                 <RelativeLayout
@@ -701,7 +728,7 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/softgray" />
+                    android:background="@color/white" />
 
                 <!--> Monday Events <!-->
                 <RelativeLayout
@@ -718,7 +745,7 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/softgray" />
+                    android:background="@color/white" />
 
                 <!--> Tuesday Events <!-->
                 <RelativeLayout
@@ -735,7 +762,7 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/softgray" />
+                    android:background="@color/white" />
 
                 <!--> Wednesday Events <!-->
                 <RelativeLayout
@@ -752,7 +779,7 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/softgray" />
+                    android:background="@color/white" />
 
                 <!--> Thursday Events <!-->
                 <RelativeLayout
@@ -769,7 +796,7 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/softgray" />
+                    android:background="@color/white" />
 
                 <!--> Friday Events <!-->
                 <RelativeLayout
@@ -786,7 +813,7 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/softgray" />
+                    android:background="@color/white" />
 
                 <!--> Saturday Events <!-->
                 <RelativeLayout
