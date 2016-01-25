@@ -134,6 +134,7 @@ public class AddActivity extends Activity {
                         secondOption.setText(SECOND_TITLE_MEETING);
                         secondField.setVisibility(View.VISIBLE);
                         secondField.setText(EMPTY);
+                        final TimePicker timePickerEndTime = new TimePicker(AddActivity.this);;
                         secondField.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -147,6 +148,8 @@ public class AddActivity extends Activity {
                                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 secondField.setText(Utils.hourAndMinuteToString(timePicker.getCurrentHour(), timePicker.getCurrentMinute()));
+                                                timePickerEndTime.setCurrentHour(timePicker.getCurrentHour());
+                                                timePickerEndTime.setCurrentMinute(timePicker.getCurrentMinute());
                                             }
                                         })
                                         .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -164,16 +167,15 @@ public class AddActivity extends Activity {
                         thirdField.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                final TimePicker timePicker = new TimePicker(AddActivity.this);
-                                timePicker.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-                                timePicker.setIs24HourView(false);
+                                timePickerEndTime.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                                timePickerEndTime.setIs24HourView(false);
                                 new AlertDialog.Builder(AddActivity.this)
                                         .setTitle("Select a end time")
                                         .setMessage("Select the meeting end time")
-                                        .setView(timePicker)
+                                        .setView(timePickerEndTime)
                                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
-                                                thirdField.setText(Utils.hourAndMinuteToString(timePicker.getCurrentHour(), timePicker.getCurrentMinute()));
+                                                thirdField.setText(Utils.hourAndMinuteToString(timePickerEndTime.getCurrentHour(), timePickerEndTime.getCurrentMinute()));
                                             }
                                         })
                                         .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -201,6 +203,7 @@ public class AddActivity extends Activity {
                         secondField.setVisibility(View.VISIBLE);
                         secondField.setText(EMPTY);
                         secondField.setInputType(InputType.TYPE_DATETIME_VARIATION_DATE);
+                        final DatePicker datePickerEndDate = (DatePicker) inflater.inflate(getResources().getLayout(R.layout.date_picker), null);
                         secondField.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -212,6 +215,8 @@ public class AddActivity extends Activity {
                                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 secondField.setText(Utils.getDayInString(datePicker.getCalendarView().getDate()));
+                                                Date date = new Date(datePicker.getCalendarView().getDate());
+                                                datePickerEndDate.updateDate(Utils.getYear(date), Utils.getMonth(date), Utils.getDay(date));
                                             }
                                         })
                                         .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -230,14 +235,13 @@ public class AddActivity extends Activity {
                         thirdField.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                final DatePicker datePicker = (DatePicker) inflater.inflate(getResources().getLayout(R.layout.date_picker), null);
                                 new AlertDialog.Builder(AddActivity.this)
                                         .setTitle("Select a end day")
                                         .setMessage("Select the task end day")
-                                        .setView(datePicker)
+                                        .setView(datePickerEndDate)
                                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
-                                                thirdField.setText(Utils.getDayInString(datePicker.getCalendarView().getDate()));
+                                                thirdField.setText(Utils.getDayInString(datePickerEndDate.getCalendarView().getDate()));
                                             }
                                         })
                                         .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
