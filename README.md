@@ -14,16 +14,16 @@ This application is a *Calendar Application* that it allows to create meetings a
 
 Next, you can see few *screenshots* of Remind it:
 
-[](https://github.com/AlbertSuarez/Remindit/blob/master/images/image1.png?raw=true)
+![](https://github.com/AlbertSuarez/Remindit/blob/master/images/image1.png?raw=true)
 
-[](https://github.com/AlbertSuarez/Remindit/blob/master/images/image2.png?raw=true)
+![](https://github.com/AlbertSuarez/Remindit/blob/master/images/image2.png?raw=true)
 
-[](https://github.com/AlbertSuarez/Remindit/blob/master/images/image3.png?raw=true)
+![](https://github.com/AlbertSuarez/Remindit/blob/master/images/image3.png?raw=true)
 
-[](https://github.com/AlbertSuarez/Remindit/blob/master/images/image4.png?raw=true)
+![](https://github.com/AlbertSuarez/Remindit/blob/master/images/image4.png?raw=true)
 
-[](https://github.com/AlbertSuarez/Remindit/blob/master/images/image5.png?raw=true)
+![](https://github.com/AlbertSuarez/Remindit/blob/master/images/image5.png?raw=true)
 
-[](https://github.com/AlbertSuarez/Remindit/blob/master/images/image6.png?raw=true)
+![](https://github.com/AlbertSuarez/Remindit/blob/master/images/image6.png?raw=true)
 
 Thank you very much for your time! Enjoy and remind it!
