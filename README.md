@@ -1,3 +1,5 @@
+![](https://github.com/AlbertSuarez/Remindit/blob/master/app/src/main/res/drawable-xhdpi/ic_app_logo.png?raw=true)
+
 # Remindit
 
 *Remind it!* is an Android application created by Albert Suarez Molgo, an student at *BarcelonaTech*, Polytechnic University of Catalonia. This application was developed in a project of a subject of the faculty: *Interaction and Interface Design*. Remind it was my first Android application, so very probably it lacks basic functionality and better design and implementation. I accept reviews, for I can improve my application.
@@ -68,4 +70,4 @@ Once depressed this option, a window appears where you really want to make sure 
 
 **Thank you** very much for your time! Enjoy and *remind it*!
 
-In appreciation for my friend Edgar Ortiz for help me to design the logo app. Visit your [website](http://ewolfphotography.wix.com/ewolf)! And also thanks to my university mates to help me in any moment!
+In appreciation for my friend **Edgar Ortiz** for help me to design the logo app. Visit your [website](http://ewolfphotography.wix.com/ewolf)! And also thanks to my university mates to help me in any moment!
