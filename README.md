@@ -14,16 +14,16 @@ This application is a *Calendar Application* that it allows to create meetings a
 
 Next, you can see few *screenshots* of Remind it:
 
-[Add Meeting](https://github.com/AlbertSuarez/Remindit/blob/master/images/image1.png?raw=true)
+[](https://github.com/AlbertSuarez/Remindit/blob/master/images/image1.png?raw=true)
 
-[Add Task](https://github.com/AlbertSuarez/Remindit/blob/master/images/image2.png?raw=true)
+[](https://github.com/AlbertSuarez/Remindit/blob/master/images/image2.png?raw=true)
 
-[Undone Task List](https://github.com/AlbertSuarez/Remindit/blob/master/images/image3.png?raw=true)
+[](https://github.com/AlbertSuarez/Remindit/blob/master/images/image3.png?raw=true)
 
-[Change Week Dialog](https://github.com/AlbertSuarez/Remindit/blob/master/images/image4.png?raw=true)
+[](https://github.com/AlbertSuarez/Remindit/blob/master/images/image4.png?raw=true)
 
-[Day View](https://github.com/AlbertSuarez/Remindit/blob/master/images/image5.png?raw=true)
+[](https://github.com/AlbertSuarez/Remindit/blob/master/images/image5.png?raw=true)
 
-[Delete All Data Dialog](https://github.com/AlbertSuarez/Remindit/blob/master/images/image6.png?raw=true)
+[](https://github.com/AlbertSuarez/Remindit/blob/master/images/image6.png?raw=true)
 
 Thank you very much for your time! Enjoy and remind it!
