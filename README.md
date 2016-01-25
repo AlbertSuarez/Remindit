@@ -66,7 +66,9 @@ In order to do so, it is as simple as clicking on the number of leaves on the he
 
 You only need to select the symbol with three small squares in the top menu and you'll see a drop; there you will find the option to Delete All Data.
 
-Once depressed this option, a window appears where you really want to make sure to delete all events from the database.\n\nOnce you have clicked on OK, all events must be eliminated.
+Once depressed this option, a window appears where you really want to make sure to delete all events from the database.
+
+Once you have clicked on OK, all events must be eliminated.
 
 **Thank you** very much for your time! Enjoy and *remind it*!
 
