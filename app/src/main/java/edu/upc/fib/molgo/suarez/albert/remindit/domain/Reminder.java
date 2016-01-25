@@ -1,6 +1,7 @@
 package edu.upc.fib.molgo.suarez.albert.remindit.domain;
 
-import java.util.*;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * Reminder class.

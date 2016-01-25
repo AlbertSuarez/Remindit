@@ -3,7 +3,7 @@ package edu.upc.fib.molgo.suarez.albert.remindit.utils;
 import android.content.Context;
 import android.util.TypedValue;
 import android.widget.Button;
-import android.widget.LinearLayout.*;
+import android.widget.LinearLayout.LayoutParams;
 
 import edu.upc.fib.molgo.suarez.albert.remindit.R;
 

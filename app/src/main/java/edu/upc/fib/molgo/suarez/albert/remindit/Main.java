@@ -1,6 +1,8 @@
 package edu.upc.fib.molgo.suarez.albert.remindit;
 
-import edu.upc.fib.molgo.suarez.albert.remindit.domain.*;
+import edu.upc.fib.molgo.suarez.albert.remindit.domain.Meeting;
+import edu.upc.fib.molgo.suarez.albert.remindit.domain.Reminder;
+import edu.upc.fib.molgo.suarez.albert.remindit.domain.Task;
 import edu.upc.fib.molgo.suarez.albert.remindit.utils.Utils;
 
 /**

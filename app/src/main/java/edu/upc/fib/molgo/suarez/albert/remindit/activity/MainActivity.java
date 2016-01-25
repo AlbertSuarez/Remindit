@@ -7,11 +7,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -76,12 +77,14 @@ public class MainActivity extends ActionBarActivity
     private String descriptionAssociatedMeeting;
     private ArrayList<Task> undoneTasks;
     private long calendarId;
+    private LayoutInflater inflater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        inflater = LayoutInflater.from(MainActivity.this);
         initializeView();
         initializeProvider();
     }
@@ -106,10 +109,8 @@ public class MainActivity extends ActionBarActivity
                 startActivityForResult(i, 0);
                 break;
             case R.id.search_day:
-                final DatePicker datePicker = new DatePicker(this);
-                datePicker.setCalendarViewShown(false);
-                datePicker.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-                datePicker.updateDate(Utils.getCurrentYear(), Utils.getCurrentMonth()-1, Utils.getCurrentFirstDay());
+                final DatePicker datePicker = (DatePicker) inflater.inflate(getResources().getLayout(R.layout.date_picker), null);
+                datePicker.updateDate(Utils.getCurrentYear(), Utils.getCurrentMonth() - 1, Utils.getCurrentFirstDay());
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle("Change week")
                         .setMessage("Select the day you want to go")

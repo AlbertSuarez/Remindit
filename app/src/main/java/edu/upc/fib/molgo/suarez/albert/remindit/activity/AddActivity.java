@@ -7,19 +7,14 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
-import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -56,12 +51,14 @@ public class AddActivity extends Activity {
 
     private Event event;
     private ArrayList<String> meetings;
+    private LayoutInflater inflater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_events);
+        inflater = LayoutInflater.from(AddActivity.this);
         event = (Event) getIntent().getSerializableExtra(MainActivity.EVENT_TO_ADD);
         meetings = (ArrayList<String>) getIntent().getSerializableExtra(MainActivity.LIST_MEETINGS);
         try {
@@ -115,9 +112,7 @@ public class AddActivity extends Activity {
                         firstField.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                final DatePicker datePicker = new DatePicker(AddActivity.this);
-                                datePicker.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-                                datePicker.setCalendarViewShown(false);
+                                final DatePicker datePicker = (DatePicker) inflater.inflate(getResources().getLayout(R.layout.date_picker), null);
                                 new AlertDialog.Builder(AddActivity.this)
                                         .setTitle("Select a day")
                                         .setMessage("Select the meeting's day")
@@ -209,9 +204,7 @@ public class AddActivity extends Activity {
                         secondField.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                final DatePicker datePicker = new DatePicker(AddActivity.this);
-                                datePicker.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-                                datePicker.setCalendarViewShown(false);
+                                final DatePicker datePicker = (DatePicker) inflater.inflate(getResources().getLayout(R.layout.date_picker), null);
                                 new AlertDialog.Builder(AddActivity.this)
                                         .setTitle("Select a start day")
                                         .setMessage("Select the task start day")
@@ -237,9 +230,7 @@ public class AddActivity extends Activity {
                         thirdField.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                final DatePicker datePicker = new DatePicker(AddActivity.this);
-                                datePicker.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-                                datePicker.setCalendarViewShown(false);
+                                final DatePicker datePicker = (DatePicker) inflater.inflate(getResources().getLayout(R.layout.date_picker), null);
                                 new AlertDialog.Builder(AddActivity.this)
                                         .setTitle("Select a end day")
                                         .setMessage("Select the task end day")
